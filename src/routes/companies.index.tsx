@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Section, Reveal, StatusPill } from "@/components/ui-primitives";
 import { COMPANIES, FUTURE_VENTURES } from "@/lib/site-data";
 
-export const Route = createFileRoute("/companies")({
+export const Route = createFileRoute("/companies/")({
   component: Companies,
   head: () => ({
     meta: [
