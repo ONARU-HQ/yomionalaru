@@ -141,10 +141,11 @@ function NodeChip({ x, y, label, slug, big }: { x: number; y: number; label: str
   );
   if (slug) {
     return (
-      <Link to="/companies/$slug" params={{ slug }} className="cursor-pointer" asChild={false as never}>
-        {inner as unknown as React.ReactNode}
-      </Link>
+      <a href={`/companies/${slug}`} className="cursor-pointer">
+        {inner}
+      </a>
     );
   }
   return inner;
+
 }
