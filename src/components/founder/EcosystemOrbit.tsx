@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+// ecosystem orbit
 import { motion } from "framer-motion";
 import { ECOSYSTEM } from "@/lib/site-data";
 
