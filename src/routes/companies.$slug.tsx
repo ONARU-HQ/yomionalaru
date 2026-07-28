@@ -1,7 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
 import { COMPANIES } from "@/lib/site-data";
-import { Reveal, StatusPill } from "@/components/ui-primitives";
+import { Reveal, Section, StatusPill } from "@/components/ui-primitives";
+import { MagneticButton } from "@/components/founder/MagneticButton";
 
 export const Route = createFileRoute("/companies/$slug")({
   loader: ({ params }) => {
@@ -14,9 +15,9 @@ export const Route = createFileRoute("/companies/$slug")({
     const c = loaderData ? COMPANIES.find((x) => x.slug === loaderData.slug) : undefined;
     return {
       meta: [
-        { title: c ? `${c.name} — Yomi Onalaru` : "Company — Yomi Onalaru" },
+        { title: c ? `${c.name} — ${c.tagline}` : "Company — Yomi Onalaru" },
         { name: "description", content: c?.description ?? "" },
-        { property: "og:title", content: c ? `${c.name} — Yomi Onalaru` : "Company — Yomi Onalaru" },
+        { property: "og:title", content: c ? `${c.name} — ${c.tagline}` : "Company — Yomi Onalaru" },
         { property: "og:description", content: c?.description ?? "" },
         { property: "og:url", content: `/companies/${loaderData?.slug ?? ""}` },
       ],
@@ -28,9 +29,15 @@ export const Route = createFileRoute("/companies/$slug")({
 function CompanyDetail() {
   const { slug } = Route.useLoaderData();
   const c = COMPANIES.find((x) => x.slug === slug)!;
+  const related = COMPANIES.filter((x) => x.slug !== c.slug).slice(0, 3);
+
   return (
     <>
-      <section className="relative mx-auto max-w-6xl px-6 pb-20 pt-40 md:pt-48">
+      {/* Cinematic hero */}
+      <section className="relative mx-auto max-w-7xl px-6 pb-24 pt-40 md:pt-48">
+        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+          <div className={`absolute -top-40 left-1/2 h-[700px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-br ${c.accent} blur-[140px]`} />
+        </div>
         <Link to="/companies" className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-muted-foreground hover:text-gold">
           <ArrowLeft className="h-3.5 w-3.5" /> All companies
         </Link>
@@ -39,71 +46,126 @@ function CompanyDetail() {
             <StatusPill status={c.status} />
             <span className="text-xs uppercase tracking-[0.28em] text-muted-foreground">{c.industry}</span>
           </div>
-          <h1 className="mt-8 font-display text-6xl leading-[1] md:text-9xl">
+          <h1 className="mt-8 font-display text-[clamp(3.5rem,12vw,10rem)] leading-[0.9]">
             <span className="gold-shine">{c.name}</span>
           </h1>
-          <p className="mt-6 max-w-2xl font-display text-2xl text-foreground/85 md:text-3xl">{c.tagline}</p>
+          <p className="mt-6 max-w-3xl font-display text-2xl text-foreground/85 md:text-4xl">{c.tagline}</p>
+          {c.website && (
+            <div className="mt-10">
+              <MagneticButton as="a" href={c.website}>
+                <span className="group inline-flex items-center gap-3 rounded-full bg-gold px-7 py-3.5 text-sm font-medium text-primary-foreground shadow-[0_10px_40px_-10px_var(--gold)] hover:bg-gold-soft">
+                  Visit {c.name}
+                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </span>
+              </MagneticButton>
+            </div>
+          )}
         </Reveal>
       </section>
 
-      <section className="relative mx-auto max-w-6xl px-6 py-16">
-        <div className={`relative overflow-hidden rounded-[2rem] glass p-12 md:p-20`}>
-          <div className={`pointer-events-none absolute -inset-40 rounded-full bg-gradient-to-br ${c.accent} blur-3xl`} />
-          <div className="relative grid gap-12 md:grid-cols-[1.4fr_1fr]">
+      {/* Mission / Vision / Progress */}
+      <Section>
+        <div className="grid gap-6 md:grid-cols-3">
+          {c.mission && (
             <Reveal>
-              <div className="text-xs uppercase tracking-[0.3em] text-gold/80">About</div>
-              <p className="mt-4 text-lg leading-relaxed text-foreground/85 md:text-xl">{c.description}</p>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <div className="space-y-5">
-                <Row k="Status" v={c.status} />
-                <Row k="Industry" v={c.industry} />
-                <Row k="Launched" v={String(c.launchYear)} />
-                {c.website && <Row k="Website" v={c.website.replace(/^https?:\/\//, "")} href={c.website} />}
-                {c.instagram && <Row k="Instagram" v={c.instagram.split("/").pop() ?? ""} href={c.instagram} />}
-                {c.tiktok && <Row k="TikTok" v={c.tiktok.split("/").pop() ?? ""} href={c.tiktok} />}
-                {c.x && <Row k="X" v={c.x.split("/").pop() ?? ""} href={c.x} />}
+              <div className="rounded-3xl glass p-8 h-full">
+                <div className="text-[10px] uppercase tracking-[0.32em] text-gold/80">Mission</div>
+                <p className="mt-4 font-display text-2xl leading-snug">{c.mission}</p>
               </div>
             </Reveal>
-          </div>
-
-          {c.website && (
-            <div className="relative mt-14">
-              <a
-                href={c.website}
-                target="_blank"
-                rel="noreferrer"
-                className="group inline-flex items-center gap-3 rounded-full bg-gold px-7 py-3.5 text-sm font-medium text-primary-foreground shadow-[0_10px_40px_-10px_var(--gold)] hover:bg-gold-soft"
-              >
-                Visit {c.name}
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </a>
-            </div>
           )}
+          {c.vision && (
+            <Reveal delay={0.06}>
+              <div className="rounded-3xl glass p-8 h-full">
+                <div className="text-[10px] uppercase tracking-[0.32em] text-gold/80">Vision</div>
+                <p className="mt-4 font-display text-2xl leading-snug">{c.vision}</p>
+              </div>
+            </Reveal>
+          )}
+          <Reveal delay={0.12}>
+            <div className="rounded-3xl glass p-8 h-full">
+              <div className="text-[10px] uppercase tracking-[0.32em] text-gold/80">Status</div>
+              <div className="mt-4 font-display text-2xl">{c.status}</div>
+              {typeof c.progress === "number" && (
+                <>
+                  <div className="mt-6 flex items-center justify-between text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+                    <span>Progress</span><span>{c.progress}%</span>
+                  </div>
+                  <div className="mt-2 h-[3px] w-full overflow-hidden rounded-full bg-white/5">
+                    <div className="h-full bg-gradient-to-r from-gold-deep via-gold to-gold-soft shadow-[0_0_20px_var(--gold)]"
+                      style={{ width: `${c.progress}%` }} />
+                  </div>
+                </>
+              )}
+            </div>
+          </Reveal>
         </div>
-      </section>
+      </Section>
 
-      <section className="mx-auto max-w-6xl px-6 py-24">
-        <div className="hairline" />
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
-          <div className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Explore more companies</div>
-          <Link to="/companies" className="text-sm text-gold hover:text-gold-soft">All companies →</Link>
+      {/* About */}
+      <Section eyebrow="About" title={<>What <span className="gold-text">{c.name}</span> is.</>}>
+        <p className="max-w-3xl text-lg leading-relaxed text-foreground/85 md:text-xl">{c.description}</p>
+      </Section>
+
+      {/* Product frames — visual placeholders */}
+      <Section eyebrow="Preview" title={<>A glimpse <span className="gold-text">inside.</span></>}>
+        <div className="grid gap-6 md:grid-cols-2">
+          {[0, 1].map((k) => (
+            <Reveal key={k} delay={k * 0.06}>
+              <div className="relative aspect-[16/10] overflow-hidden rounded-3xl border border-gold/20 glass">
+                <div className={`absolute inset-0 bg-gradient-to-br ${c.accent}`} />
+                <div className="absolute inset-0 [background:radial-gradient(600px_300px_at_30%_20%,rgba(255,255,255,0.06),transparent_60%)]" />
+                <div className="absolute inset-6 rounded-2xl border border-white/5" />
+                <div className="absolute left-8 top-8 text-[10px] uppercase tracking-[0.3em] text-gold/70">
+                  {c.name} · Frame 0{k + 1}
+                </div>
+                <div className="absolute bottom-8 left-8 font-display text-3xl md:text-5xl">
+                  {k === 0 ? c.tagline : c.vision ?? c.tagline}
+                </div>
+              </div>
+            </Reveal>
+          ))}
         </div>
-      </section>
+      </Section>
+
+      {/* Roadmap */}
+      {c.roadmap && c.roadmap.length > 0 && (
+        <Section eyebrow="Roadmap" title={<>The <span className="gold-text">path</span> forward.</>}>
+          <div className="relative">
+            <div className="absolute left-4 top-0 h-full w-px bg-border/60" />
+            <div className="space-y-10 pl-14">
+              {c.roadmap.map((r, i) => (
+                <Reveal key={r.phase} delay={i * 0.05}>
+                  <div className="relative">
+                    <div className={`absolute -left-[3.35rem] top-2 grid h-6 w-6 place-items-center rounded-full border ${r.done ? "border-gold bg-gold/20" : "border-border bg-background"}`}>
+                      {r.done && <Check className="h-3 w-3 text-gold" />}
+                    </div>
+                    <div className="text-xs uppercase tracking-[0.3em] text-gold">{r.phase}</div>
+                    <div className="mt-2 font-display text-2xl">{r.body}</div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </Section>
+      )}
+
+      {/* Related companies */}
+      <Section eyebrow="Ecosystem" title={<>Explore <span className="gold-text">more</span>.</>}>
+        <div className="grid gap-6 md:grid-cols-3">
+          {related.map((r) => (
+            <Link key={r.slug} to="/companies/$slug" params={{ slug: r.slug }}
+              className="group block rounded-3xl glass p-6 transition hover:-translate-y-1">
+              <div className="text-[10px] uppercase tracking-[0.28em] text-gold/70">{r.status}</div>
+              <div className="mt-4 font-display text-2xl">{r.name}</div>
+              <div className="mt-1 text-sm text-muted-foreground">{r.tagline}</div>
+              <div className="mt-6 inline-flex items-center gap-2 text-sm text-gold">
+                Enter <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </Section>
     </>
-  );
-}
-
-function Row({ k, v, href }: { k: string; v: string; href?: string }) {
-  const content = href ? (
-    <a href={href} target="_blank" rel="noreferrer" className="text-foreground hover:text-gold">{v}</a>
-  ) : (
-    <span className="text-foreground/90">{v}</span>
-  );
-  return (
-    <div className="flex items-baseline justify-between gap-6 border-b border-border/50 pb-4">
-      <span className="text-[10px] uppercase tracking-[0.3em] text-gold/70">{k}</span>
-      {content}
-    </div>
   );
 }
