@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Section, Reveal } from "@/components/ui-primitives";
-import { TIMELINE } from "@/lib/site-data";
 import portrait from "@/assets/yomi-portrait.png.asset.json";
+import { ScrollTimeline } from "@/components/founder/ScrollTimeline";
+import { StatCounters } from "@/components/founder/StatCounters";
+import { Manifesto } from "@/components/founder/Manifesto";
 
 export const Route = createFileRoute("/about")({
   component: About,
@@ -77,36 +79,17 @@ function About() {
               intelligence, hospitality, and everything in between.
             </p>
           </Reveal>
-          <Reveal delay={0.25}>
-            <p className="font-display text-3xl leading-snug">
-              "I don't just build businesses. <span className="gold-shine">I build infrastructure</span> that helps creative businesses scale."
-            </p>
-          </Reveal>
         </div>
       </section>
 
-      <Section eyebrow="Timeline" title={<>The <span className="gold-text">arc</span> so far.</>}>
-        <div className="relative">
-          <div className="absolute left-4 top-0 h-full w-px bg-gradient-to-b from-transparent via-gold/40 to-transparent md:left-6" />
-          <div className="space-y-10 pl-14">
-            {TIMELINE.map((t, i) => (
-              <Reveal key={t.year} delay={i * 0.05}>
-                <div className="relative">
-                  <div className="absolute -left-[3.35rem] top-3 h-3 w-3 rounded-full bg-gold shadow-[0_0_16px_var(--gold)]" />
-                  <div className="text-xs uppercase tracking-[0.3em] text-gold">{t.year}</div>
-                  <div className="mt-1 font-display text-3xl">{t.title}</div>
-                  <p className="mt-3 max-w-2xl text-muted-foreground">{t.body}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </Section>
+      <ScrollTimeline />
+      <StatCounters />
+      <Manifesto />
 
       <section className="mx-auto max-w-6xl px-6 py-32 text-center">
         <Reveal>
           <Link to="/companies" className="inline-flex items-center gap-2 rounded-full bg-gold px-8 py-4 text-sm font-medium text-primary-foreground hover:bg-gold-soft">
-            See the companies I've built →
+            See the ecosystem →
           </Link>
         </Reveal>
       </section>
