@@ -21,7 +21,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Yomi Onalaru — Creative Director. Entrepreneur. Product Builder." },
-      { name: "description", content: "The digital headquarters of Yomi Onalaru — founder of TRYSA, Yomi Visuals, YOFA, Playbaaq & Folak. Building the future of business for creatives." },
+      { name: "description", content: "The digital headquarters of Yomi Onalaru — founder of ONARU. Building the future of business for creatives." },
       { property: "og:title", content: "Yomi Onalaru — Building the Future of Creative Business" },
       { property: "og:description", content: "Founder of an ecosystem of companies shaping the future of creative business." },
       { property: "og:url", content: "/" },
@@ -175,7 +175,7 @@ function RevealLine({ children, delay = 0 }: { children: React.ReactNode; delay?
 }
 
 function MarqueeStrip() {
-  const items = ["TRYSA", "TRYSA Home", "Yomi Visuals", "YV Experience", "Playbaaq", "YOFA", "Folak", "YV Studios"];
+  const items = ["ONARU", "TRYSA", "Yomi Visuals", "YV Studios", "TRYSA Academy", "Yomi Unscripted", "ONARU Ventures"];
   return (
     <div className="relative overflow-hidden border-y border-border/60 py-8">
       <div className="flex animate-[marquee_40s_linear_infinite] gap-16 whitespace-nowrap">

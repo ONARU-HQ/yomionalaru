@@ -16,8 +16,10 @@ import { Route as MediaRouteImport } from './routes/media'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MentorshipIndexRouteImport } from './routes/mentorship.index'
 import { Route as CompaniesIndexRouteImport } from './routes/companies.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as MentorshipSlugRouteImport } from './routes/mentorship.$slug'
 import { Route as CompaniesSlugRouteImport } from './routes/companies.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
@@ -56,6 +58,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MentorshipIndexRoute = MentorshipIndexRouteImport.update({
+  id: '/mentorship/',
+  path: '/mentorship/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompaniesIndexRoute = CompaniesIndexRouteImport.update({
   id: '/companies/',
   path: '/companies/',
@@ -64,6 +71,11 @@ const CompaniesIndexRoute = CompaniesIndexRouteImport.update({
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MentorshipSlugRoute = MentorshipSlugRouteImport.update({
+  id: '/mentorship/$slug',
+  path: '/mentorship/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompaniesSlugRoute = CompaniesSlugRouteImport.update({
@@ -87,8 +99,10 @@ export interface FileRoutesByFullPath {
   '/speaking': typeof SpeakingRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
+  '/mentorship/$slug': typeof MentorshipSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
+  '/mentorship/': typeof MentorshipIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -100,8 +114,10 @@ export interface FileRoutesByTo {
   '/speaking': typeof SpeakingRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
+  '/mentorship/$slug': typeof MentorshipSlugRoute
   '/blog': typeof BlogIndexRoute
   '/companies': typeof CompaniesIndexRoute
+  '/mentorship': typeof MentorshipIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -114,8 +130,10 @@ export interface FileRoutesById {
   '/speaking': typeof SpeakingRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
+  '/mentorship/$slug': typeof MentorshipSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
+  '/mentorship/': typeof MentorshipIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -129,8 +147,10 @@ export interface FileRouteTypes {
     | '/speaking'
     | '/blog/$slug'
     | '/companies/$slug'
+    | '/mentorship/$slug'
     | '/blog/'
     | '/companies/'
+    | '/mentorship/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -142,8 +162,10 @@ export interface FileRouteTypes {
     | '/speaking'
     | '/blog/$slug'
     | '/companies/$slug'
+    | '/mentorship/$slug'
     | '/blog'
     | '/companies'
+    | '/mentorship'
   id:
     | '__root__'
     | '/'
@@ -155,8 +177,10 @@ export interface FileRouteTypes {
     | '/speaking'
     | '/blog/$slug'
     | '/companies/$slug'
+    | '/mentorship/$slug'
     | '/blog/'
     | '/companies/'
+    | '/mentorship/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -169,8 +193,10 @@ export interface RootRouteChildren {
   SpeakingRoute: typeof SpeakingRoute
   BlogSlugRoute: typeof BlogSlugRoute
   CompaniesSlugRoute: typeof CompaniesSlugRoute
+  MentorshipSlugRoute: typeof MentorshipSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   CompaniesIndexRoute: typeof CompaniesIndexRoute
+  MentorshipIndexRoute: typeof MentorshipIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -224,6 +250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mentorship/': {
+      id: '/mentorship/'
+      path: '/mentorship'
+      fullPath: '/mentorship/'
+      preLoaderRoute: typeof MentorshipIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/companies/': {
       id: '/companies/'
       path: '/companies'
@@ -236,6 +269,13 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/blog/'
       preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mentorship/$slug': {
+      id: '/mentorship/$slug'
+      path: '/mentorship/$slug'
+      fullPath: '/mentorship/$slug'
+      preLoaderRoute: typeof MentorshipSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/companies/$slug': {
@@ -265,8 +305,10 @@ const rootRouteChildren: RootRouteChildren = {
   SpeakingRoute: SpeakingRoute,
   BlogSlugRoute: BlogSlugRoute,
   CompaniesSlugRoute: CompaniesSlugRoute,
+  MentorshipSlugRoute: MentorshipSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   CompaniesIndexRoute: CompaniesIndexRoute,
+  MentorshipIndexRoute: MentorshipIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
