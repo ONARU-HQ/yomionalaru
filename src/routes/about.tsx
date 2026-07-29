@@ -58,8 +58,8 @@ function About() {
             <p>
               Somewhere along the way, I stopped being a creator who ran a business and started
               being an entrepreneur who created. I built <span className="text-gold">Yomi Visuals</span>,
-              a luxury creative agency. Then <span className="text-gold">Folak</span> and{" "}
-              <span className="text-gold">YOFA</span> — modern brands in hospitality and food.
+              a luxury creative agency. Then 
+              then ONARU — a holding company for what comes next.
               And then I noticed the same problem across every creative business I met: the operating
               system was broken.
             </p>

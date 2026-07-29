@@ -13,12 +13,15 @@ import { Route as SpeakingRouteImport } from './routes/speaking'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as MediaRouteImport } from './routes/media'
-import { Route as JournalRouteImport } from './routes/journal'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MentorshipIndexRouteImport } from './routes/mentorship.index'
 import { Route as CompaniesIndexRouteImport } from './routes/companies.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as MentorshipSlugRouteImport } from './routes/mentorship.$slug'
 import { Route as CompaniesSlugRouteImport } from './routes/companies.$slug'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const SpeakingRoute = SpeakingRouteImport.update({
   id: '/speaking',
@@ -40,11 +43,6 @@ const MediaRoute = MediaRouteImport.update({
   path: '/media',
   getParentRoute: () => rootRouteImport,
 } as any)
-const JournalRoute = JournalRouteImport.update({
-  id: '/journal',
-  path: '/journal',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -60,9 +58,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MentorshipIndexRoute = MentorshipIndexRouteImport.update({
+  id: '/mentorship/',
+  path: '/mentorship/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompaniesIndexRoute = CompaniesIndexRouteImport.update({
   id: '/companies/',
   path: '/companies/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MentorshipSlugRoute = MentorshipSlugRouteImport.update({
+  id: '/mentorship/$slug',
+  path: '/mentorship/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompaniesSlugRoute = CompaniesSlugRouteImport.update({
@@ -70,43 +83,57 @@ const CompaniesSlugRoute = CompaniesSlugRouteImport.update({
   path: '/companies/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/journal': typeof JournalRoute
   '/media': typeof MediaRoute
   '/projects': typeof ProjectsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
+  '/mentorship/$slug': typeof MentorshipSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
+  '/mentorship/': typeof MentorshipIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/journal': typeof JournalRoute
   '/media': typeof MediaRoute
   '/projects': typeof ProjectsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
+  '/mentorship/$slug': typeof MentorshipSlugRoute
+  '/blog': typeof BlogIndexRoute
   '/companies': typeof CompaniesIndexRoute
+  '/mentorship': typeof MentorshipIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/journal': typeof JournalRoute
   '/media': typeof MediaRoute
   '/projects': typeof ProjectsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
+  '/mentorship/$slug': typeof MentorshipSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
+  '/mentorship/': typeof MentorshipIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -114,50 +141,62 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
-    | '/journal'
     | '/media'
     | '/projects'
     | '/sitemap.xml'
     | '/speaking'
+    | '/blog/$slug'
     | '/companies/$slug'
+    | '/mentorship/$slug'
+    | '/blog/'
     | '/companies/'
+    | '/mentorship/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/contact'
-    | '/journal'
     | '/media'
     | '/projects'
     | '/sitemap.xml'
     | '/speaking'
+    | '/blog/$slug'
     | '/companies/$slug'
+    | '/mentorship/$slug'
+    | '/blog'
     | '/companies'
+    | '/mentorship'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/contact'
-    | '/journal'
     | '/media'
     | '/projects'
     | '/sitemap.xml'
     | '/speaking'
+    | '/blog/$slug'
     | '/companies/$slug'
+    | '/mentorship/$slug'
+    | '/blog/'
     | '/companies/'
+    | '/mentorship/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
-  JournalRoute: typeof JournalRoute
   MediaRoute: typeof MediaRoute
   ProjectsRoute: typeof ProjectsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SpeakingRoute: typeof SpeakingRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   CompaniesSlugRoute: typeof CompaniesSlugRoute
+  MentorshipSlugRoute: typeof MentorshipSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   CompaniesIndexRoute: typeof CompaniesIndexRoute
+  MentorshipIndexRoute: typeof MentorshipIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -190,13 +229,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MediaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/journal': {
-      id: '/journal'
-      path: '/journal'
-      fullPath: '/journal'
-      preLoaderRoute: typeof JournalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -218,11 +250,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mentorship/': {
+      id: '/mentorship/'
+      path: '/mentorship'
+      fullPath: '/mentorship/'
+      preLoaderRoute: typeof MentorshipIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/companies/': {
       id: '/companies/'
       path: '/companies'
       fullPath: '/companies/'
       preLoaderRoute: typeof CompaniesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mentorship/$slug': {
+      id: '/mentorship/$slug'
+      path: '/mentorship/$slug'
+      fullPath: '/mentorship/$slug'
+      preLoaderRoute: typeof MentorshipSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/companies/$slug': {
@@ -232,6 +285,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompaniesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -239,13 +299,16 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
-  JournalRoute: JournalRoute,
   MediaRoute: MediaRoute,
   ProjectsRoute: ProjectsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SpeakingRoute: SpeakingRoute,
+  BlogSlugRoute: BlogSlugRoute,
   CompaniesSlugRoute: CompaniesSlugRoute,
+  MentorshipSlugRoute: MentorshipSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
   CompaniesIndexRoute: CompaniesIndexRoute,
+  MentorshipIndexRoute: MentorshipIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -10,7 +10,7 @@ export const Route = createFileRoute("/companies/")({
   head: () => ({
     meta: [
       { title: "Companies — Yomi Onalaru" },
-      { name: "description", content: "TRYSA, TRYSA Home, Yomi Visuals, YV Experience, Playbaaq, YOFA and Folak — the ecosystem Yomi Onalaru is building." },
+      { name: "description", content: "TRYSA, Yomi Visuals, YV Studios, TRYSA Academy, Yomi Unscripted and ONARU Ventures — the ecosystem Yomi Onalaru is building." },
       { property: "og:title", content: "Companies — Yomi Onalaru" },
       { property: "og:description", content: "The ecosystem of companies Yomi Onalaru is building." },
       { property: "og:url", content: "/companies" },

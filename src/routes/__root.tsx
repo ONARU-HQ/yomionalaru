@@ -58,7 +58,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Yomi Onalaru — Creative Director. Entrepreneur. Product Builder." },
-      { name: "description", content: "The digital headquarters of Yomi Onalaru — founder of TRYSA, Yomi Visuals, YOFA & Folak. Building the future of business for creatives." },
+      { name: "description", content: "The digital headquarters of Yomi Onalaru — founder of ONARU. Building the future of business for creatives." },
       { name: "author", content: "Yomi Onalaru" },
       { name: "theme-color", content: "#0a0906" },
       { property: "og:site_name", content: "Yomi Onalaru" },

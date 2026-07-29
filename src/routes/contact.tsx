@@ -120,9 +120,9 @@ function Contact() {
                 <a href={`mailto:${CONTACT.email}`} className="mt-4 block font-display text-2xl hover:text-gold">
                   {CONTACT.email}
                 </a>
-                <a href={CONTACT.calendly} target="_blank" rel="noreferrer" className="mt-3 block text-sm text-muted-foreground hover:text-gold">
-                  Book time → {CONTACT.calendly.replace(/^https?:\/\//, "")}
-                </a>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Everything comes directly to me.
+                </p>
                 <div className="mt-6 text-xs uppercase tracking-[0.28em] text-muted-foreground">
                   {CONTACT.location}
                 </div>
