@@ -17,6 +17,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CompaniesIndexRouteImport } from './routes/companies.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as CompaniesSlugRouteImport } from './routes/companies.$slug'
 
 const SpeakingRoute = SpeakingRouteImport.update({
@@ -59,6 +60,11 @@ const CompaniesIndexRoute = CompaniesIndexRouteImport.update({
   path: '/companies/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompaniesSlugRoute = CompaniesSlugRouteImport.update({
   id: '/companies/$slug',
   path: '/companies/$slug',
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
   '/companies/$slug': typeof CompaniesSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
 }
 export interface FileRoutesByTo {
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
   '/companies/$slug': typeof CompaniesSlugRoute
+  '/blog': typeof BlogIndexRoute
   '/companies': typeof CompaniesIndexRoute
 }
 export interface FileRoutesById {
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
   '/companies/$slug': typeof CompaniesSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
 }
 export interface FileRouteTypes {
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/speaking'
     | '/companies/$slug'
+    | '/blog/'
     | '/companies/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/speaking'
     | '/companies/$slug'
+    | '/blog'
     | '/companies'
   id:
     | '__root__'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/speaking'
     | '/companies/$slug'
+    | '/blog/'
     | '/companies/'
   fileRoutesById: FileRoutesById
 }
@@ -144,6 +156,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SpeakingRoute: typeof SpeakingRoute
   CompaniesSlugRoute: typeof CompaniesSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   CompaniesIndexRoute: typeof CompaniesIndexRoute
 }
 
@@ -205,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompaniesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/companies/$slug': {
       id: '/companies/$slug'
       path: '/companies/$slug'
@@ -224,6 +244,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SpeakingRoute: SpeakingRoute,
   CompaniesSlugRoute: CompaniesSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
   CompaniesIndexRoute: CompaniesIndexRoute,
 }
 export const routeTree = rootRouteImport

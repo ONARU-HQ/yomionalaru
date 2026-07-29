@@ -4,7 +4,7 @@ import { Section, Reveal } from "@/components/ui-primitives";
 import { ARTICLES } from "@/content/articles";
 import { SITE_URL } from "@/lib/site-data";
 
-export const Route = createFileRoute("/blog")({
+export const Route = createFileRoute("/blog/")({
   component: Blog,
   head: () => ({
     meta: [
