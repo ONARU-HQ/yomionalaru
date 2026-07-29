@@ -19,6 +19,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CompaniesIndexRouteImport } from './routes/companies.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as CompaniesSlugRouteImport } from './routes/companies.$slug'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const SpeakingRoute = SpeakingRouteImport.update({
   id: '/speaking',
@@ -70,6 +71,11 @@ const CompaniesSlugRoute = CompaniesSlugRouteImport.update({
   path: '/companies/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/projects': typeof ProjectsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/projects': typeof ProjectsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/blog': typeof BlogIndexRoute
   '/companies': typeof CompaniesIndexRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/projects': typeof ProjectsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/sitemap.xml'
     | '/speaking'
+    | '/blog/$slug'
     | '/companies/$slug'
     | '/blog/'
     | '/companies/'
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/sitemap.xml'
     | '/speaking'
+    | '/blog/$slug'
     | '/companies/$slug'
     | '/blog'
     | '/companies'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/sitemap.xml'
     | '/speaking'
+    | '/blog/$slug'
     | '/companies/$slug'
     | '/blog/'
     | '/companies/'
@@ -155,6 +167,7 @@ export interface RootRouteChildren {
   ProjectsRoute: typeof ProjectsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SpeakingRoute: typeof SpeakingRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   CompaniesSlugRoute: typeof CompaniesSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   CompaniesIndexRoute: typeof CompaniesIndexRoute
@@ -232,6 +245,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompaniesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -243,6 +263,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectsRoute: ProjectsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SpeakingRoute: SpeakingRoute,
+  BlogSlugRoute: BlogSlugRoute,
   CompaniesSlugRoute: CompaniesSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   CompaniesIndexRoute: CompaniesIndexRoute,
