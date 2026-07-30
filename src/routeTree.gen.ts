@@ -16,11 +16,13 @@ import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as MediaRouteImport } from './routes/media'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MentorshipIndexRouteImport } from './routes/mentorship.index'
 import { Route as CompaniesIndexRouteImport } from './routes/companies.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as MentorshipSlugRouteImport } from './routes/mentorship.$slug'
 import { Route as CompaniesSlugRouteImport } from './routes/companies.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
@@ -60,6 +62,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -85,6 +92,11 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const MentorshipSlugRoute = MentorshipSlugRouteImport.update({
   id: '/mentorship/$slug',
   path: '/mentorship/$slug',
@@ -104,6 +116,7 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/media': typeof MediaRoute
@@ -114,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
   '/mentorship/': typeof MentorshipIndexRoute
@@ -131,6 +145,7 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
+  '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
   '/companies': typeof CompaniesIndexRoute
   '/mentorship': typeof MentorshipIndexRoute
@@ -139,6 +154,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/media': typeof MediaRoute
@@ -149,6 +165,7 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
   '/mentorship/': typeof MentorshipIndexRoute
@@ -158,6 +175,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
     | '/auth'
     | '/contact'
     | '/media'
@@ -168,6 +186,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/companies/$slug'
     | '/mentorship/$slug'
+    | '/admin/'
     | '/blog/'
     | '/companies/'
     | '/mentorship/'
@@ -185,6 +204,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/companies/$slug'
     | '/mentorship/$slug'
+    | '/admin'
     | '/blog'
     | '/companies'
     | '/mentorship'
@@ -192,6 +212,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
     | '/auth'
     | '/contact'
     | '/media'
@@ -202,6 +223,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/companies/$slug'
     | '/mentorship/$slug'
+    | '/admin/'
     | '/blog/'
     | '/companies/'
     | '/mentorship/'
@@ -210,6 +232,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   MediaRoute: typeof MediaRoute
@@ -276,6 +299,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -311,6 +341,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/mentorship/$slug': {
       id: '/mentorship/$slug'
       path: '/mentorship/$slug'
@@ -335,9 +372,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   MediaRoute: MediaRoute,
