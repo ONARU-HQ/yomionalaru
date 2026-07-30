@@ -128,7 +128,7 @@ export function useSaveSetting() {
     mutationFn: async ({ key, value }: { key: string; value: Record<string, unknown> }) => {
       const { error } = await supabase
         .from("settings")
-        .upsert({ key, value }, { onConflict: "key" });
+        .upsert({ key, value: value as never }, { onConflict: "key" });
       if (error) throw error;
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["settings"] }),
