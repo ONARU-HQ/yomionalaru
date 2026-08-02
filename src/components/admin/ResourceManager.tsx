@@ -255,6 +255,21 @@ export function FieldInput({
           </select>
         </div>
       );
+    case "json":
+      return (
+        <div>{label}
+          <textarea
+            rows={10}
+            defaultValue={JSON.stringify(value ?? [], null, 2)}
+            onBlur={(e) => {
+              try { onChange(JSON.parse(e.target.value || "[]")); }
+              catch { toast.error(`${field.label}: invalid JSON`); }
+            }}
+            className={cn(inputCls, "font-mono text-xs leading-relaxed")}
+          />
+          {field.help && <p className="mt-2 text-[10px] text-muted-foreground">{field.help}</p>}
+        </div>
+      );
     case "list":
       return (
         <div>{label}
@@ -266,6 +281,7 @@ export function FieldInput({
           />
         </div>
       );
+
     case "date":
       return (
         <div>{label}
