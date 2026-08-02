@@ -30,6 +30,9 @@ import { Route as AdminTestimonialsRouteImport } from './routes/admin.testimonia
 import { Route as AdminSpeakingRouteImport } from './routes/admin.speaking'
 import { Route as AdminResourcesRouteImport } from './routes/admin.resources'
 import { Route as AdminPortfolioRouteImport } from './routes/admin.portfolio'
+import { Route as AdminNewsletterRouteImport } from './routes/admin.newsletter'
+import { Route as AdminMediaRouteImport } from './routes/admin.media'
+import { Route as AdminContactsRouteImport } from './routes/admin.contacts'
 import { Route as AdminCompaniesRouteImport } from './routes/admin.companies'
 import { Route as AdminBooksRouteImport } from './routes/admin.books'
 import { Route as AdminArticlesRouteImport } from './routes/admin.articles'
@@ -139,6 +142,21 @@ const AdminPortfolioRoute = AdminPortfolioRouteImport.update({
   path: '/portfolio',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminNewsletterRoute = AdminNewsletterRouteImport.update({
+  id: '/newsletter',
+  path: '/newsletter',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMediaRoute = AdminMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminContactsRoute = AdminContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminCompaniesRoute = AdminCompaniesRouteImport.update({
   id: '/companies',
   path: '/companies',
@@ -169,6 +187,9 @@ export interface FileRoutesByFullPath {
   '/admin/articles': typeof AdminArticlesRoute
   '/admin/books': typeof AdminBooksRoute
   '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/contacts': typeof AdminContactsRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/portfolio': typeof AdminPortfolioRoute
   '/admin/resources': typeof AdminResourcesRoute
   '/admin/speaking': typeof AdminSpeakingRoute
@@ -194,6 +215,9 @@ export interface FileRoutesByTo {
   '/admin/articles': typeof AdminArticlesRoute
   '/admin/books': typeof AdminBooksRoute
   '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/contacts': typeof AdminContactsRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/portfolio': typeof AdminPortfolioRoute
   '/admin/resources': typeof AdminResourcesRoute
   '/admin/speaking': typeof AdminSpeakingRoute
@@ -221,6 +245,9 @@ export interface FileRoutesById {
   '/admin/articles': typeof AdminArticlesRoute
   '/admin/books': typeof AdminBooksRoute
   '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/contacts': typeof AdminContactsRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/portfolio': typeof AdminPortfolioRoute
   '/admin/resources': typeof AdminResourcesRoute
   '/admin/speaking': typeof AdminSpeakingRoute
@@ -249,6 +276,9 @@ export interface FileRouteTypes {
     | '/admin/articles'
     | '/admin/books'
     | '/admin/companies'
+    | '/admin/contacts'
+    | '/admin/media'
+    | '/admin/newsletter'
     | '/admin/portfolio'
     | '/admin/resources'
     | '/admin/speaking'
@@ -274,6 +304,9 @@ export interface FileRouteTypes {
     | '/admin/articles'
     | '/admin/books'
     | '/admin/companies'
+    | '/admin/contacts'
+    | '/admin/media'
+    | '/admin/newsletter'
     | '/admin/portfolio'
     | '/admin/resources'
     | '/admin/speaking'
@@ -300,6 +333,9 @@ export interface FileRouteTypes {
     | '/admin/articles'
     | '/admin/books'
     | '/admin/companies'
+    | '/admin/contacts'
+    | '/admin/media'
+    | '/admin/newsletter'
     | '/admin/portfolio'
     | '/admin/resources'
     | '/admin/speaking'
@@ -481,6 +517,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPortfolioRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/newsletter': {
+      id: '/admin/newsletter'
+      path: '/newsletter'
+      fullPath: '/admin/newsletter'
+      preLoaderRoute: typeof AdminNewsletterRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/media': {
+      id: '/admin/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AdminMediaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/contacts': {
+      id: '/admin/contacts'
+      path: '/contacts'
+      fullPath: '/admin/contacts'
+      preLoaderRoute: typeof AdminContactsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/companies': {
       id: '/admin/companies'
       path: '/companies'
@@ -509,6 +566,9 @@ interface AdminRouteChildren {
   AdminArticlesRoute: typeof AdminArticlesRoute
   AdminBooksRoute: typeof AdminBooksRoute
   AdminCompaniesRoute: typeof AdminCompaniesRoute
+  AdminContactsRoute: typeof AdminContactsRoute
+  AdminMediaRoute: typeof AdminMediaRoute
+  AdminNewsletterRoute: typeof AdminNewsletterRoute
   AdminPortfolioRoute: typeof AdminPortfolioRoute
   AdminResourcesRoute: typeof AdminResourcesRoute
   AdminSpeakingRoute: typeof AdminSpeakingRoute
@@ -520,6 +580,9 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminArticlesRoute: AdminArticlesRoute,
   AdminBooksRoute: AdminBooksRoute,
   AdminCompaniesRoute: AdminCompaniesRoute,
+  AdminContactsRoute: AdminContactsRoute,
+  AdminMediaRoute: AdminMediaRoute,
+  AdminNewsletterRoute: AdminNewsletterRoute,
   AdminPortfolioRoute: AdminPortfolioRoute,
   AdminResourcesRoute: AdminResourcesRoute,
   AdminSpeakingRoute: AdminSpeakingRoute,
