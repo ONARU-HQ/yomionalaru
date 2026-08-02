@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export type FieldType =
   | "text" | "textarea" | "richtext" | "number" | "boolean"
-  | "image" | "select" | "list" | "date" | "slug";
+  | "image" | "select" | "list" | "date" | "slug" | "json";
 
 export type Field = {
   name: string;
