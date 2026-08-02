@@ -26,6 +26,12 @@ import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as MentorshipSlugRouteImport } from './routes/mentorship.$slug'
 import { Route as CompaniesSlugRouteImport } from './routes/companies.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminTestimonialsRouteImport } from './routes/admin.testimonials'
+import { Route as AdminSpeakingRouteImport } from './routes/admin.speaking'
+import { Route as AdminResourcesRouteImport } from './routes/admin.resources'
+import { Route as AdminPortfolioRouteImport } from './routes/admin.portfolio'
+import { Route as AdminCompaniesRouteImport } from './routes/admin.companies'
+import { Route as AdminBooksRouteImport } from './routes/admin.books'
 import { Route as AdminArticlesRouteImport } from './routes/admin.articles'
 
 const SpeakingRoute = SpeakingRouteImport.update({
@@ -113,6 +119,36 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminTestimonialsRoute = AdminTestimonialsRouteImport.update({
+  id: '/testimonials',
+  path: '/testimonials',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSpeakingRoute = AdminSpeakingRouteImport.update({
+  id: '/speaking',
+  path: '/speaking',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminResourcesRoute = AdminResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPortfolioRoute = AdminPortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCompaniesRoute = AdminCompaniesRouteImport.update({
+  id: '/companies',
+  path: '/companies',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBooksRoute = AdminBooksRouteImport.update({
+  id: '/books',
+  path: '/books',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminArticlesRoute = AdminArticlesRouteImport.update({
   id: '/articles',
   path: '/articles',
@@ -131,6 +167,12 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
   '/admin/articles': typeof AdminArticlesRoute
+  '/admin/books': typeof AdminBooksRoute
+  '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/portfolio': typeof AdminPortfolioRoute
+  '/admin/resources': typeof AdminResourcesRoute
+  '/admin/speaking': typeof AdminSpeakingRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
@@ -150,6 +192,12 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
   '/admin/articles': typeof AdminArticlesRoute
+  '/admin/books': typeof AdminBooksRoute
+  '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/portfolio': typeof AdminPortfolioRoute
+  '/admin/resources': typeof AdminResourcesRoute
+  '/admin/speaking': typeof AdminSpeakingRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
@@ -171,6 +219,12 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
   '/admin/articles': typeof AdminArticlesRoute
+  '/admin/books': typeof AdminBooksRoute
+  '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/portfolio': typeof AdminPortfolioRoute
+  '/admin/resources': typeof AdminResourcesRoute
+  '/admin/speaking': typeof AdminSpeakingRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
@@ -193,6 +247,12 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/speaking'
     | '/admin/articles'
+    | '/admin/books'
+    | '/admin/companies'
+    | '/admin/portfolio'
+    | '/admin/resources'
+    | '/admin/speaking'
+    | '/admin/testimonials'
     | '/blog/$slug'
     | '/companies/$slug'
     | '/mentorship/$slug'
@@ -212,6 +272,12 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/speaking'
     | '/admin/articles'
+    | '/admin/books'
+    | '/admin/companies'
+    | '/admin/portfolio'
+    | '/admin/resources'
+    | '/admin/speaking'
+    | '/admin/testimonials'
     | '/blog/$slug'
     | '/companies/$slug'
     | '/mentorship/$slug'
@@ -232,6 +298,12 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/speaking'
     | '/admin/articles'
+    | '/admin/books'
+    | '/admin/companies'
+    | '/admin/portfolio'
+    | '/admin/resources'
+    | '/admin/speaking'
+    | '/admin/testimonials'
     | '/blog/$slug'
     | '/companies/$slug'
     | '/mentorship/$slug'
@@ -381,6 +453,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/testimonials': {
+      id: '/admin/testimonials'
+      path: '/testimonials'
+      fullPath: '/admin/testimonials'
+      preLoaderRoute: typeof AdminTestimonialsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/speaking': {
+      id: '/admin/speaking'
+      path: '/speaking'
+      fullPath: '/admin/speaking'
+      preLoaderRoute: typeof AdminSpeakingRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/resources': {
+      id: '/admin/resources'
+      path: '/resources'
+      fullPath: '/admin/resources'
+      preLoaderRoute: typeof AdminResourcesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/portfolio': {
+      id: '/admin/portfolio'
+      path: '/portfolio'
+      fullPath: '/admin/portfolio'
+      preLoaderRoute: typeof AdminPortfolioRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/companies': {
+      id: '/admin/companies'
+      path: '/companies'
+      fullPath: '/admin/companies'
+      preLoaderRoute: typeof AdminCompaniesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/books': {
+      id: '/admin/books'
+      path: '/books'
+      fullPath: '/admin/books'
+      preLoaderRoute: typeof AdminBooksRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/articles': {
       id: '/admin/articles'
       path: '/articles'
@@ -393,11 +507,23 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteChildren {
   AdminArticlesRoute: typeof AdminArticlesRoute
+  AdminBooksRoute: typeof AdminBooksRoute
+  AdminCompaniesRoute: typeof AdminCompaniesRoute
+  AdminPortfolioRoute: typeof AdminPortfolioRoute
+  AdminResourcesRoute: typeof AdminResourcesRoute
+  AdminSpeakingRoute: typeof AdminSpeakingRoute
+  AdminTestimonialsRoute: typeof AdminTestimonialsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminArticlesRoute: AdminArticlesRoute,
+  AdminBooksRoute: AdminBooksRoute,
+  AdminCompaniesRoute: AdminCompaniesRoute,
+  AdminPortfolioRoute: AdminPortfolioRoute,
+  AdminResourcesRoute: AdminResourcesRoute,
+  AdminSpeakingRoute: AdminSpeakingRoute,
+  AdminTestimonialsRoute: AdminTestimonialsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
