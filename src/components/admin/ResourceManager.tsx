@@ -14,6 +14,7 @@ export type Field = {
   label: string;
   type: FieldType;
   options?: string[];
+  optionLabels?: Record<string, string>;
   placeholder?: string;
   help?: string;
   from?: string; // for slug auto-generation
@@ -251,7 +252,7 @@ export function FieldInput({
         <div>{label}
           <select value={value ?? ""} onChange={(e) => onChange(e.target.value)} className={cn(inputCls, "bg-background")}>
             <option value="">—</option>
-            {field.options?.map((o) => <option key={o} value={o}>{o}</option>)}
+            {field.options?.map((o) => <option key={o} value={o}>{field.optionLabels?.[o] ?? o}</option>)}
           </select>
         </div>
       );
