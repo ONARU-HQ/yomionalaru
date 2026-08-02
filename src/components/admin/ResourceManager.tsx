@@ -195,7 +195,7 @@ export function EditorDrawer({
 
         <div className="grid gap-6 sm:grid-cols-2">
           {fields.map((f) => (
-            <div key={f.name} className={f.full || f.type === "textarea" || f.type === "richtext" || f.type === "image" ? "sm:col-span-2" : ""}>
+            <div key={f.name} className={f.full || f.type === "textarea" || f.type === "richtext" || f.type === "image" || f.type === "json" ? "sm:col-span-2" : ""}>
               <FieldInput field={f} value={value[f.name]} row={value} onChange={(v) => set(f.name, v)} />
             </div>
           ))}
