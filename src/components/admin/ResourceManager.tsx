@@ -60,7 +60,7 @@ export function ResourceManager({ config }: { config: ResourceConfig }) {
     for (const f of config.fields) {
       if (base[f.name] !== undefined) continue;
       base[f.name] =
-        f.type === "boolean" ? false : f.type === "number" ? 0 : f.type === "list" ? [] : "";
+        f.type === "boolean" ? false : f.type === "number" ? 0 : f.type === "list" || f.type === "json" ? [] : "";
     }
     return base;
   };
