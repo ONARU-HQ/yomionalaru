@@ -26,6 +26,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as MentorshipSlugRouteImport } from './routes/mentorship.$slug'
 import { Route as CompaniesSlugRouteImport } from './routes/companies.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminArticlesRouteImport } from './routes/admin.articles'
 
 const SpeakingRoute = SpeakingRouteImport.update({
   id: '/speaking',
@@ -112,6 +113,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminArticlesRoute = AdminArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -124,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
+  '/admin/articles': typeof AdminArticlesRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
@@ -142,6 +149,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
+  '/admin/articles': typeof AdminArticlesRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
@@ -162,6 +170,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
+  '/admin/articles': typeof AdminArticlesRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
@@ -183,6 +192,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sitemap.xml'
     | '/speaking'
+    | '/admin/articles'
     | '/blog/$slug'
     | '/companies/$slug'
     | '/mentorship/$slug'
@@ -201,6 +211,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sitemap.xml'
     | '/speaking'
+    | '/admin/articles'
     | '/blog/$slug'
     | '/companies/$slug'
     | '/mentorship/$slug'
@@ -220,6 +231,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sitemap.xml'
     | '/speaking'
+    | '/admin/articles'
     | '/blog/$slug'
     | '/companies/$slug'
     | '/mentorship/$slug'
@@ -369,14 +381,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/articles': {
+      id: '/admin/articles'
+      path: '/articles'
+      fullPath: '/admin/articles'
+      preLoaderRoute: typeof AdminArticlesRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
+  AdminArticlesRoute: typeof AdminArticlesRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminArticlesRoute: AdminArticlesRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
