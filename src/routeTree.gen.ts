@@ -26,6 +26,19 @@ import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as MentorshipSlugRouteImport } from './routes/mentorship.$slug'
 import { Route as CompaniesSlugRouteImport } from './routes/companies.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminTestimonialsRouteImport } from './routes/admin.testimonials'
+import { Route as AdminSpeakingRouteImport } from './routes/admin.speaking'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminResourcesRouteImport } from './routes/admin.resources'
+import { Route as AdminPortfolioRouteImport } from './routes/admin.portfolio'
+import { Route as AdminNewsletterRouteImport } from './routes/admin.newsletter'
+import { Route as AdminMediaRouteImport } from './routes/admin.media'
+import { Route as AdminContactsRouteImport } from './routes/admin.contacts'
+import { Route as AdminCompaniesRouteImport } from './routes/admin.companies'
+import { Route as AdminBooksRouteImport } from './routes/admin.books'
+import { Route as AdminArticlesRouteImport } from './routes/admin.articles'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
 
 const SpeakingRoute = SpeakingRouteImport.update({
   id: '/speaking',
@@ -112,6 +125,71 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminTestimonialsRoute = AdminTestimonialsRouteImport.update({
+  id: '/testimonials',
+  path: '/testimonials',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSpeakingRoute = AdminSpeakingRouteImport.update({
+  id: '/speaking',
+  path: '/speaking',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminResourcesRoute = AdminResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPortfolioRoute = AdminPortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminNewsletterRoute = AdminNewsletterRouteImport.update({
+  id: '/newsletter',
+  path: '/newsletter',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMediaRoute = AdminMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminContactsRoute = AdminContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCompaniesRoute = AdminCompaniesRouteImport.update({
+  id: '/companies',
+  path: '/companies',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBooksRoute = AdminBooksRouteImport.update({
+  id: '/books',
+  path: '/books',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminArticlesRoute = AdminArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -124,6 +202,19 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/articles': typeof AdminArticlesRoute
+  '/admin/books': typeof AdminBooksRoute
+  '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/contacts': typeof AdminContactsRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/newsletter': typeof AdminNewsletterRoute
+  '/admin/portfolio': typeof AdminPortfolioRoute
+  '/admin/resources': typeof AdminResourcesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/speaking': typeof AdminSpeakingRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
@@ -142,6 +233,19 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/articles': typeof AdminArticlesRoute
+  '/admin/books': typeof AdminBooksRoute
+  '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/contacts': typeof AdminContactsRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/newsletter': typeof AdminNewsletterRoute
+  '/admin/portfolio': typeof AdminPortfolioRoute
+  '/admin/resources': typeof AdminResourcesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/speaking': typeof AdminSpeakingRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
@@ -162,6 +266,19 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speaking': typeof SpeakingRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/articles': typeof AdminArticlesRoute
+  '/admin/books': typeof AdminBooksRoute
+  '/admin/companies': typeof AdminCompaniesRoute
+  '/admin/contacts': typeof AdminContactsRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/newsletter': typeof AdminNewsletterRoute
+  '/admin/portfolio': typeof AdminPortfolioRoute
+  '/admin/resources': typeof AdminResourcesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/speaking': typeof AdminSpeakingRoute
+  '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
@@ -183,6 +300,19 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sitemap.xml'
     | '/speaking'
+    | '/admin/analytics'
+    | '/admin/articles'
+    | '/admin/books'
+    | '/admin/companies'
+    | '/admin/contacts'
+    | '/admin/media'
+    | '/admin/newsletter'
+    | '/admin/portfolio'
+    | '/admin/resources'
+    | '/admin/settings'
+    | '/admin/speaking'
+    | '/admin/testimonials'
+    | '/admin/users'
     | '/blog/$slug'
     | '/companies/$slug'
     | '/mentorship/$slug'
@@ -201,6 +331,19 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sitemap.xml'
     | '/speaking'
+    | '/admin/analytics'
+    | '/admin/articles'
+    | '/admin/books'
+    | '/admin/companies'
+    | '/admin/contacts'
+    | '/admin/media'
+    | '/admin/newsletter'
+    | '/admin/portfolio'
+    | '/admin/resources'
+    | '/admin/settings'
+    | '/admin/speaking'
+    | '/admin/testimonials'
+    | '/admin/users'
     | '/blog/$slug'
     | '/companies/$slug'
     | '/mentorship/$slug'
@@ -220,6 +363,19 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sitemap.xml'
     | '/speaking'
+    | '/admin/analytics'
+    | '/admin/articles'
+    | '/admin/books'
+    | '/admin/companies'
+    | '/admin/contacts'
+    | '/admin/media'
+    | '/admin/newsletter'
+    | '/admin/portfolio'
+    | '/admin/resources'
+    | '/admin/settings'
+    | '/admin/speaking'
+    | '/admin/testimonials'
+    | '/admin/users'
     | '/blog/$slug'
     | '/companies/$slug'
     | '/mentorship/$slug'
@@ -369,14 +525,131 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/testimonials': {
+      id: '/admin/testimonials'
+      path: '/testimonials'
+      fullPath: '/admin/testimonials'
+      preLoaderRoute: typeof AdminTestimonialsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/speaking': {
+      id: '/admin/speaking'
+      path: '/speaking'
+      fullPath: '/admin/speaking'
+      preLoaderRoute: typeof AdminSpeakingRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/resources': {
+      id: '/admin/resources'
+      path: '/resources'
+      fullPath: '/admin/resources'
+      preLoaderRoute: typeof AdminResourcesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/portfolio': {
+      id: '/admin/portfolio'
+      path: '/portfolio'
+      fullPath: '/admin/portfolio'
+      preLoaderRoute: typeof AdminPortfolioRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/newsletter': {
+      id: '/admin/newsletter'
+      path: '/newsletter'
+      fullPath: '/admin/newsletter'
+      preLoaderRoute: typeof AdminNewsletterRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/media': {
+      id: '/admin/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AdminMediaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/contacts': {
+      id: '/admin/contacts'
+      path: '/contacts'
+      fullPath: '/admin/contacts'
+      preLoaderRoute: typeof AdminContactsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/companies': {
+      id: '/admin/companies'
+      path: '/companies'
+      fullPath: '/admin/companies'
+      preLoaderRoute: typeof AdminCompaniesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/books': {
+      id: '/admin/books'
+      path: '/books'
+      fullPath: '/admin/books'
+      preLoaderRoute: typeof AdminBooksRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/articles': {
+      id: '/admin/articles'
+      path: '/articles'
+      fullPath: '/admin/articles'
+      preLoaderRoute: typeof AdminArticlesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
+  AdminArticlesRoute: typeof AdminArticlesRoute
+  AdminBooksRoute: typeof AdminBooksRoute
+  AdminCompaniesRoute: typeof AdminCompaniesRoute
+  AdminContactsRoute: typeof AdminContactsRoute
+  AdminMediaRoute: typeof AdminMediaRoute
+  AdminNewsletterRoute: typeof AdminNewsletterRoute
+  AdminPortfolioRoute: typeof AdminPortfolioRoute
+  AdminResourcesRoute: typeof AdminResourcesRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminSpeakingRoute: typeof AdminSpeakingRoute
+  AdminTestimonialsRoute: typeof AdminTestimonialsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
+  AdminArticlesRoute: AdminArticlesRoute,
+  AdminBooksRoute: AdminBooksRoute,
+  AdminCompaniesRoute: AdminCompaniesRoute,
+  AdminContactsRoute: AdminContactsRoute,
+  AdminMediaRoute: AdminMediaRoute,
+  AdminNewsletterRoute: AdminNewsletterRoute,
+  AdminPortfolioRoute: AdminPortfolioRoute,
+  AdminResourcesRoute: AdminResourcesRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminSpeakingRoute: AdminSpeakingRoute,
+  AdminTestimonialsRoute: AdminTestimonialsRoute,
+  AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 

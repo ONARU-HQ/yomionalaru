@@ -3,11 +3,30 @@ import { FileText, Building2, Images, Mail, Inbox, Eye } from "lucide-react";
 import { AdminHeader } from "@/components/admin/AdminShell";
 import { useRows } from "@/lib/cms";
 import { useAuth } from "@/hooks/use-auth";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import { importStaticContent } from "@/lib/seed";
 
 export const Route = createFileRoute("/admin/")({ component: Dashboard });
 
 function Dashboard() {
-  const { profile, isAdmin } = useAuth();
+  const { profile, isAdmin, isSuperAdmin } = useAuth();
+  const qc = useQueryClient();
+  const [importing, setImporting] = useState<string | null>(null);
+
+  const runImport = async () => {
+    if (!confirm("Import the built-in site content into the CMS? Existing rows are updated, not duplicated.")) return;
+    try {
+      const summary = await importStaticContent((step) => setImporting(step));
+      await qc.invalidateQueries();
+      toast.success(`Imported: ${Object.entries(summary).map(([k, v]) => `${v} ${k}`).join(", ")}`);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Import failed");
+    } finally {
+      setImporting(null);
+    }
+  };
   const articles = useRows<{ id: string; status: string; title: string; updated_at: string }>("articles", { order: "updated_at", ascending: false });
   const companies = useRows("companies");
   const portfolio = useRows("portfolio");
@@ -52,6 +71,25 @@ function Dashboard() {
           </Link>
         ))}
       </div>
+
+      {isSuperAdmin && (
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-dashed border-gold/30 p-6">
+          <div>
+            <div className="text-sm">Import built-in content</div>
+            <p className="mt-1 max-w-lg text-xs text-muted-foreground">
+              Copies the site's original articles, companies, work, testimonials, speaking, books,
+              resources and settings into the database so everything becomes editable here.
+            </p>
+          </div>
+          <button
+            onClick={() => void runImport()}
+            disabled={!!importing}
+            className="rounded-full bg-gold px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-primary-foreground disabled:opacity-60"
+          >
+            {importing ? `Importing ${importing}…` : "Run import"}
+          </button>
+        </div>
+      )}
 
       <div className="mt-12">
         <h2 className="mb-4 text-xs uppercase tracking-[0.3em] text-gold/80">Recently edited</h2>

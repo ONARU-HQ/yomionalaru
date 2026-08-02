@@ -7,13 +7,14 @@ import { cn } from "@/lib/utils";
 
 export type FieldType =
   | "text" | "textarea" | "richtext" | "number" | "boolean"
-  | "image" | "select" | "list" | "date" | "slug";
+  | "image" | "select" | "list" | "date" | "slug" | "json";
 
 export type Field = {
   name: string;
   label: string;
   type: FieldType;
   options?: string[];
+  optionLabels?: Record<string, string>;
   placeholder?: string;
   help?: string;
   from?: string; // for slug auto-generation
@@ -60,7 +61,7 @@ export function ResourceManager({ config }: { config: ResourceConfig }) {
     for (const f of config.fields) {
       if (base[f.name] !== undefined) continue;
       base[f.name] =
-        f.type === "boolean" ? false : f.type === "number" ? 0 : f.type === "list" ? [] : "";
+        f.type === "boolean" ? false : f.type === "number" ? 0 : f.type === "list" || f.type === "json" ? [] : "";
     }
     return base;
   };
@@ -195,7 +196,7 @@ export function EditorDrawer({
 
         <div className="grid gap-6 sm:grid-cols-2">
           {fields.map((f) => (
-            <div key={f.name} className={f.full || f.type === "textarea" || f.type === "richtext" || f.type === "image" ? "sm:col-span-2" : ""}>
+            <div key={f.name} className={f.full || f.type === "textarea" || f.type === "richtext" || f.type === "image" || f.type === "json" ? "sm:col-span-2" : ""}>
               <FieldInput field={f} value={value[f.name]} row={value} onChange={(v) => set(f.name, v)} />
             </div>
           ))}
@@ -251,8 +252,23 @@ export function FieldInput({
         <div>{label}
           <select value={value ?? ""} onChange={(e) => onChange(e.target.value)} className={cn(inputCls, "bg-background")}>
             <option value="">—</option>
-            {field.options?.map((o) => <option key={o} value={o}>{o}</option>)}
+            {field.options?.map((o) => <option key={o} value={o}>{field.optionLabels?.[o] ?? o}</option>)}
           </select>
+        </div>
+      );
+    case "json":
+      return (
+        <div>{label}
+          <textarea
+            rows={10}
+            defaultValue={JSON.stringify(value ?? [], null, 2)}
+            onBlur={(e) => {
+              try { onChange(JSON.parse(e.target.value || "[]")); }
+              catch { toast.error(`${field.label}: invalid JSON`); }
+            }}
+            className={cn(inputCls, "font-mono text-xs leading-relaxed")}
+          />
+          {field.help && <p className="mt-2 text-[10px] text-muted-foreground">{field.help}</p>}
         </div>
       );
     case "list":
@@ -266,6 +282,7 @@ export function FieldInput({
           />
         </div>
       );
+
     case "date":
       return (
         <div>{label}
