@@ -55,6 +55,57 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+const ORG_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Yomi Onalaru",
+      description:
+        "The digital headquarters of Yomi Onalaru — founder of ONARU, building companies that solve meaningful problems.",
+      inLanguage: "en",
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: ONARU.name,
+      alternateName: "ONARU Holdings",
+      url: SITE_URL,
+      slogan: ONARU.tagline,
+      description: ONARU.summary,
+      founder: { "@id": `${SITE_URL}/#person` },
+      foundingLocation: { "@type": "Place", name: "Lagos, Nigeria" },
+      areaServed: "Worldwide",
+      email: CONTACT.email,
+      sameAs: [...SOCIALS.personal, ...SOCIALS.brands].map((s) => s.href),
+      subOrganization: COMPANIES.map((c) => ({
+        "@type": "Organization",
+        name: c.name,
+        description: c.tagline,
+        url: `${SITE_URL}/companies/${c.slug}`,
+      })),
+    },
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: "Yomi Onalaru",
+      url: SITE_URL,
+      image: portrait.url,
+      email: CONTACT.email,
+      jobTitle: "Founder & Creative Director",
+      description:
+        "Founder of ONARU. Building companies that solve real-world problems through creativity, technology, systems and media.",
+      knowsAbout: [...POSITIONING, ...INTERSECTIONS],
+      worksFor: { "@id": `${SITE_URL}/#organization` },
+      address: { "@type": "PostalAddress", addressLocality: "Lagos", addressCountry: "NG" },
+      sameAs: SOCIALS.personal.map((s) => s.href),
+    },
+  ],
+};
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
@@ -67,6 +118,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "Yomi Onalaru" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:creator", content: "@yomionalaru" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -75,12 +127,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" },
     ],
+    scripts: [{ type: "application/ld+json", children: JSON.stringify(ORG_LD) }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
+
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
