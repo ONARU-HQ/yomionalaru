@@ -15,6 +15,10 @@ import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { AuthProvider } from "@/hooks/use-auth";
 import { Toaster } from "@/components/ui/sonner";
+import { PageViewTracker } from "@/lib/analytics";
+import portrait from "@/assets/yomi-portrait.png.asset.json";
+import { SITE_URL, ONARU, CONTACT, SOCIALS, COMPANIES, POSITIONING, INTERSECTIONS } from "@/lib/site-data";
+
 
 function NotFoundComponent() {
   return (
