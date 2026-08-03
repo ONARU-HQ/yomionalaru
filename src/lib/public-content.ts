@@ -57,35 +57,81 @@ export function usePublicCompanies() {
 }
 
 export type PublicArticle = {
+  id: string | null;
   slug: string;
   title: string;
   excerpt: string;
+  category: string;
+  date: string;
   iso: string;
   readMins: number;
   image?: string | null;
+  body?: string;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  tags?: string[];
+  fromCms: boolean;
 };
+
+const fmt = (iso: string) => {
+  const d = new Date(iso);
+  return isNaN(d.getTime())
+    ? iso
+    : d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+};
+
+function mapCmsArticle(a: Article): PublicArticle {
+  const iso = (a.published_at ?? a.created_at).slice(0, 10);
+  return {
+    id: a.id,
+    slug: a.slug,
+    title: a.title,
+    excerpt: a.excerpt ?? "",
+    category: a.tags?.[0] ?? "Essay",
+    date: fmt(iso),
+    iso,
+    readMins: a.reading_time,
+    image: a.featured_image,
+    body: a.body,
+    seoTitle: a.seo_title,
+    seoDescription: a.seo_description,
+    tags: a.tags ?? [],
+    fromCms: true,
+  };
+}
+
+function mapStaticArticle(a: (typeof ARTICLES)[number]): PublicArticle {
+  return {
+    id: null,
+    slug: a.slug,
+    title: a.title,
+    excerpt: a.excerpt,
+    category: a.category,
+    date: a.date,
+    iso: a.iso,
+    readMins: a.readMins,
+    image: null,
+    fromCms: false,
+  };
+}
 
 export function usePublicArticles(limit?: number) {
   const { data = [], isLoading } = usePublishedArticles(limit);
   const rows: PublicArticle[] = data.length
-    ? (data as Article[]).map((a) => ({
-        slug: a.slug,
-        title: a.title,
-        excerpt: a.excerpt ?? "",
-        iso: (a.published_at ?? a.created_at).slice(0, 10),
-        readMins: a.reading_time,
-        image: a.featured_image,
-      }))
-    : ARTICLES.slice(0, limit ?? ARTICLES.length).map((a) => ({
-        slug: a.slug,
-        title: a.title,
-        excerpt: a.excerpt,
-        iso: a.iso,
-        readMins: a.readMins,
-        image: null,
-      }));
+    ? (data as Article[]).map(mapCmsArticle)
+    : ARTICLES.slice(0, limit ?? ARTICLES.length).map(mapStaticArticle);
   return { articles: rows, isLoading };
 }
+
+/** Resolves an article by slug from the CMS first, then the built-in content. */
+export function usePublicArticle(slug: string) {
+  const { data = [], isLoading } = usePublishedArticles();
+  const cms = (data as Article[]).find((a) => a.slug === slug);
+  if (cms) return { article: mapCmsArticle(cms), isLoading: false };
+  const stat = ARTICLES.find((a) => a.slug === slug);
+  return { article: stat ? mapStaticArticle(stat) : null, isLoading };
+}
+
 
 export type PublicProject = {
   slug: string;

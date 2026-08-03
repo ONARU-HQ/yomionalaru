@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Clock } from "lucide-react";
 import portrait from "@/assets/yomi-portrait.png.asset.json";
-import { COMPANIES, MEDIA_ITEMS, SOCIALS, CONTACT } from "@/lib/site-data";
+import { COMPANIES, MEDIA_ITEMS, SOCIALS, CONTACT, FUTURE_VENTURES, MENTORSHIP } from "@/lib/site-data";
 import { Section, Reveal, StatusPill } from "@/components/ui-primitives";
 import { BuildingCards } from "@/components/founder/BuildingCards";
 import { EcosystemOrbit } from "@/components/founder/EcosystemOrbit";
@@ -15,6 +15,8 @@ import { CinematicIntro } from "@/components/founder/CinematicIntro";
 import { CursorSpotlight } from "@/components/founder/CursorSpotlight";
 import { MagneticButton } from "@/components/founder/MagneticButton";
 import { TiltCard } from "@/components/founder/TiltCard";
+import { NewsletterForm } from "@/components/newsletter-form";
+import { usePublicArticles, usePublicProjects, usePublicTestimonials } from "@/lib/public-content";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -37,15 +39,28 @@ function Home() {
     <>
       <CinematicIntro />
       <CursorSpotlight />
+      {/* 1 — Hero */}
       <Hero />
       <MarqueeStrip />
-      <BuildingCards />
+      {/* 2 — Ecosystem */}
       <EcosystemSection />
+      <CompaniesPreview />
+      {/* 3 — Latest articles */}
+      <LatestArticles />
+      {/* 4 — Featured work */}
+      <FeaturedWork />
+      {/* 5 — Ventures & products */}
+      <VenturesSection />
+      {/* 6 — Testimonials */}
+      <TestimonialsSection />
+      {/* 7 — Mentorship & speaking */}
+      <MentorshipSection />
+      {/* 8 — Newsletter */}
+      <NewsletterSection />
       <StatCounters />
       <Manifesto />
       <ScrollTimeline />
       <WorldMap />
-      <CompaniesPreview />
       <MediaPreview />
       <QuoteSection />
       <SocialGrid />
@@ -53,6 +68,177 @@ function Home() {
     </>
   );
 }
+
+function LatestArticles() {
+  const { articles } = usePublicArticles(3);
+  if (articles.length === 0) return null;
+  return (
+    <Section
+      eyebrow="Latest articles"
+      title={<>Thinking, <span className="gold-text">written down.</span></>}
+      intro="Essays on systems, leadership, faith and the honest work of building companies."
+    >
+      <div className="grid gap-6 md:grid-cols-3">
+        {articles.map((a, i) => (
+          <Reveal key={a.slug} delay={i * 0.06}>
+            <Link to="/blog/$slug" params={{ slug: a.slug }} className="group block h-full">
+              <article className="flex h-full flex-col overflow-hidden rounded-3xl glass transition hover:-translate-y-1.5">
+                {a.image && <img src={a.image} alt={a.title} loading="lazy" className="h-40 w-full object-cover" />}
+                <div className="flex flex-1 flex-col p-7">
+                  <div className="text-[10px] uppercase tracking-[0.3em] text-gold/80">{a.category}</div>
+                  <h3 className="mt-4 font-display text-2xl leading-tight group-hover:text-gold">{a.title}</h3>
+                  <p className="mt-3 flex-1 text-sm text-muted-foreground">{a.excerpt}</p>
+                  <div className="mt-5 flex items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
+                    <Clock className="h-3 w-3" /> {a.readMins} min · {a.date}
+                  </div>
+                </div>
+              </article>
+            </Link>
+          </Reveal>
+        ))}
+      </div>
+      <div className="mt-12 text-center">
+        <Link to="/blog" className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-6 py-3 text-xs uppercase tracking-[0.24em] text-gold transition hover:bg-gold hover:text-primary-foreground">
+          Read the blog →
+        </Link>
+      </div>
+    </Section>
+  );
+}
+
+function FeaturedWork() {
+  const projects = usePublicProjects().slice(0, 6);
+  if (projects.length === 0) return null;
+  return (
+    <Section eyebrow="Featured work" title={<>Projects that made <span className="gold-text">the point.</span></>}>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {projects.map((p, i) => (
+          <Reveal key={p.slug} delay={i * 0.05}>
+            <div className="group h-full overflow-hidden rounded-3xl glass transition hover:-translate-y-1.5">
+              {p.image && <img src={p.image} alt={p.title} loading="lazy" className="h-44 w-full object-cover" />}
+              <div className="p-7">
+                <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+                  <span className="text-gold/80">{p.tag}</span>
+                  <span>{p.year}</span>
+                </div>
+                <h3 className="mt-4 font-display text-2xl leading-tight">{p.title}</h3>
+                <p className="mt-3 text-sm text-muted-foreground">{p.body}</p>
+              </div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+      <div className="mt-12 text-center">
+        <Link to="/projects" className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-xs uppercase tracking-[0.24em] text-foreground/80 transition hover:border-gold/50 hover:text-gold">
+          See all work →
+        </Link>
+      </div>
+    </Section>
+  );
+}
+
+function VenturesSection() {
+  return (
+    <Section
+      eyebrow="Ventures & products"
+      title={<>What's shipping, and <span className="gold-text">what's next.</span></>}
+      intro="Live products, plus the ventures ONARU is preparing to build."
+    >
+      <BuildingCards />
+      <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {FUTURE_VENTURES.map((v, i) => (
+          <Reveal key={v.name} delay={i * 0.04}>
+            <div className="h-full rounded-2xl border border-border/60 p-6">
+              <div className="text-[10px] uppercase tracking-[0.3em] text-gold/70">In development</div>
+              <div className="mt-3 font-display text-2xl">{v.name}</div>
+              <p className="mt-2 text-sm text-muted-foreground">{v.note}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function TestimonialsSection() {
+  const testimonials = usePublicTestimonials().slice(0, 6);
+  if (testimonials.length === 0) return null;
+  return (
+    <Section eyebrow="Testimonials" title={<>What people <span className="gold-text">say after.</span></>}>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {testimonials.map((t, i) => (
+          <Reveal key={t.quote} delay={i * 0.05}>
+            <figure className="flex h-full flex-col rounded-3xl glass p-8">
+              <blockquote className="flex-1 font-display text-xl leading-snug text-foreground/90">"{t.quote}"</blockquote>
+              <figcaption className="mt-6 flex items-center gap-3">
+                {t.avatar && <img src={t.avatar} alt={t.who} className="h-9 w-9 rounded-full object-cover" />}
+                <div>
+                  <div className="text-sm text-foreground/90">{t.who}</div>
+                  {t.role && <div className="text-[10px] uppercase tracking-[0.28em] text-muted-foreground">{t.role}</div>}
+                </div>
+              </figcaption>
+            </figure>
+          </Reveal>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function MentorshipSection() {
+  return (
+    <Section
+      eyebrow="Mentorship & speaking"
+      title={<>Work with me, or <span className="gold-text">bring me in.</span></>}
+      intro="One-to-one founder work, business architecture, and stages where the room needs an honest operator."
+    >
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {MENTORSHIP.slice(0, 6).map((m, i) => (
+          <Reveal key={m.slug} delay={i * 0.05}>
+            <Link to="/mentorship/$slug" params={{ slug: m.slug }} className="group block h-full">
+              <div className="flex h-full flex-col rounded-3xl glass p-8 transition hover:-translate-y-1.5">
+                <h3 className="font-display text-2xl group-hover:text-gold">{m.title}</h3>
+                <p className="mt-3 flex-1 text-sm text-muted-foreground">{m.summary}</p>
+                <div className="mt-6 flex items-center gap-2 text-sm text-gold">
+                  Explore <ArrowUpRight className="h-4 w-4" />
+                </div>
+              </div>
+            </Link>
+          </Reveal>
+        ))}
+      </div>
+      <div className="mt-12 flex flex-wrap justify-center gap-4">
+        <Link to="/mentorship" className="rounded-full bg-gold px-6 py-3 text-xs uppercase tracking-[0.24em] font-medium text-primary-foreground hover:bg-gold-soft">
+          All mentorship tracks
+        </Link>
+        <Link to="/speaking" className="rounded-full border border-border px-6 py-3 text-xs uppercase tracking-[0.24em] hover:border-gold/50 hover:text-gold">
+          Speaking
+        </Link>
+      </div>
+    </Section>
+  );
+}
+
+function NewsletterSection() {
+  return (
+    <section className="mx-auto max-w-5xl px-6 py-28">
+      <div className="relative overflow-hidden rounded-[2rem] glass p-10 md:p-16">
+        <div className="pointer-events-none absolute -inset-40 rounded-full bg-gold/10 blur-3xl" />
+        <div className="relative">
+          <div className="text-xs uppercase tracking-[0.32em] text-gold/80">Newsletter</div>
+          <h2 className="mt-4 font-display text-4xl leading-tight md:text-5xl">
+            Systems, leadership and <span className="gold-shine">lessons</span> — weekly.
+          </h2>
+          <p className="mt-4 max-w-xl text-muted-foreground">
+            The frameworks I use to build companies, written plainly. No noise, no selling.
+          </p>
+          <NewsletterForm source="homepage" className="mt-8 max-w-2xl" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
 
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
