@@ -165,7 +165,9 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
+        <PageViewTracker />
         <div className="relative min-h-screen bg-background text-foreground grain">
+
           {!bare && <SiteNav />}
           <main className="relative">
             <Outlet />
