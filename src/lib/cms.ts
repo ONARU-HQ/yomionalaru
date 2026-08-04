@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { revalidateContent } from "@/lib/revalidate";
 
 /* ---------------- types ---------------- */
 
@@ -188,6 +189,7 @@ export function useUpsertRow(table: TableName) {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["rows", table] });
       qc.invalidateQueries({ queryKey: ["public"] });
+      void revalidateContent(`upsert:${table}`);
     },
   });
 }
@@ -202,21 +204,23 @@ export function useDeleteRow(table: TableName) {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["rows", table] });
       qc.invalidateQueries({ queryKey: ["public"] });
+      void revalidateContent(`delete:${table}`);
     },
   });
 }
 
 /* ---------------- public reads ---------------- */
 
-export function usePublishedArticles(limit?: number) {
+export function usePublishedArticles(limit?: number, preview = false) {
   return useQuery({
-    queryKey: ["public", "articles", limit ?? 0],
+    queryKey: ["public", "articles", limit ?? 0, preview],
+    staleTime: preview ? 0 : 30_000,
     queryFn: async () => {
-      let q = supabase
-        .from("articles")
-        .select("*")
-        .eq("status", "published")
-        .order("published_at", { ascending: false });
+      let q = supabase.from("articles").select("*");
+      // In admin preview mode staff also see drafts and scheduled posts.
+      if (!preview) q = q.eq("status", "published");
+      else q = q.neq("status", "archived");
+      q = q.order("published_at", { ascending: false });
       if (limit) q = q.limit(limit);
       const { data } = await q;
       return (data ?? []) as Article[];
@@ -227,9 +231,11 @@ export function usePublishedArticles(limit?: number) {
 export function usePublicRows<T = Record<string, unknown>>(
   table: TableName,
   order = "sort_order",
+  preview = false,
 ) {
   return useQuery({
-    queryKey: ["public", table],
+    queryKey: ["public", table, preview],
+    staleTime: preview ? 0 : 30_000,
     queryFn: async () => {
       const { data } = await supabase.from(table).select("*").order(order, { ascending: true });
       return (data ?? []) as T[];
