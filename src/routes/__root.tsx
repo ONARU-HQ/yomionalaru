@@ -16,6 +16,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { AuthProvider } from "@/hooks/use-auth";
 import { Toaster } from "@/components/ui/sonner";
 import { PageViewTracker } from "@/lib/analytics";
+import { PreviewBanner } from "@/lib/preview";
 import portrait from "@/assets/yomi-portrait.png.asset.json";
 import { SITE_URL, ONARU, CONTACT, SOCIALS, COMPANIES, POSITIONING, INTERSECTIONS } from "@/lib/site-data";
 
@@ -166,6 +167,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <PageViewTracker />
+        <PreviewBanner />
         <div className="relative min-h-screen bg-background text-foreground grain">
 
           {!bare && <SiteNav />}

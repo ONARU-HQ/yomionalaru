@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import {
   LayoutDashboard, FileText, Building2, Images, Quote, Mic, BookOpen,
   LinkIcon, Mail, Inbox, Settings as SettingsIcon, Users, BarChart3,
-  FolderOpen, LogOut, Menu, X, ExternalLink,
+  FolderOpen, LogOut, Menu, X, ExternalLink, Eye,
 } from "lucide-react";
 import { useAuth, ROLE_LABEL } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
+import { setPreviewEnabled } from "@/lib/preview";
 
 type NavItem = { to: string; label: string; icon: typeof LayoutDashboard; min: number };
 
@@ -119,7 +120,13 @@ export function AdminShell() {
               <div className="mt-1 text-[10px] uppercase tracking-[0.25em] text-gold/80">
                 {roles.length ? roles.map((r) => ROLE_LABEL[r]).join(" · ") : "No role"}
               </div>
-              <div className="mt-4 flex items-center gap-2">
+              <button
+                onClick={() => { setPreviewEnabled(true); void navigate({ to: "/" }); }}
+                className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-full bg-gold/90 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-primary-foreground hover:bg-gold"
+              >
+                <Eye className="h-3 w-3" /> Preview site
+              </button>
+              <div className="mt-2 flex items-center gap-2">
                 <Link to="/" className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-border px-3 py-2 text-[10px] uppercase tracking-[0.2em] hover:text-gold">
                   <ExternalLink className="h-3 w-3" /> Site
                 </Link>

@@ -39,6 +39,7 @@ import { Route as AdminCompaniesRouteImport } from './routes/admin.companies'
 import { Route as AdminBooksRouteImport } from './routes/admin.books'
 import { Route as AdminArticlesRouteImport } from './routes/admin.articles'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as ApiPublicRevalidateRouteImport } from './routes/api/public/revalidate'
 
 const SpeakingRoute = SpeakingRouteImport.update({
   id: '/speaking',
@@ -190,6 +191,11 @@ const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => AdminRoute,
 } as any)
+const ApiPublicRevalidateRoute = ApiPublicRevalidateRouteImport.update({
+  id: '/api/public/revalidate',
+  path: '/api/public/revalidate',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -222,6 +228,7 @@ export interface FileRoutesByFullPath {
   '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
   '/mentorship/': typeof MentorshipIndexRoute
+  '/api/public/revalidate': typeof ApiPublicRevalidateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -253,6 +260,7 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogIndexRoute
   '/companies': typeof CompaniesIndexRoute
   '/mentorship': typeof MentorshipIndexRoute
+  '/api/public/revalidate': typeof ApiPublicRevalidateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -286,6 +294,7 @@ export interface FileRoutesById {
   '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
   '/mentorship/': typeof MentorshipIndexRoute
+  '/api/public/revalidate': typeof ApiPublicRevalidateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -320,6 +329,7 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/companies/'
     | '/mentorship/'
+    | '/api/public/revalidate'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -351,6 +361,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/companies'
     | '/mentorship'
+    | '/api/public/revalidate'
   id:
     | '__root__'
     | '/'
@@ -383,6 +394,7 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/companies/'
     | '/mentorship/'
+    | '/api/public/revalidate'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -402,6 +414,7 @@ export interface RootRouteChildren {
   BlogIndexRoute: typeof BlogIndexRoute
   CompaniesIndexRoute: typeof CompaniesIndexRoute
   MentorshipIndexRoute: typeof MentorshipIndexRoute
+  ApiPublicRevalidateRoute: typeof ApiPublicRevalidateRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -616,6 +629,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAnalyticsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/api/public/revalidate': {
+      id: '/api/public/revalidate'
+      path: '/api/public/revalidate'
+      fullPath: '/api/public/revalidate'
+      preLoaderRoute: typeof ApiPublicRevalidateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -672,6 +692,7 @@ const rootRouteChildren: RootRouteChildren = {
   BlogIndexRoute: BlogIndexRoute,
   CompaniesIndexRoute: CompaniesIndexRoute,
   MentorshipIndexRoute: MentorshipIndexRoute,
+  ApiPublicRevalidateRoute: ApiPublicRevalidateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
