@@ -357,12 +357,14 @@ function Hero() {
           <TiltCard>
             <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-gold/40 via-transparent to-transparent blur-2xl" />
             <div className="relative overflow-hidden rounded-[2rem] border border-gold/20 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)]">
-              <img
+              <CdnImage
                 src={portrait.url}
                 alt="Portrait of Yomi Onalaru"
+                sizes="(max-width: 1024px) 90vw, 420px"
+                priority
                 className="aspect-[3/4] h-auto w-full object-cover"
-                loading="eager"
               />
+
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
                 <div>
