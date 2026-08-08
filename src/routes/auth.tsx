@@ -110,10 +110,12 @@ function AuthPage() {
         </Link>
 
         <h1 className="text-center font-display text-4xl gold-text">
-          {mode === "signup" ? "Create account" : mode === "reset" ? "Reset password" : "Studio sign in"}
+          {mode === "signup" ? "Create account" : mode === "reset" ? "Reset password" : mode === "pin" ? "Owner access" : "Studio sign in"}
         </h1>
         <p className="mt-3 text-center text-sm text-muted-foreground">
-          Private access to the Yomi Onalaru content studio.
+          {mode === "pin"
+            ? "Enter your email and PIN to open the studio."
+            : "Private access to the Yomi Onalaru content studio."}
         </p>
 
         {sent && (
@@ -131,7 +133,14 @@ function AuthPage() {
             type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required autoComplete="email"
             className="w-full rounded-xl border border-border bg-transparent px-4 py-3 text-sm outline-none focus:border-gold/60"
           />
-          {mode !== "reset" && (
+          {mode === "pin" && (
+            <input
+              type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value)}
+              placeholder="PIN" required minLength={4} autoComplete="one-time-code"
+              className="w-full rounded-xl border border-border bg-transparent px-4 py-3 text-center text-lg tracking-[0.6em] outline-none focus:border-gold/60"
+            />
+          )}
+          {(mode === "signin" || mode === "signup") && (
             <input
               type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required minLength={8}
               autoComplete={mode === "signup" ? "new-password" : "current-password"}
@@ -142,7 +151,7 @@ function AuthPage() {
             type="submit" disabled={busy}
             className="w-full rounded-full bg-gold py-3 text-xs font-medium uppercase tracking-[0.24em] text-primary-foreground disabled:opacity-50"
           >
-            {busy ? "Please wait…" : mode === "signup" ? "Create account" : mode === "reset" ? "Send reset link" : "Sign in"}
+            {busy ? "Please wait…" : mode === "signup" ? "Create account" : mode === "reset" ? "Send reset link" : mode === "pin" ? "Enter studio" : "Sign in"}
           </button>
         </form>
 
@@ -161,7 +170,8 @@ function AuthPage() {
         )}
 
         <div className="mt-8 flex flex-col items-center gap-2 text-xs text-muted-foreground">
-          {mode !== "signin" && <button onClick={() => { setMode("signin"); setSent(null); }} className="hover:text-gold">Back to sign in</button>}
+          {mode !== "pin" && <button onClick={() => { setMode("pin"); setSent(null); }} className="hover:text-gold">Sign in with email + PIN</button>}
+          {mode !== "signin" && <button onClick={() => { setMode("signin"); setSent(null); }} className="hover:text-gold">Use email + password</button>}
           {mode === "signin" && (
             <>
               <button onClick={() => { setMode("signup"); setSent(null); }} className="hover:text-gold">Need an account? Create one</button>
@@ -169,6 +179,7 @@ function AuthPage() {
             </>
           )}
         </div>
+
       </div>
     </div>
   );
