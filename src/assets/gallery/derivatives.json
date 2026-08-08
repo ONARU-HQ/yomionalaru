@@ -779,5 +779,16 @@
 "size": 44646,
 "content_type": "image/webp",
 "created_at": "2026-08-08T00:14:17Z"
+},
+"grace-glow-gratitude-1080.avif": {
+"version": 1,
+"asset_id": "65fb1c87-c076-4fb9-86ef-c7a48ffebb9c",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/65fb1c87-c076-4fb9-86ef-c7a48ffebb9c/grace-glow-gratitude-1080.avif",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/65fb1c87-c076-4fb9-86ef-c7a48ffebb9c/grace-glow-gratitude-1080.avif",
+"original_filename": "grace-glow-gratitude-1080.avif",
+"size": 25365,
+"content_type": "image/avif",
+"created_at": "2026-08-08T00:14:21Z"
 }
 }
