@@ -427,5 +427,27 @@
 "size": 33894,
 "content_type": "image/webp",
 "created_at": "2026-08-08T00:12:37Z"
+},
+"boss-beauty-1080.avif": {
+"version": 1,
+"asset_id": "c0121289-090f-4820-ba8c-63969fabfcda",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/c0121289-090f-4820-ba8c-63969fabfcda/boss-beauty-1080.avif",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/c0121289-090f-4820-ba8c-63969fabfcda/boss-beauty-1080.avif",
+"original_filename": "boss-beauty-1080.avif",
+"size": 17860,
+"content_type": "image/avif",
+"created_at": "2026-08-08T00:12:41Z"
+},
+"ceo-of-allure-by-mide-640.webp": {
+"version": 1,
+"asset_id": "23b8549f-6389-47bb-b2a6-ca7aea8dde3e",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/23b8549f-6389-47bb-b2a6-ca7aea8dde3e/ceo-of-allure-by-mide-640.webp",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/23b8549f-6389-47bb-b2a6-ca7aea8dde3e/ceo-of-allure-by-mide-640.webp",
+"original_filename": "ceo-of-allure-by-mide-640.webp",
+"size": 23450,
+"content_type": "image/webp",
+"created_at": "2026-08-08T00:12:43Z"
 }
 }
