@@ -52,7 +52,17 @@ function AuthPage() {
     e.preventDefault();
     setBusy(true);
     try {
-      if (mode === "reset") {
+      if (mode === "pin") {
+        const res = await pinSignIn({ data: { email, pin } });
+        if (!res.ok) throw new Error(res.error);
+        const { error } = await supabase.auth.verifyOtp({
+          type: "email",
+          token_hash: res.tokenHash,
+        });
+        if (error) throw error;
+        toast.success("Welcome back");
+      } else if (mode === "reset") {
+
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
           redirectTo: `${window.location.origin}/reset-password`,
         });
