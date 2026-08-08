@@ -49,6 +49,8 @@ function Home() {
       <LatestArticles />
       {/* 4 — Featured work */}
       <FeaturedWork />
+      <SelectedPhotography />
+
       {/* 5 — Ventures & products */}
       <VenturesSection />
       {/* 6 — Testimonials */}
