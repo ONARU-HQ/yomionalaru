@@ -5,7 +5,7 @@ import { PROJECTS } from "@/lib/site-data";
 import { GalleryGrid, HallOfFame } from "@/components/gallery-grid";
 import { PHOTOS } from "@/lib/gallery";
 
-const COVER = PHOTOS[0];
+
 
 export const Route = createFileRoute("/projects")({
   component: Projects,
