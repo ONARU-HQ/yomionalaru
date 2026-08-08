@@ -5,6 +5,9 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/hooks/use-auth";
+import { useServerFn } from "@tanstack/react-start";
+import { signInWithPin } from "@/lib/admin-pin.functions";
+
 
 const searchSchema = z.object({ redirect: z.string().optional() });
 
@@ -31,7 +34,10 @@ function AuthPage() {
   const { redirect } = Route.useSearch();
   const navigate = useNavigate();
   const { user, loading } = useAuth();
-  const [mode, setMode] = useState<"signin" | "signup" | "reset">("signin");
+  const [mode, setMode] = useState<"pin" | "signin" | "signup" | "reset">("pin");
+  const [pin, setPin] = useState("");
+  const pinSignIn = useServerFn(signInWithPin);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -46,7 +52,17 @@ function AuthPage() {
     e.preventDefault();
     setBusy(true);
     try {
-      if (mode === "reset") {
+      if (mode === "pin") {
+        const res = await pinSignIn({ data: { email, pin } });
+        if (!res.ok) throw new Error(res.error);
+        const { error } = await supabase.auth.verifyOtp({
+          type: "email",
+          token_hash: res.tokenHash,
+        });
+        if (error) throw error;
+        toast.success("Welcome back");
+      } else if (mode === "reset") {
+
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
           redirectTo: `${window.location.origin}/reset-password`,
         });
@@ -94,10 +110,12 @@ function AuthPage() {
         </Link>
 
         <h1 className="text-center font-display text-4xl gold-text">
-          {mode === "signup" ? "Create account" : mode === "reset" ? "Reset password" : "Studio sign in"}
+          {mode === "signup" ? "Create account" : mode === "reset" ? "Reset password" : mode === "pin" ? "Owner access" : "Studio sign in"}
         </h1>
         <p className="mt-3 text-center text-sm text-muted-foreground">
-          Private access to the Yomi Onalaru content studio.
+          {mode === "pin"
+            ? "Enter your email and PIN to open the studio."
+            : "Private access to the Yomi Onalaru content studio."}
         </p>
 
         {sent && (
@@ -115,7 +133,14 @@ function AuthPage() {
             type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required autoComplete="email"
             className="w-full rounded-xl border border-border bg-transparent px-4 py-3 text-sm outline-none focus:border-gold/60"
           />
-          {mode !== "reset" && (
+          {mode === "pin" && (
+            <input
+              type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value)}
+              placeholder="PIN" required minLength={4} autoComplete="one-time-code"
+              className="w-full rounded-xl border border-border bg-transparent px-4 py-3 text-center text-lg tracking-[0.6em] outline-none focus:border-gold/60"
+            />
+          )}
+          {(mode === "signin" || mode === "signup") && (
             <input
               type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required minLength={8}
               autoComplete={mode === "signup" ? "new-password" : "current-password"}
@@ -126,7 +151,7 @@ function AuthPage() {
             type="submit" disabled={busy}
             className="w-full rounded-full bg-gold py-3 text-xs font-medium uppercase tracking-[0.24em] text-primary-foreground disabled:opacity-50"
           >
-            {busy ? "Please wait…" : mode === "signup" ? "Create account" : mode === "reset" ? "Send reset link" : "Sign in"}
+            {busy ? "Please wait…" : mode === "signup" ? "Create account" : mode === "reset" ? "Send reset link" : mode === "pin" ? "Enter studio" : "Sign in"}
           </button>
         </form>
 
@@ -145,7 +170,8 @@ function AuthPage() {
         )}
 
         <div className="mt-8 flex flex-col items-center gap-2 text-xs text-muted-foreground">
-          {mode !== "signin" && <button onClick={() => { setMode("signin"); setSent(null); }} className="hover:text-gold">Back to sign in</button>}
+          {mode !== "pin" && <button onClick={() => { setMode("pin"); setSent(null); }} className="hover:text-gold">Sign in with email + PIN</button>}
+          {mode !== "signin" && <button onClick={() => { setMode("signin"); setSent(null); }} className="hover:text-gold">Use email + password</button>}
           {mode === "signin" && (
             <>
               <button onClick={() => { setMode("signup"); setSent(null); }} className="hover:text-gold">Need an account? Create one</button>
@@ -153,6 +179,7 @@ function AuthPage() {
             </>
           )}
         </div>
+
       </div>
     </div>
   );

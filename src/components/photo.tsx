@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { sourcesFor } from "@/lib/image-sources";
 import type { Photo as PhotoType } from "@/lib/gallery";
 
 /**
  * Reusable image primitive.
+ * - responsive AVIF/WebP with JPEG fallback
  * - blur-up placeholder (no layout shift, dimensions always declared)
  * - lazy by default, eager + high priority for hero images
  * - swap a photograph by changing the pointer in src/assets/gallery/
@@ -28,6 +30,7 @@ export function Photo({
 }) {
   const [loaded, setLoaded] = useState(false);
   const ref = useRef<HTMLImageElement>(null);
+  const sources = sourcesFor(photo.src);
 
   useEffect(() => {
     if (ref.current?.complete) setLoaded(true);
@@ -47,26 +50,66 @@ export function Photo({
           loaded ? "opacity-0" : "opacity-100",
         )}
       />
+      <picture>
+        {sources.avif && <source type="image/avif" srcSet={sources.avif} sizes={sizes} />}
+        {sources.webp && <source type="image/webp" srcSet={sources.webp} sizes={sizes} />}
+        <img
+          ref={ref}
+          src={photo.src}
+          alt={alt ?? photo.title}
+          width={photo.width}
+          height={photo.height}
+          sizes={sizes}
+          loading={priority ? "eager" : "lazy"}
+          decoding={priority ? "sync" : "async"}
+          fetchPriority={priority ? "high" : "auto"}
+          onLoad={() => setLoaded(true)}
+          onError={() => setLoaded(true)}
+          className={cn(
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-[900ms] ease-out",
+            loaded ? "opacity-100" : "opacity-0",
+            imgClassName,
+          )}
+        />
+      </picture>
+    </div>
+  );
+}
+
+/**
+ * Any CDN image (not part of the gallery manifest) with AVIF/WebP sources.
+ */
+export function CdnImage({
+  src,
+  alt,
+  className,
+  sizes = "100vw",
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  sizes?: string;
+  priority?: boolean;
+}) {
+  const sources = sourcesFor(src);
+  return (
+    <picture>
+      {sources.avif && <source type="image/avif" srcSet={sources.avif} sizes={sizes} />}
+      {sources.webp && <source type="image/webp" srcSet={sources.webp} sizes={sizes} />}
       <img
-        ref={ref}
-        src={photo.src}
-        alt={alt ?? photo.title}
-        width={photo.width}
-        height={photo.height}
+        src={src}
+        alt={alt}
         sizes={sizes}
         loading={priority ? "eager" : "lazy"}
         decoding={priority ? "sync" : "async"}
         fetchPriority={priority ? "high" : "auto"}
-        onLoad={() => setLoaded(true)}
-        className={cn(
-          "absolute inset-0 h-full w-full object-cover transition-opacity duration-[900ms] ease-out",
-          loaded ? "opacity-100" : "opacity-0",
-          imgClassName,
-        )}
+        className={className}
       />
-    </div>
+    </picture>
   );
 }
+
 
 /**
  * Photographs that respond to phone movement (device orientation) and to
