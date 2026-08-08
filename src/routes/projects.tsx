@@ -2,15 +2,21 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { Section, Reveal } from "@/components/ui-primitives";
 import { PROJECTS } from "@/lib/site-data";
+import { GalleryGrid, HallOfFame } from "@/components/gallery-grid";
+import { PHOTOS } from "@/lib/gallery";
+
+const COVER = PHOTOS[0];
 
 export const Route = createFileRoute("/projects")({
   component: Projects,
   head: () => ({
     meta: [
-      { title: "Projects — Yomi Onalaru" },
-      { name: "description", content: "Selected projects — photography, film, brand identity and product from Yomi Onalaru." },
-      { property: "og:title", content: "Projects — Yomi Onalaru" },
-      { property: "og:description", content: "Selected work — photography, film, brand and product." },
+      { title: "Selected Work & Gallery — Yomi Onalaru" },
+      { name: "description", content: "The photography archive of Yomi Onalaru — portraits, fashion, culture and commercial frames shot through Yomi Visuals." },
+      { property: "og:title", content: "Selected Work & Gallery — Yomi Onalaru" },
+      { property: "og:description", content: "Portraits, fashion, culture and commercial photography from Yomi Visuals." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "/projects" },
     ],
     links: [{ rel: "canonical", href: "/projects" }],
@@ -22,14 +28,26 @@ function Projects() {
     <>
       <section className="mx-auto max-w-7xl px-6 pb-16 pt-40 md:pt-48">
         <Reveal>
-          <div className="text-xs uppercase tracking-[0.32em] text-gold/80">Projects</div>
+          <div className="text-xs uppercase tracking-[0.32em] text-gold/80">Selected work</div>
           <h1 className="mt-8 font-display text-5xl leading-[1.02] md:text-8xl">
-            Selected <span className="gold-shine">work.</span>
+            The <span className="gold-shine">archive.</span>
           </h1>
+          <p className="mt-8 max-w-xl text-muted-foreground">
+            {PHOTOS.length} frames — portraits, fashion, culture and commercial work.
+          </p>
         </Reveal>
       </section>
 
-      <Section>
+      <section className="pb-8">
+        <HallOfFame />
+      </section>
+
+      <Section eyebrow="Gallery" title={<>Every <span className="gold-text">frame.</span></>}>
+        <GalleryGrid />
+      </Section>
+
+      <Section eyebrow="Case studies" title={<>Projects that made <span className="gold-text">the point.</span></>}>
+
         <div className="grid gap-6 md:grid-cols-2">
           {PROJECTS.map((p, i) => (
             <Reveal key={p.slug} delay={i * 0.05}>

@@ -636,5 +636,71 @@
 "size": 36002,
 "content_type": "image/avif",
 "created_at": "2026-08-08T00:13:36Z"
+},
+"christmas-together-1080.webp": {
+"version": 1,
+"asset_id": "812ed721-fbd6-4c73-92b8-4071114e414c",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/812ed721-fbd6-4c73-92b8-4071114e414c/christmas-together-1080.webp",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/812ed721-fbd6-4c73-92b8-4071114e414c/christmas-together-1080.webp",
+"original_filename": "christmas-together-1080.webp",
+"size": 109224,
+"content_type": "image/webp",
+"created_at": "2026-08-08T00:13:39Z"
+},
+"christmas-together-1080.avif": {
+"version": 1,
+"asset_id": "db8e4227-1f77-45c6-96a4-7f1117fe0b6f",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/db8e4227-1f77-45c6-96a4-7f1117fe0b6f/christmas-together-1080.avif",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/db8e4227-1f77-45c6-96a4-7f1117fe0b6f/christmas-together-1080.avif",
+"original_filename": "christmas-together-1080.avif",
+"size": 78921,
+"content_type": "image/avif",
+"created_at": "2026-08-08T00:13:42Z"
+},
+"elegance-framed-in-light-640.webp": {
+"version": 1,
+"asset_id": "c170639c-7f6b-4946-8bcd-38253308d181",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/c170639c-7f6b-4946-8bcd-38253308d181/elegance-framed-in-light-640.webp",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/c170639c-7f6b-4946-8bcd-38253308d181/elegance-framed-in-light-640.webp",
+"original_filename": "elegance-framed-in-light-640.webp",
+"size": 31758,
+"content_type": "image/webp",
+"created_at": "2026-08-08T00:13:46Z"
+},
+"elegance-framed-in-light-640.avif": {
+"version": 1,
+"asset_id": "87443f2d-8169-4fea-8c94-455541e11dd7",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/87443f2d-8169-4fea-8c94-455541e11dd7/elegance-framed-in-light-640.avif",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/87443f2d-8169-4fea-8c94-455541e11dd7/elegance-framed-in-light-640.avif",
+"original_filename": "elegance-framed-in-light-640.avif",
+"size": 19728,
+"content_type": "image/avif",
+"created_at": "2026-08-08T00:13:48Z"
+},
+"elegance-framed-in-light-1080.webp": {
+"version": 1,
+"asset_id": "530cd576-386a-4609-9047-b83e289c5306",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/530cd576-386a-4609-9047-b83e289c5306/elegance-framed-in-light-1080.webp",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/530cd576-386a-4609-9047-b83e289c5306/elegance-framed-in-light-1080.webp",
+"original_filename": "elegance-framed-in-light-1080.webp",
+"size": 74018,
+"content_type": "image/webp",
+"created_at": "2026-08-08T00:13:51Z"
+},
+"elegance-framed-in-light-1080.avif": {
+"version": 1,
+"asset_id": "c12520a4-d670-4406-a806-4af2cebb290b",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/c12520a4-d670-4406-a806-4af2cebb290b/elegance-framed-in-light-1080.avif",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/c12520a4-d670-4406-a806-4af2cebb290b/elegance-framed-in-light-1080.avif",
+"original_filename": "elegance-framed-in-light-1080.avif",
+"size": 45195,
+"content_type": "image/avif",
+"created_at": "2026-08-08T00:13:54Z"
 }
 }
