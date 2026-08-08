@@ -702,5 +702,16 @@
 "size": 45195,
 "content_type": "image/avif",
 "created_at": "2026-08-08T00:13:54Z"
+},
+"frame-study-640.webp": {
+"version": 1,
+"asset_id": "f8aad83e-cade-44ed-9271-3ca096747fc2",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/f8aad83e-cade-44ed-9271-3ca096747fc2/frame-study-640.webp",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/f8aad83e-cade-44ed-9271-3ca096747fc2/frame-study-640.webp",
+"original_filename": "frame-study-640.webp",
+"size": 77340,
+"content_type": "image/webp",
+"created_at": "2026-08-08T00:13:57Z"
 }
 }
