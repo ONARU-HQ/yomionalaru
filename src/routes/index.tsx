@@ -17,6 +17,12 @@ import { MagneticButton } from "@/components/founder/MagneticButton";
 import { TiltCard } from "@/components/founder/TiltCard";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { usePublicArticles, usePublicProjects, usePublicTestimonials } from "@/lib/public-content";
+import { Photo, CdnImage } from "@/components/photo";
+import { HallOfFame } from "@/components/gallery-grid";
+import { PHOTOS } from "@/lib/gallery";
+
+const HOME_PHOTOS = PHOTOS.slice(0, 6);
+
 
 export const Route = createFileRoute("/")({
   component: Home,
