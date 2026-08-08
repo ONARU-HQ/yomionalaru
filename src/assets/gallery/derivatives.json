@@ -724,5 +724,27 @@
 "size": 62242,
 "content_type": "image/avif",
 "created_at": "2026-08-08T00:14:01Z"
+},
+"frame-study-1080.webp": {
+"version": 1,
+"asset_id": "0424a469-7d2b-4792-9888-29db6afeb83a",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/0424a469-7d2b-4792-9888-29db6afeb83a/frame-study-1080.webp",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/0424a469-7d2b-4792-9888-29db6afeb83a/frame-study-1080.webp",
+"original_filename": "frame-study-1080.webp",
+"size": 182420,
+"content_type": "image/webp",
+"created_at": "2026-08-08T00:14:04Z"
+},
+"frame-study-1080.avif": {
+"version": 1,
+"asset_id": "4603a8e4-e925-4d4c-881d-82ff4bb26f85",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/4603a8e4-e925-4d4c-881d-82ff4bb26f85/frame-study-1080.avif",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/4603a8e4-e925-4d4c-881d-82ff4bb26f85/frame-study-1080.avif",
+"original_filename": "frame-study-1080.avif",
+"size": 139172,
+"content_type": "image/avif",
+"created_at": "2026-08-08T00:14:08Z"
 }
 }
