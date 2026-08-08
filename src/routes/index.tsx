@@ -71,6 +71,38 @@ function Home() {
   );
 }
 
+function SelectedPhotography() {
+  return (
+    <Section
+      eyebrow="Selected photography"
+      title={<>Frames from <span className="gold-text">the archive.</span></>}
+      intro="Portraits, fashion, culture and commercial work shot through Yomi Visuals."
+    >
+      <HallOfFame />
+      <div className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-3">
+        {HOME_PHOTOS.map((p, i) => (
+          <Reveal key={p.slug} delay={i * 0.05}>
+            <figure className="group overflow-hidden rounded-2xl border border-border/50">
+              <Photo
+                photo={p}
+                ratio="4 / 5"
+                sizes="(max-width: 768px) 46vw, 31vw"
+                imgClassName="transition-transform duration-[1200ms] group-hover:scale-[1.04]"
+              />
+            </figure>
+          </Reveal>
+        ))}
+      </div>
+      <div className="mt-12 text-center">
+        <Link to="/projects" className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-6 py-3 text-xs uppercase tracking-[0.24em] text-gold transition hover:bg-gold hover:text-primary-foreground">
+          Enter the gallery →
+        </Link>
+      </div>
+    </Section>
+  );
+}
+
+
 function LatestArticles() {
   const { articles } = usePublicArticles(3);
   if (articles.length === 0) return null;
