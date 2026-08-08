@@ -372,5 +372,60 @@
 "size": 18022,
 "content_type": "image/avif",
 "created_at": "2026-08-08T00:12:22Z"
+},
+"birthday-portrait-1080.webp": {
+"version": 1,
+"asset_id": "ab26369b-0e6b-4074-a21c-b7a5b598ee78",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/ab26369b-0e6b-4074-a21c-b7a5b598ee78/birthday-portrait-1080.webp",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/ab26369b-0e6b-4074-a21c-b7a5b598ee78/birthday-portrait-1080.webp",
+"original_filename": "birthday-portrait-1080.webp",
+"size": 64332,
+"content_type": "image/webp",
+"created_at": "2026-08-08T00:12:25Z"
+},
+"birthday-portrait-1080.avif": {
+"version": 1,
+"asset_id": "42fb2065-c4a4-4559-b64e-91ac218e75a1",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/42fb2065-c4a4-4559-b64e-91ac218e75a1/birthday-portrait-1080.avif",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/42fb2065-c4a4-4559-b64e-91ac218e75a1/birthday-portrait-1080.avif",
+"original_filename": "birthday-portrait-1080.avif",
+"size": 36761,
+"content_type": "image/avif",
+"created_at": "2026-08-08T00:12:28Z"
+},
+"boss-beauty-640.webp": {
+"version": 1,
+"asset_id": "b58c23e5-bd6d-444a-904a-5f0c8c661f84",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/b58c23e5-bd6d-444a-904a-5f0c8c661f84/boss-beauty-640.webp",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/b58c23e5-bd6d-444a-904a-5f0c8c661f84/boss-beauty-640.webp",
+"original_filename": "boss-beauty-640.webp",
+"size": 16116,
+"content_type": "image/webp",
+"created_at": "2026-08-08T00:12:31Z"
+},
+"boss-beauty-640.avif": {
+"version": 1,
+"asset_id": "1e782f8e-86cd-4093-a291-3e97fe3b5d89",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/1e782f8e-86cd-4093-a291-3e97fe3b5d89/boss-beauty-640.avif",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/1e782f8e-86cd-4093-a291-3e97fe3b5d89/boss-beauty-640.avif",
+"original_filename": "boss-beauty-640.avif",
+"size": 8752,
+"content_type": "image/avif",
+"created_at": "2026-08-08T00:12:34Z"
+},
+"boss-beauty-1080.webp": {
+"version": 1,
+"asset_id": "3d74f931-3b93-4dea-bb0b-d850e5798351",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/3d74f931-3b93-4dea-bb0b-d850e5798351/boss-beauty-1080.webp",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/3d74f931-3b93-4dea-bb0b-d850e5798351/boss-beauty-1080.webp",
+"original_filename": "boss-beauty-1080.webp",
+"size": 33894,
+"content_type": "image/webp",
+"created_at": "2026-08-08T00:12:37Z"
 }
 }
