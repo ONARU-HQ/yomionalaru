@@ -31,7 +31,10 @@ function AuthPage() {
   const { redirect } = Route.useSearch();
   const navigate = useNavigate();
   const { user, loading } = useAuth();
-  const [mode, setMode] = useState<"signin" | "signup" | "reset">("signin");
+  const [mode, setMode] = useState<"pin" | "signin" | "signup" | "reset">("pin");
+  const [pin, setPin] = useState("");
+  const pinSignIn = useServerFn(signInWithPin);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
