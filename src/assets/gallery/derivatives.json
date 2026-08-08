@@ -746,5 +746,27 @@
 "size": 139172,
 "content_type": "image/avif",
 "created_at": "2026-08-08T00:14:08Z"
+},
+"grace-glow-gratitude-640.webp": {
+"version": 1,
+"asset_id": "73a8cb5a-d4e3-4e98-89b9-77fdc4db4caa",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/73a8cb5a-d4e3-4e98-89b9-77fdc4db4caa/grace-glow-gratitude-640.webp",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/73a8cb5a-d4e3-4e98-89b9-77fdc4db4caa/grace-glow-gratitude-640.webp",
+"original_filename": "grace-glow-gratitude-640.webp",
+"size": 20922,
+"content_type": "image/webp",
+"created_at": "2026-08-08T00:14:11Z"
+},
+"grace-glow-gratitude-640.avif": {
+"version": 1,
+"asset_id": "dcfe4be1-d689-4b75-bbd4-714a657a3834",
+"project_id": "2e5376c9-79c0-4603-b0f9-83894885d407",
+"url": "/__l5e/assets-v1/dcfe4be1-d689-4b75-bbd4-714a657a3834/grace-glow-gratitude-640.avif",
+"r2_key": "a/v1/2e5376c9-79c0-4603-b0f9-83894885d407/dcfe4be1-d689-4b75-bbd4-714a657a3834/grace-glow-gratitude-640.avif",
+"original_filename": "grace-glow-gratitude-640.avif",
+"size": 12821,
+"content_type": "image/avif",
+"created_at": "2026-08-08T00:14:14Z"
 }
 }
