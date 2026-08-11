@@ -155,7 +155,18 @@ export type TableName =
   | "user_roles"
   | "invitations"
   | "audit_logs"
-  | "page_views";
+  | "page_views"
+  | "ventures"
+  | "ecosystem_updates"
+  | "work_projects"
+  | "journey_milestones"
+  | "archive_entries"
+  | "press_mentions"
+  | "speaking_topics"
+  | "enquiries"
+  | "enquiry_notes"
+  | "integration_sources"
+  | "integration_cache";
 
 export function useRows<T = Record<string, unknown>>(
   table: TableName,
