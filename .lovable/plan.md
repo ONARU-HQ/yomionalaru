@@ -1,62 +1,51 @@
-# Version 2.0 — Founder Experience
+# Yomi Ecosystem HQ — Evolution Plan
 
-Elevating the existing site into an immersive founder HQ. Keeping the matte-black + gold identity, TanStack Start stack (Next.js was requested but the project is locked to TanStack Start — I'll deliver the same experience on this stack).
+Upgrading the existing site into a live ecosystem headquarters. Nothing is rebuilt: current design system, typography, photography pipeline, journal, reflections, existing routes and the CMS all stay. Everything below is additive or a swap of hard-coded values for admin-controlled data.
 
-## Scope
+## Phase 1 — Ecosystem data layer
 
-### 1. Cinematic intro
-- One-time (session-scoped) YO monogram reveal with gold glow, then dissolves into home. Skippable, respects `prefers-reduced-motion`.
+New tables (extensible, RLS-protected, public sees only published rows):
 
-### 2. Living homepage
-- Replace static "current focus" with **"What I'm Building"** status cards: TRYSA, TRYSA Home, YOFA, Playbaaq, YV Experience — each with animated progress bar, pulsing status dot, subtle float.
-- Add **Ecosystem orbit** section (see #3).
-- Add **Animated stats** counters (see #5).
-- Add **Manifesto** full-screen section (see #6).
-- Add **World map** highlight (see #7).
+- `ventures` — TRYSA, Yomi Visuals, YV Studios, Yomi Unscripted, Academy, ONARU Ventures. Status enum: idea, building, beta, live, operating, paused, archived. Plus connection state: live, synced, curated, not_connected.
+- `venture_updates` — the "Building Now" feed: venture, title, blurb, date, image, CTA.
+- `work_projects` + `work_media` — case studies: client, year, role, overview, challenge, approach, execution, result, gallery, video, external URL.
+- `journey_milestones` — year, title, description, media, related venture/project.
+- `archive_entries` — category (work, build, thoughts, places, people, media), searchable.
+- `press_mentions`, `speaking_topics`, `enquiries` (with status new → reviewing → contacted → meeting → closed), `enquiry_notes`, `integration_sources` (per-product connection config + last sync + cached payload).
 
-### 3. Company ecosystem (new visual identity)
-- SVG-based orbit: "Yomi Onalaru" node in center, companies orbiting with animated connecting lines. Parent→child relationships (TRYSA→TRYSA Home, Yomi Visuals→YV Studios/YV Experience). Hover glows, click navigates to company page.
-- Replaces the plain grid on `/companies` and appears in condensed form on home.
+Existing `companies`, `portfolio`, `testimonials`, `articles`, `newsletter_subscribers`, `contacts`, `settings`, `media_library`, `page_views` are kept and reused rather than duplicated.
 
-### 4. Interactive founder timeline
-- Scroll-driven storytelling on `/about` and home: sticky year, entries fade/slide in with Framer Motion `useScroll`. Years: 2023, 2025, 2026, Current, Future.
+## Phase 2 — Integration service layer
 
-### 5. Dynamic statistics
-- Counter component using `useInView` + rAF tween. Metrics: Companies Built, Products Shipping, Creative Projects, Businesses Powered, Cities, Years, Photos Delivered.
+- Server functions only; no product credentials in the browser.
+- `integration_sources` row per product holds endpoint + connection status; secrets live in backend secrets, never in code.
+- A generic sync service: fetch → validate → cache into `integration_cache` → serve from cache. If a fetch fails, the site serves the last good cache, then curated ecosystem data. Never a fake "LIVE" badge.
+- YouTube (YVStudiosHQ) sync via a scheduled public API route + cached results, so new episodes appear without editing the site. Needs a YouTube Data API key.
+- TRYSA/YV Studios: architecture, data model, service interface and connection status shipped now; marked CURATED until real endpoints exist.
 
-### 6. Founder manifesto
-- Full-viewport section, huge Instrument Serif type, gold gradient underline, quiet.
+## Phase 3 — Public surfaces
 
-### 7. Interactive world
-- Lightweight SVG world map (no heavy 3D dep) with pulsing gold markers on Lagos, Accra, plus "future" muted markers. Hover shows city label.
+- Homepage resequenced in place (same components/visual language): Hero → Selected Work → Currently Building → Ecosystem → Latest Updates → Journey → Yomi Unscripted → Work With Yomi → Newsletter. Hard-coded progress percentages replaced with real status labels.
+- `/ecosystem` — each venture with its own identity and CTA.
+- `/work/$slug` — editorial case study pages; `/work` index reuses the existing gallery/filter system.
+- `/press` media kit, `/archive` searchable archive, `/speaking` with Invite Yomi form, `/work-with-yomi` branching enquiry flow.
+- Existing routes (`/companies`, `/projects`, `/blog`, `/mentorship`, `/media`, `/contact`) stay and redirect or link into the new surfaces where they overlap — no dead links.
 
-### 8. Product-style company pages
-- Rework `/companies/$slug`: massive hero, mission/vision blocks, screenshots placeholder frames, roadmap timeline, "visit" CTA. Keep data-driven from `site-data.ts` (extend with mission/vision/roadmap).
+## Phase 4 — Command Center (/admin)
 
-### 9. Editorial journal
-- Rework `/journal` list into editorial cards; add reading-progress bar + estimated read time on article view (add `/journal/$slug` route with sample content, quote blocks, large imagery slots).
+Adds to the existing admin shell: Ventures, Updates, Work projects, Journey, Archive, Press, Speaking, Enquiries CRM (lead list, status, notes, activity), Integrations (connection status, manual sync), and Website (featured sections, SEO, nav/footer/socials). Analytics gains ecosystem metrics with "Not connected" instead of zeros.
 
-### 10. Media — Breaking Boundaries series
-- Featured episode hero (YouTube embed via lite thumbnail), episode grid, "Watch on YouTube" CTAs.
+## Phase 5 — Quality pass
 
-### 11. Speaking
-- Add testimonials carousel, past events list, "Creative Mindset Shift" flagship talk block, media kit download link (placeholder PDF link).
+Route/link/button audit, mobile checks at 320/375/390/430/tablet/desktop, loading + error + retry states, RLS review, per-route SEO metadata and schema (Person, Organization, CreativeWork, Article), sitemap refresh.
 
-### 12. Contact
-- Category chips (Speaking, Consulting, Creative Direction, Partnerships, Media, Technology, Photography) that prefill the message textarea via query param + state.
+## What I need from you
 
-### 13. Micro-interactions
-- Magnetic buttons, cursor spotlight (desktop only, disabled on touch/reduced-motion), card tilt on company cards, animated section dividers, scroll reveals already in place. Ambient floating gradients on hero backgrounds.
+1. **YouTube Data API key** for the live Yomi Unscripted feed. Without it I ship the section reading from cached/curated entries and mark it NOT CONNECTED.
+2. **TRYSA endpoint** — if TRYSA already exposes a public API or webhook, the URL. Otherwise it ships as CURATED with the integration interface ready.
 
-### 14. Founder dashboard
-- `/hq` route gated behind Lovable Cloud auth + `admin` role (user_roles table). Shows current projects, upcoming launches, ideas, quick notes (local state for now, DB-backed CRUD for notes/ideas).
-- **Requires enabling Lovable Cloud.** If you'd rather skip auth for now, I can ship it as a hidden route with a shared-password gate instead.
+## Notes
 
-## Technical notes
-- Stack stays TanStack Start / React 19 / Tailwind v4 / Framer Motion (already installed). No GSAP — Framer Motion covers every animation here at lower bundle cost. No three.js globe — SVG map keeps Lighthouse ≥95.
-- New data added to `src/lib/site-data.ts` (mission/vision/roadmap per company, stats, testimonials, episodes, ecosystem tree).
-- New components: `CinematicIntro`, `BuildingCards`, `EcosystemOrbit`, `ScrollTimeline`, `StatCounters`, `Manifesto`, `WorldMap`, `MagneticButton`, `CursorSpotlight`, `TiltCard`, `ReadingProgress`.
-- SEO head() per route preserved and updated where content changes.
-
-## One decision I need from you
-**Founder dashboard `/hq`:** enable Lovable Cloud + email auth (proper, revocable), or ship as a hidden route with a single shared password? Pick one and I'll build everything above in that turn.
+- No invented statistics, dates, testimonials or achievements anywhere.
+- Photography stays on the existing CDN/derivative pipeline.
+- Phases ship in order; the site stays working after each one.
