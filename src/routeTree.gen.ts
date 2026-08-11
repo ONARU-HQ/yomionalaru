@@ -20,10 +20,12 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MentorshipIndexRouteImport } from './routes/mentorship.index'
+import { Route as EcosystemIndexRouteImport } from './routes/ecosystem.index'
 import { Route as CompaniesIndexRouteImport } from './routes/companies.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as MentorshipSlugRouteImport } from './routes/mentorship.$slug'
+import { Route as EcosystemSlugRouteImport } from './routes/ecosystem.$slug'
 import { Route as CompaniesSlugRouteImport } from './routes/companies.$slug'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
@@ -97,6 +99,11 @@ const MentorshipIndexRoute = MentorshipIndexRouteImport.update({
   path: '/mentorship/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EcosystemIndexRoute = EcosystemIndexRouteImport.update({
+  id: '/ecosystem/',
+  path: '/ecosystem/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompaniesIndexRoute = CompaniesIndexRouteImport.update({
   id: '/companies/',
   path: '/companies/',
@@ -115,6 +122,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 const MentorshipSlugRoute = MentorshipSlugRouteImport.update({
   id: '/mentorship/$slug',
   path: '/mentorship/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EcosystemSlugRoute = EcosystemSlugRouteImport.update({
+  id: '/ecosystem/$slug',
+  path: '/ecosystem/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompaniesSlugRoute = CompaniesSlugRouteImport.update({
@@ -230,10 +242,12 @@ export interface FileRoutesByFullPath {
   '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
+  '/ecosystem/$slug': typeof EcosystemSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
+  '/ecosystem/': typeof EcosystemIndexRoute
   '/mentorship/': typeof MentorshipIndexRoute
   '/api/public/revalidate': typeof ApiPublicRevalidateRoute
   '/api/public/sync-integrations': typeof ApiPublicSyncIntegrationsRoute
@@ -263,10 +277,12 @@ export interface FileRoutesByTo {
   '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
+  '/ecosystem/$slug': typeof EcosystemSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
   '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
   '/companies': typeof CompaniesIndexRoute
+  '/ecosystem': typeof EcosystemIndexRoute
   '/mentorship': typeof MentorshipIndexRoute
   '/api/public/revalidate': typeof ApiPublicRevalidateRoute
   '/api/public/sync-integrations': typeof ApiPublicSyncIntegrationsRoute
@@ -298,10 +314,12 @@ export interface FileRoutesById {
   '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/companies/$slug': typeof CompaniesSlugRoute
+  '/ecosystem/$slug': typeof EcosystemSlugRoute
   '/mentorship/$slug': typeof MentorshipSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/companies/': typeof CompaniesIndexRoute
+  '/ecosystem/': typeof EcosystemIndexRoute
   '/mentorship/': typeof MentorshipIndexRoute
   '/api/public/revalidate': typeof ApiPublicRevalidateRoute
   '/api/public/sync-integrations': typeof ApiPublicSyncIntegrationsRoute
@@ -334,10 +352,12 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/blog/$slug'
     | '/companies/$slug'
+    | '/ecosystem/$slug'
     | '/mentorship/$slug'
     | '/admin/'
     | '/blog/'
     | '/companies/'
+    | '/ecosystem/'
     | '/mentorship/'
     | '/api/public/revalidate'
     | '/api/public/sync-integrations'
@@ -367,10 +387,12 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/blog/$slug'
     | '/companies/$slug'
+    | '/ecosystem/$slug'
     | '/mentorship/$slug'
     | '/admin'
     | '/blog'
     | '/companies'
+    | '/ecosystem'
     | '/mentorship'
     | '/api/public/revalidate'
     | '/api/public/sync-integrations'
@@ -401,10 +423,12 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/blog/$slug'
     | '/companies/$slug'
+    | '/ecosystem/$slug'
     | '/mentorship/$slug'
     | '/admin/'
     | '/blog/'
     | '/companies/'
+    | '/ecosystem/'
     | '/mentorship/'
     | '/api/public/revalidate'
     | '/api/public/sync-integrations'
@@ -423,9 +447,11 @@ export interface RootRouteChildren {
   SpeakingRoute: typeof SpeakingRoute
   BlogSlugRoute: typeof BlogSlugRoute
   CompaniesSlugRoute: typeof CompaniesSlugRoute
+  EcosystemSlugRoute: typeof EcosystemSlugRoute
   MentorshipSlugRoute: typeof MentorshipSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
   CompaniesIndexRoute: typeof CompaniesIndexRoute
+  EcosystemIndexRoute: typeof EcosystemIndexRoute
   MentorshipIndexRoute: typeof MentorshipIndexRoute
   ApiPublicRevalidateRoute: typeof ApiPublicRevalidateRoute
   ApiPublicSyncIntegrationsRoute: typeof ApiPublicSyncIntegrationsRoute
@@ -510,6 +536,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MentorshipIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ecosystem/': {
+      id: '/ecosystem/'
+      path: '/ecosystem'
+      fullPath: '/ecosystem/'
+      preLoaderRoute: typeof EcosystemIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/companies/': {
       id: '/companies/'
       path: '/companies'
@@ -536,6 +569,13 @@ declare module '@tanstack/react-router' {
       path: '/mentorship/$slug'
       fullPath: '/mentorship/$slug'
       preLoaderRoute: typeof MentorshipSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ecosystem/$slug': {
+      id: '/ecosystem/$slug'
+      path: '/ecosystem/$slug'
+      fullPath: '/ecosystem/$slug'
+      preLoaderRoute: typeof EcosystemSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/companies/$slug': {
@@ -709,9 +749,11 @@ const rootRouteChildren: RootRouteChildren = {
   SpeakingRoute: SpeakingRoute,
   BlogSlugRoute: BlogSlugRoute,
   CompaniesSlugRoute: CompaniesSlugRoute,
+  EcosystemSlugRoute: EcosystemSlugRoute,
   MentorshipSlugRoute: MentorshipSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
   CompaniesIndexRoute: CompaniesIndexRoute,
+  EcosystemIndexRoute: EcosystemIndexRoute,
   MentorshipIndexRoute: MentorshipIndexRoute,
   ApiPublicRevalidateRoute: ApiPublicRevalidateRoute,
   ApiPublicSyncIntegrationsRoute: ApiPublicSyncIntegrationsRoute,

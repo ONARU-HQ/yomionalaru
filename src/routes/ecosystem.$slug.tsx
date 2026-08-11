@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { Editorial, Reveal } from "@/components/editorial";
 import { StatusBadge, ConnectionBadge } from "@/components/ecosystem/StatusBadge";
