@@ -14,6 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
+      archive_entries: {
+        Row: {
+          body: string | null
+          category: Database["public"]["Enums"]["archive_category"]
+          created_at: string
+          description: string | null
+          entry_date: string | null
+          featured: boolean
+          id: string
+          image_url: string | null
+          published: boolean
+          published_at: string | null
+          slug: string
+          sort_order: number
+          tags: string[]
+          title: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          body?: string | null
+          category?: Database["public"]["Enums"]["archive_category"]
+          created_at?: string
+          description?: string | null
+          entry_date?: string | null
+          featured?: boolean
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          published_at?: string | null
+          slug: string
+          sort_order?: number
+          tags?: string[]
+          title: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          body?: string | null
+          category?: Database["public"]["Enums"]["archive_category"]
+          created_at?: string
+          description?: string | null
+          entry_date?: string | null
+          featured?: boolean
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          published_at?: string | null
+          slug?: string
+          sort_order?: number
+          tags?: string[]
+          title?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       articles: {
         Row: {
           author_id: string | null
@@ -304,6 +361,247 @@ export type Database = {
         }
         Relationships: []
       }
+      ecosystem_updates: {
+        Row: {
+          category: string | null
+          created_at: string
+          cta_label: string | null
+          cta_url: string | null
+          description: string | null
+          featured: boolean
+          id: string
+          image_url: string | null
+          published: boolean
+          published_at: string
+          sort_order: number
+          source: Database["public"]["Enums"]["connection_state"]
+          title: string
+          updated_at: string
+          venture_id: string | null
+          venture_label: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          description?: string | null
+          featured?: boolean
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          published_at?: string
+          sort_order?: number
+          source?: Database["public"]["Enums"]["connection_state"]
+          title: string
+          updated_at?: string
+          venture_id?: string | null
+          venture_label?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          description?: string | null
+          featured?: boolean
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          published_at?: string
+          sort_order?: number
+          source?: Database["public"]["Enums"]["connection_state"]
+          title?: string
+          updated_at?: string
+          venture_id?: string | null
+          venture_label?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ecosystem_updates_venture_id_fkey"
+            columns: ["venture_id"]
+            isOneToOne: false
+            referencedRelation: "ventures"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      enquiries: {
+        Row: {
+          audience_size: string | null
+          budget: string | null
+          company: string | null
+          created_at: string
+          details: Json
+          email: string
+          enquiry_type: string
+          event_date: string | null
+          event_location: string | null
+          event_name: string | null
+          id: string
+          last_activity_at: string
+          message: string
+          name: string
+          phone: string | null
+          status: Database["public"]["Enums"]["enquiry_status"]
+          subject: string | null
+          timeline: string | null
+          updated_at: string
+        }
+        Insert: {
+          audience_size?: string | null
+          budget?: string | null
+          company?: string | null
+          created_at?: string
+          details?: Json
+          email: string
+          enquiry_type: string
+          event_date?: string | null
+          event_location?: string | null
+          event_name?: string | null
+          id?: string
+          last_activity_at?: string
+          message: string
+          name: string
+          phone?: string | null
+          status?: Database["public"]["Enums"]["enquiry_status"]
+          subject?: string | null
+          timeline?: string | null
+          updated_at?: string
+        }
+        Update: {
+          audience_size?: string | null
+          budget?: string | null
+          company?: string | null
+          created_at?: string
+          details?: Json
+          email?: string
+          enquiry_type?: string
+          event_date?: string | null
+          event_location?: string | null
+          event_name?: string | null
+          id?: string
+          last_activity_at?: string
+          message?: string
+          name?: string
+          phone?: string | null
+          status?: Database["public"]["Enums"]["enquiry_status"]
+          subject?: string | null
+          timeline?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      enquiry_notes: {
+        Row: {
+          author_id: string | null
+          body: string
+          created_at: string
+          enquiry_id: string
+          id: string
+        }
+        Insert: {
+          author_id?: string | null
+          body: string
+          created_at?: string
+          enquiry_id: string
+          id?: string
+        }
+        Update: {
+          author_id?: string | null
+          body?: string
+          created_at?: string
+          enquiry_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enquiry_notes_enquiry_id_fkey"
+            columns: ["enquiry_id"]
+            isOneToOne: false
+            referencedRelation: "enquiries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      integration_cache: {
+        Row: {
+          created_at: string
+          error: string | null
+          fetched_at: string
+          id: string
+          ok: boolean
+          payload: Json
+          source_key: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          error?: string | null
+          fetched_at?: string
+          id?: string
+          ok?: boolean
+          payload?: Json
+          source_key: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          error?: string | null
+          fetched_at?: string
+          id?: string
+          ok?: boolean
+          payload?: Json
+          source_key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      integration_sources: {
+        Row: {
+          config: Json
+          connection: Database["public"]["Enums"]["connection_state"]
+          created_at: string
+          enabled: boolean
+          endpoint_url: string | null
+          id: string
+          key: string
+          label: string
+          last_error: string | null
+          last_sync_at: string | null
+          provider: string
+          updated_at: string
+        }
+        Insert: {
+          config?: Json
+          connection?: Database["public"]["Enums"]["connection_state"]
+          created_at?: string
+          enabled?: boolean
+          endpoint_url?: string | null
+          id?: string
+          key: string
+          label: string
+          last_error?: string | null
+          last_sync_at?: string | null
+          provider: string
+          updated_at?: string
+        }
+        Update: {
+          config?: Json
+          connection?: Database["public"]["Enums"]["connection_state"]
+          created_at?: string
+          enabled?: boolean
+          endpoint_url?: string | null
+          id?: string
+          key?: string
+          label?: string
+          last_error?: string | null
+          last_sync_at?: string | null
+          provider?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       invitations: {
         Row: {
           accepted_at: string | null
@@ -330,6 +628,66 @@ export type Database = {
           role?: Database["public"]["Enums"]["app_role"]
         }
         Relationships: []
+      }
+      journey_milestones: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          project_id: string | null
+          published: boolean
+          sort_order: number
+          title: string
+          updated_at: string
+          venture_id: string | null
+          video_url: string | null
+          year: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          project_id?: string | null
+          published?: boolean
+          sort_order?: number
+          title: string
+          updated_at?: string
+          venture_id?: string | null
+          video_url?: string | null
+          year: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          project_id?: string | null
+          published?: boolean
+          sort_order?: number
+          title?: string
+          updated_at?: string
+          venture_id?: string | null
+          video_url?: string | null
+          year?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journey_milestones_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "work_projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "journey_milestones_venture_id_fkey"
+            columns: ["venture_id"]
+            isOneToOne: false
+            referencedRelation: "ventures"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       media_library: {
         Row: {
@@ -478,6 +836,45 @@ export type Database = {
         }
         Relationships: []
       }
+      press_mentions: {
+        Row: {
+          created_at: string
+          headline: string
+          id: string
+          image_url: string | null
+          mention_date: string | null
+          publication: string
+          published: boolean
+          sort_order: number
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          created_at?: string
+          headline: string
+          id?: string
+          image_url?: string | null
+          mention_date?: string | null
+          publication: string
+          published?: boolean
+          sort_order?: number
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          created_at?: string
+          headline?: string
+          id?: string
+          image_url?: string | null
+          mention_date?: string | null
+          publication?: string
+          published?: boolean
+          sort_order?: number
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -616,6 +1013,45 @@ export type Database = {
         }
         Relationships: []
       }
+      speaking_topics: {
+        Row: {
+          audience: string | null
+          available: boolean
+          created_at: string
+          description: string | null
+          format: string | null
+          id: string
+          published: boolean
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          audience?: string | null
+          available?: boolean
+          created_at?: string
+          description?: string | null
+          format?: string | null
+          id?: string
+          published?: boolean
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          audience?: string | null
+          available?: boolean
+          created_at?: string
+          description?: string | null
+          format?: string | null
+          id?: string
+          published?: boolean
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       tags: {
         Row: {
           created_at: string
@@ -700,6 +1136,173 @@ export type Database = {
         }
         Relationships: []
       }
+      ventures: {
+        Row: {
+          accent_color: string | null
+          category: string | null
+          connection: Database["public"]["Enums"]["connection_state"]
+          cover_image: string | null
+          created_at: string
+          cta_label: string | null
+          cta_url: string | null
+          description: string | null
+          featured: boolean
+          features: string[]
+          id: string
+          logo_url: string | null
+          long_description: string | null
+          name: string
+          published: boolean
+          published_at: string | null
+          slug: string
+          sort_order: number
+          status: Database["public"]["Enums"]["venture_status"]
+          tagline: string | null
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          accent_color?: string | null
+          category?: string | null
+          connection?: Database["public"]["Enums"]["connection_state"]
+          cover_image?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          description?: string | null
+          featured?: boolean
+          features?: string[]
+          id?: string
+          logo_url?: string | null
+          long_description?: string | null
+          name: string
+          published?: boolean
+          published_at?: string | null
+          slug: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["venture_status"]
+          tagline?: string | null
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          accent_color?: string | null
+          category?: string | null
+          connection?: Database["public"]["Enums"]["connection_state"]
+          cover_image?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          description?: string | null
+          featured?: boolean
+          features?: string[]
+          id?: string
+          logo_url?: string | null
+          long_description?: string | null
+          name?: string
+          published?: boolean
+          published_at?: string | null
+          slug?: string
+          sort_order?: number
+          status?: Database["public"]["Enums"]["venture_status"]
+          tagline?: string | null
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
+      work_projects: {
+        Row: {
+          approach: string | null
+          category: string | null
+          challenge: string | null
+          client: string | null
+          cover_image: string | null
+          created_at: string
+          execution: string | null
+          external_url: string | null
+          featured: boolean
+          gallery: string[]
+          id: string
+          overview: string | null
+          published: boolean
+          published_at: string | null
+          result: string | null
+          role: string | null
+          slug: string
+          sort_order: number
+          summary: string | null
+          tags: string[]
+          title: string
+          updated_at: string
+          venture_id: string | null
+          video_url: string | null
+          year: string | null
+        }
+        Insert: {
+          approach?: string | null
+          category?: string | null
+          challenge?: string | null
+          client?: string | null
+          cover_image?: string | null
+          created_at?: string
+          execution?: string | null
+          external_url?: string | null
+          featured?: boolean
+          gallery?: string[]
+          id?: string
+          overview?: string | null
+          published?: boolean
+          published_at?: string | null
+          result?: string | null
+          role?: string | null
+          slug: string
+          sort_order?: number
+          summary?: string | null
+          tags?: string[]
+          title: string
+          updated_at?: string
+          venture_id?: string | null
+          video_url?: string | null
+          year?: string | null
+        }
+        Update: {
+          approach?: string | null
+          category?: string | null
+          challenge?: string | null
+          client?: string | null
+          cover_image?: string | null
+          created_at?: string
+          execution?: string | null
+          external_url?: string | null
+          featured?: boolean
+          gallery?: string[]
+          id?: string
+          overview?: string | null
+          published?: boolean
+          published_at?: string | null
+          result?: string | null
+          role?: string | null
+          slug?: string
+          sort_order?: number
+          summary?: string | null
+          tags?: string[]
+          title?: string
+          updated_at?: string
+          venture_id?: string | null
+          video_url?: string | null
+          year?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "work_projects_venture_id_fkey"
+            columns: ["venture_id"]
+            isOneToOne: false
+            referencedRelation: "ventures"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -724,7 +1327,24 @@ export type Database = {
     }
     Enums: {
       app_role: "super_admin" | "admin" | "editor" | "author"
+      archive_category:
+        | "work"
+        | "build"
+        | "thoughts"
+        | "places"
+        | "people"
+        | "media"
+      connection_state: "live" | "synced" | "curated" | "not_connected"
       content_status: "draft" | "scheduled" | "published" | "archived"
+      enquiry_status: "new" | "reviewing" | "contacted" | "meeting" | "closed"
+      venture_status:
+        | "idea"
+        | "building"
+        | "beta"
+        | "live"
+        | "operating"
+        | "paused"
+        | "archived"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -853,7 +1473,26 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["super_admin", "admin", "editor", "author"],
+      archive_category: [
+        "work",
+        "build",
+        "thoughts",
+        "places",
+        "people",
+        "media",
+      ],
+      connection_state: ["live", "synced", "curated", "not_connected"],
       content_status: ["draft", "scheduled", "published", "archived"],
+      enquiry_status: ["new", "reviewing", "contacted", "meeting", "closed"],
+      venture_status: [
+        "idea",
+        "building",
+        "beta",
+        "live",
+        "operating",
+        "paused",
+        "archived",
+      ],
     },
   },
 } as const
