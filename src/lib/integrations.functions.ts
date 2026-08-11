@@ -25,7 +25,7 @@ export type IntegrationPayload = {
   fetchedAt: string | null;
   ok: boolean;
   error: string | null;
-  data: unknown;
+  data: Record<string, unknown> | null;
 };
 
 const KEYS = ["youtube_yomi_unscripted", "trysa_status", "yv_studios_availability"] as const;
@@ -33,22 +33,20 @@ const KEYS = ["youtube_yomi_unscripted", "trysa_status", "yv_studios_availabilit
 /** Public read of the cached integration payloads. Safe fields only. */
 export const getIntegrationData = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) =>
-    z
-      .object({ keys: z.array(z.string().max(60)).max(10).optional() })
-      .parse(data ?? {}),
+    z.object({ keys: z.array(z.string().max(60)).max(10).optional() }).parse(data ?? {}),
   )
   .handler(async ({ data }): Promise<IntegrationPayload[]> => {
     const wanted = data.keys?.length ? data.keys : [...KEYS];
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const [sources, cache] = await Promise.all([
-      supabaseAdmin.from("integration_sources").select("key, connection, enabled, last_sync_at, last_error"),
+      supabaseAdmin
+        .from("integration_sources")
+        .select("key, connection, enabled, last_sync_at, last_error"),
       supabaseAdmin.from("integration_cache").select("source_key, payload, fetched_at, ok, error"),
     ]);
 
-    const cacheByKey = new Map(
-      (cache.data ?? []).map((r) => [r.source_key as string, r] as const),
-    );
+    const cacheByKey = new Map((cache.data ?? []).map((r) => [r.source_key as string, r] as const));
 
     return wanted.map((key) => {
       const source = (sources.data ?? []).find((s) => s.key === key);
@@ -62,13 +60,15 @@ export const getIntegrationData = createServerFn({ method: "GET" })
         fetchedAt: (cached?.fetched_at as string | null) ?? null,
         ok: Boolean(cached?.ok),
         error: (cached?.error as string | null) ?? null,
-        data: cached?.payload ?? null,
+        data: (cached?.payload as Record<string, unknown> | null) ?? null,
       };
     });
   });
 
-/** Trigger a sync of every enabled integration. Admin-only via the caller check. */
-export const syncIntegrations = createServerFn({ method: "POST" }).handler(async () => {
-  const { runIntegrationSync } = await import("@/lib/integrations.server");
-  return runIntegrationSync();
-});
+/** Trigger a sync of every enabled integration (used by the Command Center). */
+export const syncIntegrations = createServerFn({ method: "POST" }).handler(
+  async (): Promise<{ key: string; ok: boolean; error: string | null }[]> => {
+    const { runIntegrationSync } = await import("@/lib/integrations.server");
+    return runIntegrationSync();
+  },
+);
