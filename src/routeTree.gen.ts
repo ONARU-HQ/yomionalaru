@@ -39,6 +39,7 @@ import { Route as AdminCompaniesRouteImport } from './routes/admin.companies'
 import { Route as AdminBooksRouteImport } from './routes/admin.books'
 import { Route as AdminArticlesRouteImport } from './routes/admin.articles'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as ApiPublicSyncIntegrationsRouteImport } from './routes/api/public/sync-integrations'
 import { Route as ApiPublicRevalidateRouteImport } from './routes/api/public/revalidate'
 
 const SpeakingRoute = SpeakingRouteImport.update({
@@ -191,6 +192,12 @@ const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => AdminRoute,
 } as any)
+const ApiPublicSyncIntegrationsRoute =
+  ApiPublicSyncIntegrationsRouteImport.update({
+    id: '/api/public/sync-integrations',
+    path: '/api/public/sync-integrations',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicRevalidateRoute = ApiPublicRevalidateRouteImport.update({
   id: '/api/public/revalidate',
   path: '/api/public/revalidate',
@@ -229,6 +236,7 @@ export interface FileRoutesByFullPath {
   '/companies/': typeof CompaniesIndexRoute
   '/mentorship/': typeof MentorshipIndexRoute
   '/api/public/revalidate': typeof ApiPublicRevalidateRoute
+  '/api/public/sync-integrations': typeof ApiPublicSyncIntegrationsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -261,6 +269,7 @@ export interface FileRoutesByTo {
   '/companies': typeof CompaniesIndexRoute
   '/mentorship': typeof MentorshipIndexRoute
   '/api/public/revalidate': typeof ApiPublicRevalidateRoute
+  '/api/public/sync-integrations': typeof ApiPublicSyncIntegrationsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -295,6 +304,7 @@ export interface FileRoutesById {
   '/companies/': typeof CompaniesIndexRoute
   '/mentorship/': typeof MentorshipIndexRoute
   '/api/public/revalidate': typeof ApiPublicRevalidateRoute
+  '/api/public/sync-integrations': typeof ApiPublicSyncIntegrationsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -330,6 +340,7 @@ export interface FileRouteTypes {
     | '/companies/'
     | '/mentorship/'
     | '/api/public/revalidate'
+    | '/api/public/sync-integrations'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -362,6 +373,7 @@ export interface FileRouteTypes {
     | '/companies'
     | '/mentorship'
     | '/api/public/revalidate'
+    | '/api/public/sync-integrations'
   id:
     | '__root__'
     | '/'
@@ -395,6 +407,7 @@ export interface FileRouteTypes {
     | '/companies/'
     | '/mentorship/'
     | '/api/public/revalidate'
+    | '/api/public/sync-integrations'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -415,6 +428,7 @@ export interface RootRouteChildren {
   CompaniesIndexRoute: typeof CompaniesIndexRoute
   MentorshipIndexRoute: typeof MentorshipIndexRoute
   ApiPublicRevalidateRoute: typeof ApiPublicRevalidateRoute
+  ApiPublicSyncIntegrationsRoute: typeof ApiPublicSyncIntegrationsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -629,6 +643,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAnalyticsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/api/public/sync-integrations': {
+      id: '/api/public/sync-integrations'
+      path: '/api/public/sync-integrations'
+      fullPath: '/api/public/sync-integrations'
+      preLoaderRoute: typeof ApiPublicSyncIntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/revalidate': {
       id: '/api/public/revalidate'
       path: '/api/public/revalidate'
@@ -693,17 +714,8 @@ const rootRouteChildren: RootRouteChildren = {
   CompaniesIndexRoute: CompaniesIndexRoute,
   MentorshipIndexRoute: MentorshipIndexRoute,
   ApiPublicRevalidateRoute: ApiPublicRevalidateRoute,
+  ApiPublicSyncIntegrationsRoute: ApiPublicSyncIntegrationsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
