@@ -19,13 +19,15 @@ export type VideoItem = {
   publishedAt: string | null;
 };
 
+export type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
+
 export type IntegrationPayload = {
   key: string;
   connection: "live" | "synced" | "curated" | "not_connected";
   fetchedAt: string | null;
   ok: boolean;
   error: string | null;
-  data: Record<string, unknown> | null;
+  data: Json;
 };
 
 const KEYS = ["youtube_yomi_unscripted", "trysa_status", "yv_studios_availability"] as const;
@@ -60,7 +62,7 @@ export const getIntegrationData = createServerFn({ method: "GET" })
         fetchedAt: (cached?.fetched_at as string | null) ?? null,
         ok: Boolean(cached?.ok),
         error: (cached?.error as string | null) ?? null,
-        data: (cached?.payload as Record<string, unknown> | null) ?? null,
+        data: (cached?.payload as Json | undefined) ?? null,
       };
     });
   });
