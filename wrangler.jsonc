@@ -4,7 +4,9 @@
   // (see the deploy-production job in .github/workflows/deploy-cloudflare.yml).
   "name": "yomionalaru-v2-staging",
   "main": "@tanstack/react-start/server-entry",
-  "compatibility_date": "2026-11-02",
+  // Kept behind the current date so the local Workers runtime (workerd, which
+  // the bundled wrangler ships) and `wrangler dev`/`vite preview` both accept it.
+  "compatibility_date": "2026-10-01",
   "compatibility_flags": [
     "nodejs_compat"
   ],
