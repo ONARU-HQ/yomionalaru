@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { z } from "zod";
 import { Section, Reveal } from "@/components/ui-primitives";
 import { CONTACT, CONTACT_CATEGORIES, SOCIALS } from "@/lib/site-data";
-import { cn } from "@/lib/utils";
+import { EnquiryForm } from "@/components/ecosystem/EnquiryForm";
 
 const CategorySchema = z.object({ category: z.string().optional() }).partial();
 
@@ -29,16 +29,6 @@ function Contact() {
     return c ?? CONTACT_CATEGORIES[0];
   }, [search.category]);
 
-  const [selected, setSelected] = useState<string>(initial.key);
-  const [message, setMessage] = useState<string>(initial.prefill);
-
-  const handleCategory = (key: string) => {
-    const c = CONTACT_CATEGORIES.find((x) => x.key === key);
-    if (!c) return;
-    setSelected(key);
-    setMessage(c.prefill);
-  };
-
   return (
     <>
       <section className="relative mx-auto max-w-7xl px-6 pb-16 pt-40 md:pt-48">
@@ -56,61 +46,7 @@ function Contact() {
       <Section>
         <div className="grid gap-16 md:grid-cols-[1.4fr_1fr]">
           <Reveal>
-            <div className="rounded-3xl glass p-8 md:p-10">
-              <div className="text-[10px] uppercase tracking-[0.32em] text-gold/80">What is this about?</div>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {CONTACT_CATEGORIES.map((c) => (
-                  <button
-                    key={c.key}
-                    type="button"
-                    onClick={() => handleCategory(c.key)}
-                    className={cn(
-                      "rounded-full border px-4 py-2 text-xs uppercase tracking-[0.22em] transition",
-                      selected === c.key
-                        ? "border-gold bg-gold text-primary-foreground"
-                        : "border-border text-muted-foreground hover:border-gold/40 hover:text-gold",
-                    )}
-                  >
-                    {c.label}
-                  </button>
-                ))}
-              </div>
-
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const form = e.currentTarget as HTMLFormElement;
-                  const data = new FormData(form);
-                  const name = data.get("name");
-                  const email = data.get("email");
-                  const subject = `[${CONTACT_CATEGORIES.find((x) => x.key === selected)?.label}] From ${name}`;
-                  const body = `${message}\n\n— ${name}\n${email}`;
-                  window.location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                }}
-                className="mt-8 grid gap-4"
-              >
-                <div className="grid gap-4 md:grid-cols-2">
-                  <Field name="name" placeholder="Your name" required />
-                  <Field name="email" type="email" placeholder="Email" required />
-                </div>
-                <label className="block">
-                  <span className="text-[10px] uppercase tracking-[0.28em] text-muted-foreground">Message</span>
-                  <textarea
-                    name="message"
-                    rows={8}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className="mt-2 w-full rounded-2xl border border-border bg-black/30 p-4 text-sm outline-none focus:border-gold/50"
-                  />
-                </label>
-                <button
-                  type="submit"
-                  className="mt-2 rounded-full bg-gold px-7 py-3.5 text-sm font-medium text-primary-foreground shadow-[0_10px_40px_-10px_var(--gold)] hover:bg-gold-soft"
-                >
-                  Send message
-                </button>
-              </form>
-            </div>
+            <EnquiryForm initialType={initial.key === "creative" ? "photography" : initial.key === "speaking" ? "speaking" : initial.key === "partnerships" ? "partnership" : "other"} heading="Send an enquiry" />
           </Reveal>
 
           <div className="space-y-6">
