@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/hooks/use-auth";
 import { useServerFn } from "@tanstack/react-start";
 import { signInWithPin } from "@/lib/admin-pin.functions";
@@ -92,10 +91,13 @@ function AuthPage() {
   };
 
   const google = async () => {
-    const res = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin + "/auth",
+    // Standalone build: Google sign-in goes directly to Supabase Auth.
+    // The project's Auth settings must allow `https://yomionalaru.com/auth` as a redirect URL.
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin + "/auth" },
     });
-    if (res.error) toast.error("Google sign-in failed");
+    if (error) toast.error(error.message || "Google sign-in failed");
   };
 
   return (
