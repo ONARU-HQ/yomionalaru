@@ -1,0 +1,16 @@
+{
+  "name": "yomionalaru-v2-staging",
+  "main": "@tanstack/react-start/server-entry",
+  "compatibility_date": "2026-11-02",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "observability": {
+    "enabled": true
+  },
+  "env": {
+    "staging": {
+      "name": "yomionalaru-v2-staging"
+    }
+  }
+}
