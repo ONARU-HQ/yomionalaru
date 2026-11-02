@@ -8,7 +8,7 @@ const MAP = derivatives as unknown as Record<string, Pointer>;
 
 const WIDTHS = [640, 1080] as const;
 
-/** "/__l5e/assets-v1/<id>/a-king.jpg" -> "a-king" */
+/** "/media/a-king.jpg" -> "a-king" */
 export function baseName(src: string): string {
   const file = src.split("/").pop() ?? "";
   return file.replace(/\.[a-z0-9]+$/i, "");
