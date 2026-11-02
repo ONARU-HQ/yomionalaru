@@ -4,19 +4,35 @@ import { z } from "zod";
 import { ENQUIRY_TYPES, enquirySchema, useSubmitEnquiry } from "@/lib/enquiries";
 import { cn } from "@/lib/utils";
 
+/** Public brand choices only; workspace UUIDs are deliberately server-side. */
+const ENQUIRY_BRANDS = [
+  { value: "personal", label: "Yomi Onalaru — personal" },
+  { value: "yomi-visuals", label: "Yomi Visuals" },
+  { value: "yv-studios-lagos", label: "YV Studios — Lagos (physical studio)" },
+  { value: "yv-studios-accra", label: "YV Studios Africa — Accra (partner network)" },
+  { value: "trysa", label: "TRYSA" },
+  { value: "playbaaq", label: "PlayBaaq" },
+  { value: "shop-1401", label: "Shop 1401" },
+  { value: "yofa", label: "YOFA" },
+  { value: "onaru", label: "ONARU / other ventures" },
+] as const;
+
 const input =
   "w-full rounded-xl border border-border/70 bg-transparent px-4 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-gold/60";
 
 type Props = {
   /** Lock the form to one enquiry type (used by the speaking page). */
   fixedType?: string;
+  initialType?: string;
+  fixedBrand?: string;
   heading?: string;
   className?: string;
 };
 
-export function EnquiryForm({ fixedType, heading, className }: Props) {
+export function EnquiryForm({ fixedType, initialType, fixedBrand, heading, className }: Props) {
   const submit = useSubmitEnquiry();
-  const [type, setType] = useState(fixedType ?? "photography");
+  const [type, setType] = useState(fixedType ?? initialType ?? "photography");
+  const [brand, setBrand] = useState(fixedBrand ?? "personal");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [done, setDone] = useState(false);
 
@@ -27,7 +43,19 @@ export function EnquiryForm({ fixedType, heading, className }: Props) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     const values = Object.fromEntries(form.entries()) as Record<string, string>;
-    const payload = { ...values, enquiry_type: type };
+    // Keep current database schema compatible: persist the explicit brand choice
+    // in the existing subject field; authoritative TRYSA routing must validate
+    // this server-side against a pinned brand-to-workspace registry.
+    const allowedBrand = ENQUIRY_BRANDS.find((b) => b.value === brand);
+    if (!allowedBrand) {
+      toast.error("Choose a valid business.");
+      return;
+    }
+    const payload = {
+      ...values,
+      enquiry_type: type,
+      subject: `[${allowedBrand.value}] Enquiry for ${allowedBrand.label}`,
+    };
     setErrors({});
     try {
       const parsed = enquirySchema.parse(payload);
@@ -65,6 +93,23 @@ export function EnquiryForm({ fixedType, heading, className }: Props) {
     >
       {heading && <h3 className="mb-8 font-display text-3xl">{heading}</h3>}
 
+      {!fixedBrand && (
+        <div className="mb-8">
+          <label htmlFor="enquiry-brand" className="eyebrow mb-4 block">Which brand would you like to contact?</label>
+          <select
+            id="enquiry-brand"
+            name="brand_choice"
+            value={brand}
+            onChange={(e) => setBrand(e.target.value)}
+            required
+            className={input}
+          >
+            {ENQUIRY_BRANDS.map((b) => (
+              <option key={b.value} value={b.value} className="bg-neutral-950 text-white">{b.label}</option>
+            ))}
+          </select>
+        </div>
+      )}
       {!fixedType && (
         <div className="mb-8">
           <span className="eyebrow mb-4 block">What is this about?</span>
