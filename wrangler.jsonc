@@ -1,16 +1,15 @@
 {
+  // Staging Worker. The production Worker serving yomionalaru.com is
+  // `yomionalaru`; deploy to it with `wrangler deploy --name yomionalaru`
+  // (see the deploy-production job in .github/workflows/deploy-cloudflare.yml).
   "name": "yomionalaru-v2-staging",
   "main": "@tanstack/react-start/server-entry",
   "compatibility_date": "2026-11-02",
   "compatibility_flags": [
     "nodejs_compat"
   ],
+  "workers_dev": true,
   "observability": {
     "enabled": true
-  },
-  "env": {
-    "staging": {
-      "name": "yomionalaru-v2-staging"
-    }
   }
 }

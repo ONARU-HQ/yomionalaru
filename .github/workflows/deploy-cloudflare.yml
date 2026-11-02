@@ -3,25 +3,97 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      deploy_target:
+        description: Which Worker receives this build
+        type: choice
+        required: true
+        default: staging
+        options:
+          - staging
+          - production
+
 concurrency:
   group: cloudflare-deploy
   cancel-in-progress: false
+
 permissions:
   contents: read
+
+# `push` to main builds and deploys the staging Worker only.
+# yomionalaru.com is served by the production Worker `yomionalaru`, which is
+# updated by running this workflow manually with deploy_target=production.
 jobs:
-  deploy-worker:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 1.4.0
+          bun-version: "1.4.0"
       - run: bun install --frozen-lockfile
-      - run: bun run build
-      - name: Deploy Worker
+      - name: Build Worker bundle
+        run: bun run build
+        env:
+          # Repository secrets (Settings -> Secrets and variables -> Actions).
+          # Without them the client bundle ships "Missing Supabase environment"
+          # and browser sign-in fails at runtime.
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
+      - name: Verify Supabase config was inlined
+        run: |
+          if grep -rq "Missing Supabase environment variable" dist/client/assets \
+             && ! grep -rqE "https://[a-z0-9]+\.supabase\.co" dist/client/assets; then
+            echo "::error::No Supabase project URL was compiled into the client bundle."
+            echo "::error::Set the VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY secrets before deploying."
+            exit 1
+          fi
+          echo "Client bundle carries the Supabase project config."
+      - name: Strip local dev secrets from the artifact
+        run: rm -f dist/server/.dev.vars
+      - uses: actions/upload-artifact@v4
+        with:
+          name: worker-build
+          path: dist
+          retention-days: 7
+
+  deploy-staging:
+    if: ${{ github.event_name == 'push' || github.event.inputs.deploy_target == 'staging' }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: worker-build
+          path: dist
+      - name: Deploy staging Worker
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           wranglerVersion: "4"
-          command: deploy --name yomionalaru
+          # The build writes the deployable config (entry point + assets binding)
+          # to dist/server/wrangler.json; its asset paths are relative to itself.
+          command: deploy -c dist/server/wrangler.json
+
+  deploy-production:
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_target == 'production' }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: worker-build
+          path: dist
+      - name: Deploy production Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4"
+          # yomionalaru.com is bound to this Worker name.
+          command: deploy -c dist/server/wrangler.json --name yomionalaru
