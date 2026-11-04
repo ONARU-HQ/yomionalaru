@@ -2,7 +2,7 @@ export const SITE_URL = "https://yomionalaru.com";
 
 export const NAV_LINKS = [
   { to: "/", label: "Home" },
-  { to: "/about", label: "Journey" },
+  { to: "/journey", label: "Journey" },
   { to: "/companies", label: "Companies" },
   { to: "/projects", label: "Work" },
   { to: "/mentorship", label: "Mentorship" },
