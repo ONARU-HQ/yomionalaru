@@ -37,7 +37,7 @@ export function SiteNav() {
 
         <nav
           className={cn(
-            "hidden items-center gap-1 rounded-full px-2 py-1.5 transition md:flex",
+            "hidden items-center gap-1 rounded-full px-2 py-1.5 transition lg:flex",
             scrolled && "glass",
           )}
         >
@@ -58,7 +58,7 @@ export function SiteNav() {
           })}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <Link
             to="/contact"
             className="rounded-full bg-gold px-5 py-2 text-xs font-medium uppercase tracking-[0.2em] text-primary-foreground transition hover:bg-gold-soft"
@@ -69,7 +69,7 @@ export function SiteNav() {
 
         <button
           onClick={() => setOpen((o) => !o)}
-          className="grid h-10 w-10 place-items-center rounded-full border border-border md:hidden"
+          className="grid h-10 w-10 place-items-center rounded-full border border-border lg:hidden"
           aria-label="Toggle menu"
         >
           {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
