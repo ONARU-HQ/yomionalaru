@@ -4,6 +4,7 @@ import { ArrowDownRight, ArrowRight, ArrowUpRight, Camera, Code2, Film, Layers3,
 import { lazy, Suspense } from "react";
 import { TIMELINE, PRINCIPLES } from "@/lib/site-data";
 import { usePublicArticles, usePublicProjects } from "@/lib/public-content";
+import { IdentityCardShowcase } from "./IdentityCardShowcase";
 
 const Universe = lazy(() => import("./FounderUniverse3D").then(m => ({default:m.FounderUniverse3D})));
 
@@ -50,7 +51,7 @@ export function FounderIdentityExperience() {
             My work moves between imagery, software, businesses and the ideas connecting them.
           </motion.p>
           <motion.div {...anim(0.24)} className="mt-8 flex flex-wrap gap-3">
-            <a href="#the-journey" className="inline-flex min-h-12 items-center gap-3 rounded-full bg-[#d1e87b] px-6 text-xs font-semibold uppercase tracking-[.15em] text-[#121612] transition hover:bg-[#e5f7ad]">Explore my journey <ArrowDownRight className="h-4 w-4"/></a>
+            <a href="/journey" className="inline-flex min-h-12 items-center gap-3 rounded-full bg-[#d1e87b] px-6 text-xs font-semibold uppercase tracking-[.15em] text-[#121612] transition hover:bg-[#e5f7ad]">Enter the 3D journey <ArrowDownRight className="h-4 w-4"/></a>
             <Link to="/projects" className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/30 bg-black/30 px-6 text-xs uppercase tracking-[.14em] transition hover:border-white">Selected work <ArrowUpRight className="h-4 w-4"/></Link>
           </motion.div>
         </div>
@@ -76,6 +77,8 @@ export function FounderIdentityExperience() {
         <span>Chapter 01 / Identity</span><span>Scroll to explore ↓</span>
       </div>
     </section>
+
+    <IdentityCardShowcase />
 
     <section id="the-journey" className="bg-[#f1f0e7] px-6 py-24 text-[#1c211e] md:py-32" aria-labelledby="journey-title">
       <div className="mx-auto max-w-7xl">
