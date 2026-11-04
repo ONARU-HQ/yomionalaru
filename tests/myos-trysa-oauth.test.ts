@@ -3,7 +3,7 @@ import {
   startTrysaOwnerOAuth,
   finishTrysaOwnerOAuth,
   verifiedOwnerSession,
-} from "../../src/lib/myos/trysa-owner-session.server";
+} from "../src/lib/myos/trysa-owner-session.server";
 
 const ORIGIN = "https://yomionalaru.com";
 const OWNER = "c55d346b-066d-46f0-99e0-617cc6053978";
