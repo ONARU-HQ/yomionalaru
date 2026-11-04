@@ -3,6 +3,9 @@ on:
   pull_request:
     paths:
       - "src/lib/myos/**"
+      - "src/routes/auth.tsx"
+      - "src/routes/api/auth/trysa/**"
+      - "src/routes/api/admin/myos-owner-session.ts"
       - "src/routes/admin.my-os.tsx"
       - "src/routes/api/admin/myos-trysa-status.ts"
       - "src/components/admin/AdminShell.tsx"
