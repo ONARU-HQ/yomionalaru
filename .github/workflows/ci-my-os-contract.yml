@@ -1,0 +1,26 @@
+name: MY OS TRYSA Admin Build
+on:
+  pull_request:
+    paths:
+      - "src/lib/myos/**"
+      - "src/routes/admin.my-os.tsx"
+      - "src/routes/api/admin/myos-trysa-status.ts"
+      - "src/components/admin/AdminShell.tsx"
+      - "docs/integrations/my-os-trysa-admin.md"
+      - ".github/workflows/ci-my-os-contract.yml"
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.4.0"
+      - run: bun install --frozen-lockfile
+      - name: Build YomiOnalaru Worker
+        run: bun run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
