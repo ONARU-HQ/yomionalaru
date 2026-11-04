@@ -1,9 +1,17 @@
 name: Personal identity frontend QA
 
 on:
+  push:
+    branches:
+      - fix/identity-card-ui-production-lock-20261104
   pull_request:
     paths:
       - "src/components/founder/FounderUniverse3D.tsx"
+      - "src/components/founder/IdentityCardShowcase.tsx"
+      - "src/components/founder/LifeJourney3D.tsx"
+      - "src/routes/journey.tsx"
+      - "bun.lock"
+      - "src/routes/sitemap[.]xml.ts"
       - "src/components/founder/FounderIdentityExperience.tsx"
       - "src/routes/index.tsx"
       - "src/routes/thinking.tsx"
@@ -24,7 +32,7 @@ jobs:
         with:
           bun-version: 1.4.0
       - name: Resolve new Three.js dependencies
-        run: bun install --no-save
+        run: bun install --frozen-lockfile
       - name: Verify frontend and Worker build
         run: bun run build
       - name: Check private owner modules are unchanged
