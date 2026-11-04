@@ -35,19 +35,8 @@ export function AdminShell() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [open, setOpen] = useState(false);
   const isMyOs = pathname === "/admin/my-os" || pathname.startsWith("/admin/my-os/");
-  const [trySaOwner, setTrySaOwner] = useState<"checking" | "yes" | "no">("checking");
 
   useEffect(() => setOpen(false), [pathname]);
-
-  useEffect(() => {
-    if (!isMyOs) return;
-    let active = true;
-    setTrySaOwner("checking");
-    void fetch("/api/admin/myos-owner-session", { credentials: "same-origin", cache: "no-store" })
-      .then(r => { if (active) setTrySaOwner(r.ok ? "yes" : "no"); })
-      .catch(() => { if (active) setTrySaOwner("no"); });
-    return () => { active = false; };
-  }, [isMyOs]);
 
   useEffect(() => {
     if (loading || isMyOs) return;
@@ -56,47 +45,23 @@ export function AdminShell() {
     }
   }, [loading, user, navigate, pathname, isMyOs]);
 
-  // TRYSA can authorize ONLY this MY OS route. It cannot grant access to
-  // other YomiOnalaru CMS routes, users, or elevated CMS roles.
+  // YomiOnalaru.com is a frontend only for MY OS. No OAuth secrets,
+  // owner sessions, CRM records or signing keys live on this host.
   if (isMyOs) {
-    if (trySaOwner === "checking") {
-      return <div className="grid min-h-screen place-items-center bg-background text-sm text-muted-foreground">Verifying TRYSA owner access…</div>;
-    }
-    if (trySaOwner === "no") {
-      return (
-        <div className="grid min-h-screen place-items-center bg-background px-5 text-foreground">
-          <div className="max-w-md rounded-3xl border border-border p-8 text-center">
-            <h1 className="font-display text-4xl gold-text">MY OS — Owner access</h1>
-            <p className="mt-4 text-sm leading-6 text-muted-foreground">
-              Authenticate on TRYSA using your existing email and PIN, Google or other approved TRYSA sign-in method.
-              Only the verified MY OS owner can continue. TRYSA keeps CRM and booking records.
-            </p>
-            <a href="/api/auth/trysa/start"
-              className="mt-7 inline-flex rounded-full bg-gold px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground">
-              Continue with TRYSA
-            </a>
-            <p className="mt-4 text-xs text-muted-foreground">
-              No TRYSA password or PIN is entered on this website.
-            </p>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div className="min-h-screen bg-background text-foreground">
-        <header className="flex items-center justify-between gap-3 border-b border-border/60 px-5 py-4 lg:px-10">
-          <span className="text-xs uppercase tracking-[0.25em] text-gold">Yomi Onalaru / MY OS</span>
-          <div className="flex gap-4 text-xs">
-            <a className="hover:text-gold" href="/">Public site</a>
-            <button onClick={async () => {
-              await fetch("/api/auth/trysa/logout", { method: "POST", credentials: "same-origin" });
-              window.location.assign("/auth");
-            }} className="hover:text-gold">Sign out</button>
-          </div>
-        </header>
-        <main className="mx-auto max-w-6xl px-5 py-10 lg:px-10"><Outlet /></main>
+    return <div className="grid min-h-screen place-items-center bg-background px-5 text-foreground">
+      <div className="max-w-lg rounded-3xl border border-border p-8 text-center">
+        <h1 className="font-display text-4xl gold-text">MY OS</h1>
+        <p className="mt-4 text-sm leading-7 text-muted-foreground">
+          Your private workspace is hosted securely by ONARU OS. TRYSA remains
+          responsible for authentication, CRM and bookings.
+        </p>
+        <a href="https://onaru.app/my-os"
+          className="mt-7 inline-flex rounded-full bg-gold px-6 py-3 text-xs font-semibold uppercase tracking-[0.15em] text-primary-foreground">
+          Open MY OS securely
+        </a>
+        <p className="mt-4 text-xs text-muted-foreground">Only the verified owner account can access private MY OS data.</p>
       </div>
-    );
+    </div>;
   }
 
   if (loading) {

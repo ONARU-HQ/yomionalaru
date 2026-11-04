@@ -1,92 +1,47 @@
-# YomiOnalaru MY OS ↔ TRYSA identity and data contract
+# MY OS frontend handoff — YomiOnalaru.com
 
-**STATUS 2026-11-04: GitHub code only — no production SSO, no CRM synchronization.**
+**Status: feature branch, not yet deployed.**
 
-## Problem and resolution
+YomiOnalaru.com is the public personal-brand website and a link-only frontend
+for owner MY OS. It should NOT host a second TRYSA OAuth callback, private
+signing keys, client secrets, user tokens, CRM data or booking records.
 
-The original YomiOnalaru Owner PIN screen checked `ADMIN_EMAIL` and `ADMIN_PIN`
-on YomiOnalaru's separate Supabase/Worker project. Production lacked the PIN
-setting. Signing up for a separate site account does not grant MY OS access.
+## Destination
 
-This implementation makes **TRYSA the identity provider and CRM/bookings backend**.
-The site never asks for a TRYSA PIN or password. It redirects to TRYSA's
-existing sign-in and OAuth consent flow, then independently verifies the
-identity returned from TRYSA against the owner's pinned **immutable TRYSA user
-UUID**. An arbitrary matching email or site signup is not enough.
+- YomiOnalaru.com `/auth` offers a **Continue with TRYSA** link to
+  `https://onaru.app/my-os`.
+- YomiOnalaru.com `/admin/my-os` displays a frontend-only link to
+  `https://onaru.app/my-os`.
+- ONARU OS is the confidential TRYSA OAuth client and owns the verified
+  owner session. Callback:
+  `https://onaru.app/api/auth/trysa/callback`.
+- TRYSA is the identity provider and CRM/booking system of record. Owner
+  access requires exact immutable TRYSA identity match and explicit
+  workspace OAuth consent. Credentials never enter Yomi browser code.
+- The site's separate CMS roles and staff login are unchanged.
 
-## Security boundaries
+## Retired Yomi server-side MY OS code
 
-- `/auth`: TRYSA-first, with existing staff Supabase/Google login retained
-  solely for separately authorized content-studio roles. The dead Yomi-specific
-  owner PIN and confusing public signup were removed from this login UI.
-- `/admin/my-os`: only a pinned TRYSA owner session grants access. The
-  parent admin shell makes no TRYSA-to-Supabase-role elevation. All other
-  YomiOnalaru admin routes keep their original local role guards.
-- `/api/auth/trysa/start`: validates a same-site origin and begins
-  authorization-code + PKCE S256 with random state/verifier protected in
-  AES-256-GCM sealed HttpOnly Secure SameSite=Lax transaction cookie.
-- `/api/auth/trysa/callback`: verifies state, obtains tokens server-to-server
-  using confidential OAuth client authentication and PKCE, calls TRYSA
-  `/api/public/onaru/oauth/me` with the access token to retrieve a verified
-  subject and consented workspace, compares the subject to the pinned owner
-  UUID, then issues a short-lived encrypted HttpOnly owner-only cookie.
-- `/api/admin/myos-owner-session` and
-  `/api/admin/myos-trysa-status`: both call the owner verifier on each
-  request. The verifier validates the cookie and re-introspects the TRYSA
-  access token, making revoked grants fail closed.
-- Owner session never grants rights to other CMS/admin routes, and no local
-  browser code receives the TRYSA OAuth access/refresh tokens.
-- A valid TRYSA login does not automatically authorize **all** workspaces.
-  The user must separately approve each workspace under TRYSA's existing
-  consent rules. Current preview supports one selected workspace per session;
-  a durable multi-workspace grant registry does not yet exist.
-- No customer records are moved to a new database and no CRM or booking
-  writes are implemented.
-- The existing MY OS ↔ TRYSA bilateral signing contract is separate from SSO
-  and must be independently activated before CRM data is shared.
+Removed from this feature branch:
+`src/lib/myos/trysa-owner-session.server.ts`,
+`src/lib/myos/trysa-contract.server.ts`,
+`src/routes/api/auth/trysa/{start,callback,logout}.ts`,
+`src/routes/api/admin/{myos-owner-session,myos-trysa-status}.ts`,
+and the tests that depended on those server modules. Owner OAuth tests
+now run in ONARU OS.
 
-## Provisioning — do not commit values
+## Activation order
 
-The dedicated TRYSA OAuth client **`yomionalaru_myos` is not registered**.
-Register it via authorized TRYSA operator workflow with exact redirect URL
-`https://yomionalaru.com/api/auth/trysa/callback`, PKCE S256 enforced,
-client secret hashed on TRYSA server, and allowed scopes restricted to
-`workspaces.read clients.read bookings.read`.
-Do not rotate the existing `onaru_os` client credentials.
+1. Review and merge TRYSA OAuth registration UI. Register confidential client
+   suspended with exact ONARU OS redirect and minimal read scopes.
+2. Provision owner-pinned OAuth secret and AES-GCM cookie key in ONARU OS
+   Vercel only. Do not provision them in YomiOnalaru Cloudflare.
+3. Review and validate ONARU OS OAuth broker and its owner-only privacy tests.
+4. Verify real TRYSA login, consent, revocation, wrong-owner denial and
+   no cross-workspace access.
+5. Activate OAuth client only after an authorized operator approves tests.
+6. Deploy ONARU OS first, then deploy YomiOnalaru frontend handoff.
+7. Bilateral signed CRM/booking reads remain a separate explicit release gate.
 
-Set these **Cloudflare Worker server-side secrets only**, under the correct
-production/staging environment:
-- `MYOS_TRYSA_CLIENT_SECRET`: dedicated TRYSA OAuth confidential client secret
-- `MYOS_TRYSA_OWNER_SUB`: immutable owner UUID, independently verified in TRYSA
-- `MYOS_TRYSA_COOKIE_KEY_B64`: 32 random bytes base64url encoded; rotate on
-  suspected exposure (rotation invalidates prior sessions)
-- `MYOS_PUBLIC_ORIGIN`: `https://yomionalaru.com` in production
-- Bilateral contract variables: `MYOS_TRYSA_CONTRACT_DIGEST`,
-  `MYOS_TRYSA_TRUSTED_PUBLIC_KEYS_JSON`, `MYOS_TRYSA_ATTESTATIONS_JSON`,
-  `MYOS_TRYSA_KEY_ID`, `MYOS_TRYSA_PRIVATE_KEY_PEM` (independently signed)
-
-No variables are `VITE_*`. Do not paste secrets, client PIN, OAuth tokens,
-private keys or customer data into a chat, commit, issue, PR or browser console.
-
-## Release blockers / acceptance checks
-
-- [ ] TRYSA identity endpoint on the actual live `own-stack` deployment.
-- [ ] Dedicated OAuth client registered and known owner identity verified.
-- [ ] Stage YomiOnalaru Worker in isolated environment, ensure exact
-      callback URL is registered for that deployment.
-- [ ] Verify a correct TRYSA login can select an approved workspace and return.
-- [ ] Reject a different TRYSA account with identical display name/email.
-- [ ] Reject altered state, expired codes, missing PIN, revoked authorization,
-      denied workspace, expired cookies, wrong owner UUID and wrong OAuth client.
-- [ ] Confirm anonymous callers and ordinary site staff cannot load MY OS.
-- [ ] Confirm MY OS login grants no YomiOnalaru CMS/editor/super-admin rights.
-- [ ] Validate refresh/session UX. Current session expires within 15 minutes;
-      long-lived login requires server-side refresh-token rotation, not
-      long-lived browser tokens.
-- [ ] Complete bilateral cryptographic attestation and negative tests before
-      enabling any MY OS CRM/bookings read.
-- [ ] Test iPhone Safari and mobile navigation on staging.
-- [ ] Confirm production deployment only after owner and security review.
-
-**Do not merge or deploy as a working SSO until these are verified.** The
-Current GitHub build validates compilation only, not a real login.
+**No MY OS data is shown on the Yomi site** before the separately protected
+ONARU OS owner session. No live OAuth client was registered by this PR.

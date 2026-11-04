@@ -61,14 +61,14 @@ function AuthPage(){
       </Link>
       <h1 className="text-center font-display text-5xl gold-text">Owner access</h1>
       <p className="mt-4 text-center text-sm leading-7 text-muted-foreground">
-        Use your TRYSA account to open MY OS. Your email and PIN are verified securely on TRYSA—not on this website.
+        MY OS is securely hosted by ONARU OS. TRYSA authenticates your email and PIN on its own website.
       </p>
-      <a href="/api/auth/trysa/start"
+      <a href="https://onaru.app/my-os"
         className="mt-10 flex w-full items-center justify-center rounded-full bg-gold px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-primary-foreground">
         Continue with TRYSA
       </a>
       <p className="mt-4 text-center text-xs leading-6 text-muted-foreground">
-        TRYSA will ask you to sign in and approve an individual workspace. Only the pre-approved owner account may enter MY OS.
+        ONARU OS will redirect you to TRYSA for owner verification and explicit workspace consent.
       </p>
       <div className="my-8 flex items-center gap-4 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
         <div className="h-px flex-1 bg-border"/> Existing site staff <div className="h-px flex-1 bg-border"/>
