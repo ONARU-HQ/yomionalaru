@@ -4,6 +4,7 @@ import { ArrowDownRight, ArrowRight, ArrowUpRight, Camera, Code2, Film, Layers3,
 import { lazy, Suspense } from "react";
 import { TIMELINE, PRINCIPLES } from "@/lib/site-data";
 import { usePublicArticles, usePublicProjects } from "@/lib/public-content";
+import { IdentityCardShowcase } from "./IdentityCardShowcase";
 
 const Universe = lazy(() => import("./FounderUniverse3D").then(m => ({default:m.FounderUniverse3D})));
 
@@ -84,6 +85,8 @@ export function FounderIdentityExperience() {
         <span>Chapter 01 / Identity</span><span>Scroll to explore ↓</span>
       </div>
     </section>
+
+    <IdentityCardShowcase />
 
     <section id="the-journey" className="bg-[#f2f2f2] px-6 py-24 text-[#151515] md:py-32" aria-labelledby="journey-title">
       <div className="mx-auto max-w-7xl">
