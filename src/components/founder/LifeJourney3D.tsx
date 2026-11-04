@@ -23,7 +23,7 @@ export function LifeJourney3D({ progress }: { progress: number }) {
         const T=await import("three");
         if(disposed||!host.isConnected)return;
         const scene=new T.Scene();
-        scene.fog=new T.FogExp2(0x090c0c,0.018);
+        scene.fog=new T.FogExp2(0x0a0a0a,0.018);
         const camera=new T.PerspectiveCamera(45,1,0.1,65);
         camera.position.set(0,0,10);
         const renderer=new T.WebGLRenderer({alpha:true,antialias:true,powerPreference:"low-power"});
@@ -35,7 +35,7 @@ export function LifeJourney3D({ progress }: { progress: number }) {
         const shared:T.BufferGeometry[]=[];
         const materials:T.Material[]=[];
         const groups:T.Group[]=[];
-        const gold=0xd2b88e, mint=0x9cceb6, lime=0xc7ee73, blue=0x7eb9da;
+        const gold=0xe8e8e8, mint=0xbdbdbd, lime=0xffffff, blue=0x888888;
         const wire=(geom:T.BufferGeometry,color:number,opacity=0.58)=>{
           shared.push(geom);
           const edges=new T.EdgesGeometry(geom);
@@ -110,7 +110,7 @@ export function LifeJourney3D({ progress }: { progress: number }) {
         const pointsGeometry=new T.BufferGeometry();
         pointsGeometry.setAttribute("position",new T.BufferAttribute(stars,3));
         shared.push(pointsGeometry);
-        const pointMaterial=new T.PointsMaterial({color:0xb9d5c7,size:.035,transparent:true,opacity:.6});
+        const pointMaterial=new T.PointsMaterial({color:0xbdbdbd,size:.035,transparent:true,opacity:.6});
         materials.push(pointMaterial);
         scene.add(new T.Points(pointsGeometry,pointMaterial));
         let running=false,frame=0,visible=true;
