@@ -1,3 +1,4 @@
+import { FounderIdentityExperience } from "@/components/founder/FounderIdentityExperience";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
@@ -43,35 +44,11 @@ export const Route = createFileRoute("/")({
 function Home() {
   return (
     <>
-      <CinematicIntro />
-      <CursorSpotlight />
-      {/* 1 — Hero */}
-      <Hero />
-      <MarqueeStrip />
-      {/* 2 — Ecosystem */}
-      <EcosystemSection />
-      <CompaniesPreview />
-      {/* 3 — Latest articles */}
-      <LatestArticles />
-      {/* 4 — Featured work */}
-      <FeaturedWork />
-      <SelectedPhotography />
-
-      {/* 5 — Ventures & products */}
-      <VenturesSection />
-      {/* 6 — Testimonials */}
-      <TestimonialsSection />
-      {/* 7 — Mentorship & speaking */}
-      <MentorshipSection />
-      {/* 8 — Newsletter */}
-      <NewsletterSection />
-      <StatCounters />
-      <Manifesto />
-      <ScrollTimeline />
-      <WorldMap />
+      <FounderIdentityExperience />
+      {/* Existing public media, newsletter and contact paths remain accessible,
+          without repeating the full archives above the identity story. */}
       <MediaPreview />
-      <QuoteSection />
-      <SocialGrid />
+      <NewsletterSection />
       <ContactCTA />
     </>
   );
