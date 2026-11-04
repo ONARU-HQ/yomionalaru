@@ -4,6 +4,7 @@ on:
     paths:
       - "src/lib/myos/**"
       - "src/routes/auth.tsx"
+      - "tests/myos-trysa-oauth.test.ts"
       - "src/routes/api/auth/trysa/**"
       - "src/routes/api/admin/myos-owner-session.ts"
       - "src/routes/admin.my-os.tsx"
@@ -22,6 +23,8 @@ jobs:
         with:
           bun-version: "1.4.0"
       - run: bun install --frozen-lockfile
+      - name: Verify TRYSA OAuth owner login safeguards
+        run: bun test tests/myos-trysa-oauth.test.ts
       - name: Build YomiOnalaru Worker
         run: bun run build
         env:
