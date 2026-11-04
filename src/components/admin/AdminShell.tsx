@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   LayoutDashboard, FileText, Building2, Images, Quote, Mic, BookOpen,
   LinkIcon, Mail, Inbox, Settings as SettingsIcon, Users, BarChart3,
-  FolderOpen, LogOut, Menu, X, ExternalLink, Eye,
+  FolderOpen, LogOut, Menu, X, ExternalLink, Eye, ShieldCheck,
 } from "lucide-react";
 import { useAuth, ROLE_LABEL } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
@@ -14,6 +14,7 @@ type NavItem = { to: string; label: string; icon: typeof LayoutDashboard; min: n
 const NAV: NavItem[] = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, min: 1 },
   { to: "/admin/analytics", label: "Analytics", icon: BarChart3, min: 3 },
+  { to: "/admin/my-os", label: "MY OS ↔ TRYSA", icon: ShieldCheck, min: 4 },
   { to: "/admin/articles", label: "Articles", icon: FileText, min: 1 },
   { to: "/admin/companies", label: "Companies", icon: Building2, min: 2 },
   { to: "/admin/portfolio", label: "Portfolio", icon: Images, min: 2 },
