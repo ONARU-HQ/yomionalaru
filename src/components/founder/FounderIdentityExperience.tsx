@@ -50,7 +50,7 @@ export function FounderIdentityExperience() {
             My work moves between imagery, software, businesses and the ideas connecting them.
           </motion.p>
           <motion.div {...anim(0.24)} className="mt-8 flex flex-wrap gap-3">
-            <a href="#the-journey" className="inline-flex min-h-12 items-center gap-3 rounded-full bg-[#d1e87b] px-6 text-xs font-semibold uppercase tracking-[.15em] text-[#121612] transition hover:bg-[#e5f7ad]">Explore my journey <ArrowDownRight className="h-4 w-4"/></a>
+            <Link to="/journey" className="inline-flex min-h-12 items-center gap-3 rounded-full bg-[#d1e87b] px-6 text-xs font-semibold uppercase tracking-[.15em] text-[#121612] transition hover:bg-[#e5f7ad]">Enter the 3D journey <ArrowDownRight className="h-4 w-4"/></Link>
             <Link to="/projects" className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/30 bg-black/30 px-6 text-xs uppercase tracking-[.14em] transition hover:border-white">Selected work <ArrowUpRight className="h-4 w-4"/></Link>
           </motion.div>
         </div>
