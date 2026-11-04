@@ -1,11 +1,12 @@
-export const SITE_URL = "https://yomionalaru.lovable.app";
+export const SITE_URL = "https://yomionalaru.com";
 
 export const NAV_LINKS = [
   { to: "/", label: "Home" },
-  { to: "/about", label: "Founder" },
-  { to: "/companies", label: "Ecosystem" },
+  { to: "/about", label: "Journey" },
+  { to: "/companies", label: "Companies" },
+  { to: "/projects", label: "Work" },
   { to: "/mentorship", label: "Mentorship" },
-  { to: "/blog", label: "Blog" },
+  { to: "/thinking", label: "Thinking" },
   { to: "/media", label: "Media" },
   { to: "/contact", label: "Contact" },
 ] as const;
