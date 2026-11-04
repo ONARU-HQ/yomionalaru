@@ -48,8 +48,8 @@ function verifiedAttestations(digest: string, registry: Registry, signatures: At
 }
 
 type Configuration = {
-  digest: string; registry: Registry; keyId: string; workspaceId: string;
-  privateKeyPem: string; accessToken: string;
+  digest: string; registry: Registry; keyId: string;
+  privateKeyPem: string;
 };
 
 function loadConfig(): Configuration | null {
@@ -57,11 +57,8 @@ function loadConfig(): Configuration | null {
   const keys = process.env.MYOS_TRYSA_TRUSTED_PUBLIC_KEYS_JSON;
   const signatures = process.env.MYOS_TRYSA_ATTESTATIONS_JSON;
   const keyId = process.env.MYOS_TRYSA_KEY_ID ?? "";
-  const workspaceId = process.env.MYOS_TRYSA_WORKSPACE_ID ?? "";
   const privateKeyPem = process.env.MYOS_TRYSA_PRIVATE_KEY_PEM ?? "";
-  const accessToken = process.env.MYOS_TRYSA_OAUTH_ACCESS_TOKEN ?? "";
-  if (!keys || !signatures || !keyId || !uuid.test(workspaceId) ||
-      !privateKeyPem || !accessToken || !hex64.test(digest)) return null;
+  if (!keys || !signatures || !keyId || !privateKeyPem || !hex64.test(digest)) return null;
   try {
     const registry = JSON.parse(keys) as Registry;
     if (registry.myos?.keyId !== keyId ||
@@ -71,7 +68,7 @@ function loadConfig(): Configuration | null {
     const challenge = Buffer.from("myos-local-key-verification");
     if (!verify(null, challenge, createPublicKey(registry.myos.publicKeyPem),
       sign(null, challenge, privateKey))) return null;
-    return { digest, registry, keyId, workspaceId, privateKeyPem, accessToken };
+    return { digest, registry, keyId, privateKeyPem };
   } catch { return null; }
 }
 
@@ -106,8 +103,11 @@ export type ContractConnectionResult = {
  * Read-only signed handshake. Only reports verification; it never requests
  * customer data, modifies CRM records, or signs the bilateral contract itself.
  */
-export async function testTrysaContract(): Promise<ContractConnectionResult> {
+export async function testTrysaContract(session: { accessToken: string; workspaceId: string }): Promise<ContractConnectionResult> {
   const config = loadConfig();
+  if (!uuid.test(session.workspaceId) || !/^onaru_at_[A-Za-z0-9_-]+$/.test(session.accessToken)) return {
+    connected:false,state:"rejected",syncActive:false,message:"Workspace OAuth authorization is invalid.",
+  };
   if (!config) return {
     connected: false, state: "not_configured", syncActive: false,
     message: "Both independent service attestations, signing identity and scoped OAuth configuration are required.",
@@ -115,7 +115,7 @@ export async function testTrysaContract(): Promise<ContractConnectionResult> {
 
   const request = new Request(TRYSA_STATUS_URL, {
     method: "GET",
-    headers: { authorization: `Bearer ${config.accessToken}` },
+    headers: { authorization: `Bearer ${session.accessToken}` },
   });
   const envelope = {
     contractId: CONTRACT_ID,
@@ -123,7 +123,7 @@ export async function testTrysaContract(): Promise<ContractConnectionResult> {
     sender: "myos" as const,
     recipient: "trysa" as const,
     keyId: config.keyId,
-    workspaceId: config.workspaceId,
+    workspaceId: session.workspaceId,
     timestamp: new Date().toISOString(),
     nonce: randomBytes(24).toString("base64url"),
     bodySha256: sha256(Buffer.alloc(0)),
