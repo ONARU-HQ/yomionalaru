@@ -11,7 +11,7 @@ const ventures = [
   { name:"Yomi Visuals HQ", category:"Creative direction / photography", phase:"CREATING", href:"/companies/yomi-visuals", image:"/media/yomi-portrait-1080.webp", icon:Camera, tone:"from-[#574735] via-[#1b1c1a] to-[#10110f]" },
   { name:"YV Studios Africa", category:"Creative production spaces", phase:"OPERATING", href:"https://yvstudios.ng", image:"/media/the-oria-space-1080.webp", icon:Layers3, tone:"from-[#2a3a32] via-[#151b17] to-[#0a0a0a]" },
   { name:"TRYSA", category:"Business operating system", phase:"BUILDING", href:"https://trysa.app", image:"", icon:Code2, tone:"from-[#d9ea7a] via-[#a7cb53] to-[#5d8761]" },
-  { name:"PlayBaaq", category:"Artists / music / entertainment", phase:"BUILDING", href:"https://playbaaq.com", image:"", icon:Film, tone:"from-[#4a3549] via-[#252037] to-[#10121a]" },
+  { name:"PlayBaaq", category:"Artists / music / entertainment", phase:"BUILDING", href:"/projects", image:"", icon:Film, tone:"from-[#4a3549] via-[#252037] to-[#10121a]" },
   { name:"Shop 1401", category:"Fashion and commerce", phase:"BUILDING", href:"https://trysa.app/shop1401", image:"/media/elegance-framed-in-light-1080.webp", icon:Sparkles, tone:"from-[#614638] via-[#28201c] to-[#140e0d]" },
   { name:"ONARU OS", category:"Products / systems / intelligence", phase:"IN DEVELOPMENT", href:"https://onaru.app", image:"", icon:Layers3, tone:"from-[#405764] via-[#16272e] to-[#12171c]" },
 ] as const;
