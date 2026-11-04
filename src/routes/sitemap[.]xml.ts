@@ -29,7 +29,7 @@ function publicClient() {
 
 async function buildEntries(): Promise<Entry[]> {
   const staticPaths: Entry[] = [
-    "/", "/about", "/companies", "/mentorship", "/blog", "/projects", "/speaking", "/media", "/contact",
+    "/", "/about", "/companies", "/mentorship", "/thinking", "/blog", "/projects", "/speaking", "/media", "/contact",
   ].map((path) => ({ path }));
 
   const entries: Entry[] = [...staticPaths];
