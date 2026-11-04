@@ -1,9 +1,6 @@
 name: Personal identity frontend QA
 
 on:
-  push:
-    branches:
-      - fix/identity-card-ui-production-lock-20261104
   pull_request:
     paths:
       - "src/components/founder/FounderUniverse3D.tsx"
