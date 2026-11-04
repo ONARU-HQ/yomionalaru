@@ -38,7 +38,6 @@ export function FounderUniverse3D() {
 
         const group = new THREE.Group();
         scene.add(group);
-        const lines: THREE.LineLoop[] = [];
         for (let i = 0; i < 6; i++) {
           const geo = new THREE.TorusGeometry(2.55 + i * 0.32, 0.0075, 3, 180);
           const mat = new THREE.MeshBasicMaterial({
@@ -72,6 +71,7 @@ export function FounderUniverse3D() {
         group.add(stars);
         let frame = 0;
         let visible = true;
+        let intersecting = true;
         const pointer = { x: 0, y: 0 };
         const onPointer = (event: PointerEvent) => {
           const rect = node.getBoundingClientRect();
@@ -100,12 +100,13 @@ export function FounderUniverse3D() {
           frame = requestAnimationFrame(render);
         };
         const visibilityObserver = new IntersectionObserver(([entry]) => {
-          visible = entry.isIntersecting && !document.hidden;
+          intersecting = entry.isIntersecting;
+          visible = intersecting && !document.hidden;
           if (visible) render();
           else cancelAnimationFrame(frame);
         });
         const onVisibility = () => {
-          visible = !document.hidden && visibilityObserver.takeRecords().every(x => x.isIntersecting);
+          visible = !document.hidden && intersecting;
           if (visible) render();
           else cancelAnimationFrame(frame);
         };
@@ -121,13 +122,14 @@ export function FounderUniverse3D() {
           resizeObserver.disconnect();
           starsGeo.dispose();
           icosahedron.dispose();
-          (stars.material as THREE.Material).dispose();
-          (wire.geometry as THREE.BufferGeometry).dispose();
-          (wire.material as THREE.Material).dispose();
+          stars.material.dispose();
+          wire.geometry.dispose();
+          wire.material.dispose();
           group.traverse(child => {
             if (child instanceof THREE.Mesh) {
               child.geometry.dispose();
-              (child.material as THREE.Material).dispose();
+              if (Array.isArray(child.material)) child.material.forEach(mat => mat.dispose());
+              else child.material.dispose();
             }
           });
           renderer.dispose();
