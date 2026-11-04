@@ -1,0 +1,22 @@
+name: Verify reference card UI build
+on:
+  push:
+    branches:
+      - fix/identity-card-ui-production-lock-20261104
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.4.0"
+      - name: Frozen dependency installation
+        run: bun install --frozen-lockfile
+      - name: Build static frontend and Cloudflare Worker
+        run: bun run build
