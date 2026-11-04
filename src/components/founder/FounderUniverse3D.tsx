@@ -41,7 +41,7 @@ export function FounderUniverse3D() {
         for (let i = 0; i < 6; i++) {
           const geo = new THREE.TorusGeometry(2.55 + i * 0.32, 0.0075, 3, 180);
           const mat = new THREE.MeshBasicMaterial({
-            color: i % 2 ? 0xc7aa78 : 0x75c9b8, transparent: true, opacity: 0.12 + (5 - i) * 0.023,
+            color: i % 2 ? 0xd0d0d0 : 0x888888, transparent: true, opacity: 0.12 + (5 - i) * 0.023,
           });
           const ring = new THREE.Mesh(geo, mat);
           ring.rotation.x = 0.55 + i * 0.13;
@@ -51,7 +51,7 @@ export function FounderUniverse3D() {
         const icosahedron = new THREE.IcosahedronGeometry(1.28, 1);
         const wire = new THREE.LineSegments(
           new THREE.EdgesGeometry(icosahedron),
-          new THREE.LineBasicMaterial({ color: 0xcdb58b, transparent: true, opacity: 0.34 }),
+          new THREE.LineBasicMaterial({ color: 0xc0c0c0, transparent: true, opacity: 0.34 }),
         );
         group.add(wire);
         const points = new Float32Array(270 * 3);
@@ -67,7 +67,7 @@ export function FounderUniverse3D() {
         const starsGeo = new THREE.BufferGeometry();
         starsGeo.setAttribute("position", new THREE.BufferAttribute(points, 3));
         const stars = new THREE.Points(starsGeo,
-          new THREE.PointsMaterial({ color: 0xd9c7a9, size: 0.026, transparent: true, opacity: 0.44 }));
+          new THREE.PointsMaterial({ color: 0xbbbbbb, size: 0.026, transparent: true, opacity: 0.44 }));
         group.add(stars);
         let frame = 0;
         let visible = true;
@@ -149,6 +149,6 @@ export function FounderUniverse3D() {
   }, []);
   return <div ref={mount} className="pointer-events-auto absolute inset-0 opacity-90"
     aria-hidden="true" data-webgl={available ? "ready" : "fallback"}>
-    <div className="pointer-events-none absolute left-1/2 top-1/2 h-[65%] w-[65%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#7ab7a0]/[0.13] blur-[90px]" />
+    <div className="pointer-events-none absolute left-1/2 top-1/2 h-[65%] w-[65%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#aaaaaa]/[0.13] blur-[90px]" />
   </div>;
 }
