@@ -29,7 +29,7 @@ function onArchiveError(event: React.SyntheticEvent<HTMLImageElement>) {
   img.dataset.fallback = "done";
   img.removeAttribute("srcset");
   const path = new URL(img.currentSrc || img.src, window.location.origin).pathname;
-  img.src = path.includes("yomi-portrait") ? "/media/yomi-portrait.png" : path.replace(/-1080\\.webp$/, ".jpg");
+  img.src = path.includes("yomi-portrait") ? "/media/yomi-portrait.png" : path.replace(/-1080\.webp$/, ".jpg");
 }
 export function FounderIdentityExperience() {
   const reduced = useReducedMotion();
@@ -39,7 +39,7 @@ export function FounderIdentityExperience() {
   };
   const {articles}=usePublicArticles(3);
   const projects=usePublicProjects().slice(0,3);
-  return <div className="identity-v2 text-[#f3f1eb]">
+  return <div className="identity-v2 text-[#f5f5f5]">
     <section className="relative isolate min-h-[92svh] overflow-hidden bg-[#090909] pb-20 pt-32 sm:pt-40" aria-labelledby="identity-title">
       <div aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_80%,rgba(180,180,180,0.10),transparent_46%),radial-gradient(ellipse_at_10%_10%,rgba(180,180,180,0.08),transparent_55%)]"/>
       <div className="pointer-events-none absolute inset-0 z-0 opacity-80" aria-hidden>
@@ -53,7 +53,7 @@ export function FounderIdentityExperience() {
           <motion.h1 {...anim(0.08)} id="identity-title" className="mt-8 font-sans text-[clamp(3.8rem,10.5vw,9.3rem)] font-medium leading-[0.84] tracking-[-0.085em]">
             One life.<br/><span className="text-[#d3d3d3]">Many</span><br/>worlds.
           </motion.h1>
-          <motion.p {...anim(0.16)} className="mt-8 max-w-md text-base leading-7 text-[#c7c7c1] sm:text-lg">
+          <motion.p {...anim(0.16)} className="mt-8 max-w-md text-base leading-7 text-[#bdbdbd] sm:text-lg">
             I’m Yomi Onalaru. Photographer turned creative director, founder and product builder.
             My work moves between imagery, software, businesses and the ideas connecting them.
           </motion.p>
@@ -94,7 +94,7 @@ export function FounderIdentityExperience() {
           <p className="max-w-sm text-sm leading-7 text-[#666666]">A documentary-style timeline of the work, creative spaces, businesses and software that followed. Each chapter builds on the last.</p>
         </motion.div>
         <div className="mt-10 grid gap-4 lg:grid-cols-[1.2fr_.8fr]">
-          <motion.article {...anim()} className="relative min-h-[520px] overflow-hidden rounded-[1.5rem] bg-[#181d1a]">
+          <motion.article {...anim()} className="relative min-h-[520px] overflow-hidden rounded-[1.5rem] bg-[#202020]">
             <img onError={onArchiveError} src="/media/studio-portrait-1080.webp" alt="Creative portrait from Yomi's photography archive" loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-85 grayscale"/>
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/10"/>
             <div className="absolute bottom-8 left-8 right-8 text-white">
@@ -139,7 +139,7 @@ export function FounderIdentityExperience() {
     <section className="bg-[#f5f5f5] px-6 py-24 text-[#151515] md:py-32" aria-labelledby="work-title">
       <div className="mx-auto max-w-7xl">
         <motion.div {...anim()} className="flex flex-wrap items-end justify-between gap-6">
-          <div><span className="text-[10px] uppercase tracking-[.3em] text-[#616d63]">04 / Selected work</span><h2 id="work-title" className="mt-4 text-[clamp(3rem,7.5vw,6.5rem)] font-semibold leading-[.94] tracking-[-.07em]">Work that<br/>speaks first.</h2></div>
+          <div><span className="text-[10px] uppercase tracking-[.3em] text-[#666666]">04 / Selected work</span><h2 id="work-title" className="mt-4 text-[clamp(3rem,7.5vw,6.5rem)] font-semibold leading-[.94] tracking-[-.07em]">Work that<br/>speaks first.</h2></div>
           <Entry href="/projects" className="inline-flex min-h-12 items-center gap-2 rounded-full border border-black/20 px-5 text-xs uppercase tracking-widest">View all projects <ArrowUpRight className="h-4 w-4"/></Entry>
         </motion.div>
         <div className="mt-11 grid gap-4 md:grid-cols-3">
