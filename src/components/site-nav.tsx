@@ -21,11 +21,11 @@ export function SiteNav() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-        scrolled ? "py-3" : "py-6",
+        "fixed inset-x-0 top-0 z-50 text-white transition-all duration-300",
+        scrolled ? "py-2" : "py-3 sm:py-5",
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-full border border-white/15 bg-[#101010]/95 px-4 py-2 shadow-lg backdrop-blur-xl sm:mx-5 sm:px-5 lg:mx-auto lg:bg-[#101010]/85">
         <Link to="/" className="group flex items-center gap-3">
           <span className="grid h-9 w-9 place-items-center rounded-full border border-gold/40 bg-black/40 font-display text-lg text-gold shadow-[0_0_30px_-8px_var(--gold)] transition group-hover:shadow-[0_0_40px_-4px_var(--gold)]">
             Y
@@ -69,16 +69,17 @@ export function SiteNav() {
 
         <button
           onClick={() => setOpen((o) => !o)}
-          className="grid h-10 w-10 place-items-center rounded-full border border-border lg:hidden"
-          aria-label="Toggle menu"
+          className="grid h-11 w-11 place-items-center rounded-full border border-white/35 bg-white/10 text-white transition-colors hover:bg-white/20 lg:hidden"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
         >
           {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
         </button>
       </div>
 
       {open && (
-        <div className="md:hidden">
-          <div className="mx-6 mt-3 glass rounded-3xl p-6">
+        <div className="lg:hidden">
+          <div className="mx-4 mt-3 max-h-[75dvh] overflow-y-auto rounded-3xl border border-white/15 bg-[#101010]/95 p-4 text-white shadow-2xl backdrop-blur-xl sm:mx-6 sm:p-6">
             <div className="flex flex-col gap-1">
               {NAV_LINKS.map((l) => (
                 <Link
