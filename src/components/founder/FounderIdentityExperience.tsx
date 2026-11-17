@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Camera, Code2, Film, Layers3, Quote, Sparkles } from "lucide-react";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { TIMELINE, PRINCIPLES } from "@/lib/site-data";
 import { usePublicArticles, usePublicProjects } from "@/lib/public-content";
-import { IdentityCardShowcase } from "./IdentityCardShowcase";
+
 
 const Universe = lazy(() => import("./FounderUniverse3D").then(m => ({default:m.FounderUniverse3D})));
 
@@ -34,9 +34,18 @@ function onArchiveError(event: React.SyntheticEvent<HTMLImageElement>) {
 }
 export function FounderIdentityExperience() {
   const reduced = useReducedMotion();
+  const [showUniverse, setShowUniverse] = useState(false);
+  useEffect(() => {
+    // The 3D canvas is decorative: do not boot WebGL on phones or reduced-motion devices.
+    const media = window.matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)");
+    const sync = () => setShowUniverse(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
   const anim = (delay=0) => reduced ? {} : {
-    initial:{opacity:0,y:26},whileInView:{opacity:1,y:0},
-    viewport:{once:true,amount:0.15},transition:{duration:0.68,delay,ease:[0.22,1,0.36,1] as [number,number,number,number]},
+    initial:{opacity:1,y:12},whileInView:{opacity:1,y:0},
+    viewport:{once:true,amount:0.05},transition:{duration:0.55,delay:Math.min(delay,0.12),ease:[0.22,1,0.36,1] as [number,number,number,number]},
   };
   const {articles}=usePublicArticles(3);
   const projects=usePublicProjects().slice(0,3);
@@ -45,7 +54,7 @@ export function FounderIdentityExperience() {
       <div aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_80%,rgba(180,180,180,0.10),transparent_46%),radial-gradient(ellipse_at_10%_10%,rgba(180,180,180,0.08),transparent_55%)]"/>
       <div className="pointer-events-none absolute inset-0 z-0 opacity-80" aria-hidden>
         <Suspense fallback={<div className="absolute inset-0 bg-[radial-gradient(circle_at_58%_45%,rgba(160,160,160,.12),transparent_55%)]"/>}>
-          <Universe/>
+          {showUniverse && <Universe/>}
         </Suspense>
       </div>
       <div className="relative z-10 mx-auto grid min-h-[65svh] max-w-7xl items-center gap-8 px-6 lg:grid-cols-[1.07fr_0.93fr] lg:gap-12">
@@ -86,7 +95,6 @@ export function FounderIdentityExperience() {
       </div>
     </section>
 
-    <IdentityCardShowcase />
 
     <section id="the-journey" className="bg-[#f2f2f2] px-6 py-24 text-[#151515] md:py-32" aria-labelledby="journey-title">
       <div className="mx-auto max-w-7xl">
