@@ -1,5 +1,8 @@
 name: ONARU Chat Pilot CI
 on:
+  push:
+    branches:
+      - feat/onaru-chat-packet-pilot-20261119
   pull_request:
     branches: [main]
     paths:
