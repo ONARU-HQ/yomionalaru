@@ -8,7 +8,9 @@ import { useEffect } from "react";
 export function OnaruChatLoader() {
   useEffect(() => {
     const host = window.location.hostname.toLowerCase();
-    if (host !== "yomionalaru.com" && host !== "www.yomionalaru.com") {
+    if (host !== "yomionalaru.com" &&
+      host !== "www.yomionalaru.com" &&
+      host !== "yomionalaru-v2-staging.yomionalaru.workers.dev") {
       return;
     }
 
