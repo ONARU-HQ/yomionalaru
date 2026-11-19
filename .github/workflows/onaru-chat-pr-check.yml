@@ -1,0 +1,22 @@
+name: ONARU Chat Pilot CI
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/components/onaru-chat-loader.tsx"
+      - "src/routes/__root.tsx"
+      - ".github/workflows/onaru-chat-pr-check.yml"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.4.0"
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+      - name: Verify ONARU chat loader compiled
+        run: grep -rq "onaru-chat-widget-v1" dist/client || (echo "ONARU widget URL missing" && exit 1)
