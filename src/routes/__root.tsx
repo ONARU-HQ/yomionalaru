@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { OnaruChatLoader } from "@/components/onaru-chat-loader";
 import { AuthProvider } from "@/hooks/use-auth";
 import { Toaster } from "@/components/ui/sonner";
 import { PageViewTracker } from "@/lib/analytics";
@@ -167,6 +168,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <PageViewTracker />
+        {!bare && <OnaruChatLoader />}
         <PreviewBanner />
         <div className="relative min-h-screen bg-background text-foreground grain">
 
